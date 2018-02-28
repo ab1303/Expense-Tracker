@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -47,7 +40,7 @@ namespace Angular_ASPNETCore_Seed
                     Title = "ASP.NET Core Customers API",
                     Description = "ASP.NET Core/Angular Swagger Documentation",
                     TermsOfService = "None",
-                    Contact = new Contact { Name = "Dan Wahlin", Url = "http://twitter.com/danwahlin" },
+                    Contact = new Contact { Name = "Abdul Wahab", Url = "http://github.com/ab1303" },
                     License = new License { Name = "MIT", Url = "https://en.wikipedia.org/wiki/MIT_License" }
                 });
 
