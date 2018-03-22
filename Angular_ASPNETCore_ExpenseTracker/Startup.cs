@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.EntityFrameworkCore;
+using ETS.Data;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -25,6 +27,8 @@ namespace Angular_ASPNETCore_Seed
         {
             // Add framework services.
             services.AddMvc();
+            services.AddDbContext<DataContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("DataConnection")));
 
             //Handle XSRF Name for Header
             services.AddAntiforgery(options => {

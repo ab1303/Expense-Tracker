@@ -23,7 +23,13 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="src\app\shared\model\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\ETS.DataCore\ETS.DataCore.csproj" />
+    <ProjectReference Include="..\ETS.DomainCore\ETS.DomainCore.csproj" />
   </ItemGroup>
 
 </Project>

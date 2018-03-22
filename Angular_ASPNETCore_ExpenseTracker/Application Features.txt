@@ -1,0 +1,3 @@
+﻿- Multi Tenancy
+- Angular JWT Token Authentication
+- Local Storage of Token
