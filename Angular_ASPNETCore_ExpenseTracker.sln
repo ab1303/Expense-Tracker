@@ -5,9 +5,13 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Angular_ASPNETCore_ExpenseTracker", "Angular_ASPNETCore_ExpenseTracker\Angular_ASPNETCore_ExpenseTracker.csproj", "{DC1C8B12-12CC-437F-A725-569D8ADC7C0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.DataCore", "ETS.DataCore\ETS.DataCore.csproj", "{37BAA85D-1B22-4821-98B0-19030A9361BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.DataCore", "ETS.DataCore\ETS.DataCore.csproj", "{37BAA85D-1B22-4821-98B0-19030A9361BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.DomainCore", "ETS.DomainCore\ETS.DomainCore.csproj", "{D78C5AC6-2392-46BC-869A-92FD78A5D670}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.DomainCore", "ETS.DomainCore\ETS.DomainCore.csproj", "{D78C5AC6-2392-46BC-869A-92FD78A5D670}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.Core", "ETS.Core\ETS.Core.csproj", "{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.Services", "ETS.Services\ETS.Services.csproj", "{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{D78C5AC6-2392-46BC-869A-92FD78A5D670}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D78C5AC6-2392-46BC-869A-92FD78A5D670}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D78C5AC6-2392-46BC-869A-92FD78A5D670}.Release|Any CPU.Build.0 = Release|Any CPU
+		{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

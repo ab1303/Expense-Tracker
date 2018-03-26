@@ -10,6 +10,9 @@ using System.IO;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.EntityFrameworkCore;
 using ETS.Data;
+using ETS.DataCore.Seeders;
+using ETS.Core.Interfaces;
+using ETS.Services.Implementations;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -25,8 +28,10 @@ namespace Angular_ASPNETCore_Seed
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
+            // Add MVC Framework Services.
             services.AddMvc();
+
+            //Add SQL Server support
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DataConnection")));
 
@@ -53,10 +58,19 @@ namespace Angular_ASPNETCore_Seed
                 // options.IncludeXmlComments(filePath);
 
             });
+
+            // Add Application Services
+
+            services.AddTransient<DatabaseSeeder>();
+            services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IAntiforgery antiforgery)
+        public void Configure(IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            IAntiforgery antiforgery,
+            DatabaseSeeder databaseSeeder )
         {
             //Manually handle setting XSRF cookie. Needed because HttpOnly has to be set to false so that
             //Angular is able to read/access the cookie.
@@ -125,6 +139,11 @@ namespace Angular_ASPNETCore_Seed
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
 
             });
+
+
+            // Run seed on start up
+            databaseSeeder.SeedAsync(app.ApplicationServices);
+
         }
     }
 }

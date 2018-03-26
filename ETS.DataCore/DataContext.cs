@@ -1,26 +1,37 @@
-﻿using ETS.Domain;
+﻿using ETS.DataCore;
+using ETS.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace ETS.Data
 {
-    public class DataContext:DbContext
+    public class DataContext : DbContext, IDataContext
     {
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
 
 
-        public DataContext(DbContextOptions<DataContext> options):base(options)
+        public static readonly LoggerFactory MyConsoleLoggerFactor = new LoggerFactory(new[]
+        {
+            new ConsoleLoggerProvider((category,level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information, true)
+        });
+
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var connectionString = @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=ETS-DB;Integrated Security=True";
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
 
-        //    optionsBuilder.UseSqlServer(connectionString);
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+            optionsBuilder
+                .UseLoggerFactory(MyConsoleLoggerFactor)
+                .EnableSensitiveDataLogging(true);
+
+
+                base.OnConfiguring(optionsBuilder);
+        }
     }
 }

@@ -12,6 +12,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.6.1" />
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="2.6.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>
   
@@ -24,12 +25,15 @@
   
   <ItemGroup>
     <Folder Include="src\app\shared\model\" />
+    <Folder Include="Views\Database\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\ETS.Core\ETS.Core.csproj" />
     <ProjectReference Include="..\ETS.DataCore\ETS.DataCore.csproj" />
     <ProjectReference Include="..\ETS.DomainCore\ETS.DomainCore.csproj" />
+    <ProjectReference Include="..\ETS.Services\ETS.Services.csproj" />
   </ItemGroup>
 
 </Project>

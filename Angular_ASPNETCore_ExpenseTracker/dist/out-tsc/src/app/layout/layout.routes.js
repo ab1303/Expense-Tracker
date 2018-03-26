@@ -65,6 +65,22 @@ var LAYOUT_ROUTES = [
             {
                 path: "page-layouts/right-side-nav-v2",
                 loadChildren: "../pages/page-layouts/right-side-nav-v2/right-side-nav-v2.module#RightSideNavV2Module"
+            },
+            //---------------------------------------------------------->
+            // Assets
+            //---------------------------------------------------------->
+            //---------------------------------------------------------->
+            // Income
+            //---------------------------------------------------------->
+            //---------------------------------------------------------->
+            // Expenses
+            //---------------------------------------------------------->
+            //---------------------------------------------------------->
+            // Administration
+            //---------------------------------------------------------->
+            {
+                path: "administration/expense-category",
+                loadChildren: "../pages/administration/expense-category/expense-category.module#ExpenseCategoryModule"
             }
         ]
     },
