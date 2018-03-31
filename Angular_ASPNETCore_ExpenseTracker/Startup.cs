@@ -13,6 +13,8 @@ using ETS.Data;
 using ETS.DataCore.Seeders;
 using ETS.Core.Interfaces;
 using ETS.Services.Implementations;
+using Microsoft.AspNetCore.Identity;
+using ETS.DomainCore.Model;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -25,18 +27,69 @@ namespace Angular_ASPNETCore_Seed
 
         public IConfiguration Configuration { get; }
 
+        private void ConfigureAuth(IServiceCollection services)
+        {
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                     .AddEntityFrameworkStores<DataContext>()
+                     .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                // If the LoginPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/Login.
+                options.LoginPath = "/Account/Login";
+                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+                // the path to /Account/AccessDenied.
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+        }
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add MVC Framework Services.
-            services.AddMvc();
 
             //Add SQL Server support
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DataConnection")));
 
+
+            // Identity and Authorization
+            ConfigureAuth(services);
+
+
+            // Add MVC Framework Services.
+            services.AddMvc();
+
+          
+
             //Handle XSRF Name for Header
-            services.AddAntiforgery(options => {
+            services.AddAntiforgery(options =>
+            {
                 options.HeaderName = "X-XSRF-TOKEN";
             });
 
@@ -67,10 +120,10 @@ namespace Angular_ASPNETCore_Seed
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-            IHostingEnvironment env, 
+        public void Configure(IApplicationBuilder app,
+            IHostingEnvironment env,
             IAntiforgery antiforgery,
-            DatabaseSeeder databaseSeeder )
+            DatabaseSeeder databaseSeeder)
         {
             //Manually handle setting XSRF cookie. Needed because HttpOnly has to be set to false so that
             //Angular is able to read/access the cookie.
@@ -128,6 +181,8 @@ namespace Angular_ASPNETCore_Seed
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

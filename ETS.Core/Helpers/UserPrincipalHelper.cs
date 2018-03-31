@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public static class UserPrincipalHelper
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public class CardHelper
     {

@@ -1,1 +1,4 @@
 https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro
+
+
+https://github.com/aspnet/Docs/blob/master/aspnetcore/security/authentication/identity/sample/src/ASPNETCore-IdentityDemoComplete/IdentityDemo/Controllers/AccountController.cs

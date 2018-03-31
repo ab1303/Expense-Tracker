@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public static class TypeExtensions
     {

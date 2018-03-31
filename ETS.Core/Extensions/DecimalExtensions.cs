@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UGC.Core.Extensions
+namespace ETS.Core.Extensions
 {
     public static class DecimalExtensions
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Net.NetworkInformation;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public static class EnumUtil
     {

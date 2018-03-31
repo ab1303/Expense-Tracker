@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public static class RegexHelper
     {

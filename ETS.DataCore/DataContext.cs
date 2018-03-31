@@ -1,12 +1,14 @@
 ﻿using ETS.DataCore;
 using ETS.Domain;
+using ETS.DomainCore.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
 namespace ETS.Data
 {
-    public class DataContext : DbContext, IDataContext
+    public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }

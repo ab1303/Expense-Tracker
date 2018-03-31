@@ -24,6 +24,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
     <Folder Include="src\app\shared\model\" />
     <Folder Include="Views\Database\" />
     <Folder Include="wwwroot\" />

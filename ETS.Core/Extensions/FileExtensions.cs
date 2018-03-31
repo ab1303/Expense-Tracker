@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UGC.Core.Extensions
+namespace ETS.Core.Extensions
 {
     public static class FileExtensions
     {

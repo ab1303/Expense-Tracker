@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UGC.Core.Helpers
+namespace ETS.Core.Helpers
 {
     public class BindingDefinition
     {

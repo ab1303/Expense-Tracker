@@ -1,4 +1,4 @@
-﻿namespace UGC.Core.Extensions
+﻿namespace ETS.Core.Extensions
 {
     public static class BooleanExtensions
     {

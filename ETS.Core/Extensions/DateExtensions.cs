@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace UGC.Core.Extensions
+namespace ETS.Core.Extensions
 {
     public static class DateExtensions
     {

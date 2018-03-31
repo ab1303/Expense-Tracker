@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace UGC.Core.Extensions
+namespace ETS.Core.Extensions
 {
     public static class StringExtensions
     {
