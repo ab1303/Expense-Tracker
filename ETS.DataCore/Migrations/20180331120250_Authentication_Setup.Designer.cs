@@ -12,9 +12,10 @@ using System;
 namespace ETS.DataCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180331120250_Authentication_Setup")]
+    partial class Authentication_Setup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,24 +105,16 @@ namespace ETS.DataCore.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<long?>("FacebookId");
-
                     b.Property<string>("FirstName");
-
-                    b.Property<string>("IdentityId");
 
                     b.Property<string>("LastName");
 
                     b.Property<int>("Mobile");
 
-                    b.Property<string>("PictureUrl");
-
                     b.Property<string>("UpdateLogin")
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdentityId");
 
                     b.ToTable("UserDetails");
                 });
@@ -302,13 +295,6 @@ namespace ETS.DataCore.Migrations
                     b.HasOne("ETS.Domain.UserDetail", "PaidFor")
                         .WithMany()
                         .HasForeignKey("PaidForId");
-                });
-
-            modelBuilder.Entity("ETS.Domain.UserDetail", b =>
-                {
-                    b.HasOne("ETS.DomainCore.Model.ApplicationUser", "Identity")
-                        .WithMany()
-                        .HasForeignKey("IdentityId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

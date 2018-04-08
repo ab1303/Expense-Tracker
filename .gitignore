@@ -7,6 +7,11 @@ project.json.old
 **/wwwroot/app/**/*.js
 **/wwwroot/app/**/*.map
 
+**/wwwroot/devDist/**/*.js
+**/wwwroot/devDist/**/*.map
+
+
+
 #remove node_modules copied into wwwroot
 **/wwwroot/lib
 

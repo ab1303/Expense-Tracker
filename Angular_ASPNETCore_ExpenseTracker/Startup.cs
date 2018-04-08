@@ -15,6 +15,8 @@ using ETS.Core.Interfaces;
 using ETS.Services.Implementations;
 using Microsoft.AspNetCore.Identity;
 using ETS.DomainCore.Model;
+using System.Reflection;
+using ETS.Services.Interfaces;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -53,19 +55,21 @@ namespace Angular_ASPNETCore_Seed
                 options.User.RequireUniqueEmail = true;
             });
 
-            services.ConfigureApplicationCookie(options =>
-            {
-                // Cookie settings
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                // If the LoginPath isn't set, ASP.NET Core defaults 
-                // the path to /Account/Login.
-                options.LoginPath = "/Account/Login";
-                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
-                // the path to /Account/AccessDenied.
-                options.AccessDeniedPath = "/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    // Cookie settings
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+            //    // If the LoginPath isn't set, ASP.NET Core defaults 
+            //    // the path to /Account/Login.
+            //    options.LoginPath = "/Account/Login";
+            //    // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
+            //    // the path to /Account/AccessDenied.
+            //    options.AccessDeniedPath = "/Account/AccessDenied";
+            //    options.SlidingExpiration = true;
+            //});
+
+
         }
 
 
@@ -74,8 +78,10 @@ namespace Angular_ASPNETCore_Seed
         {
 
             //Add SQL Server support
+            var migrationAssembly = typeof(DataContext).GetTypeInfo().Assembly.GetName().Name;
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DataConnection")));
+                Configuration.GetConnectionString("DataConnection"),
+                sql => sql.MigrationsAssembly(migrationAssembly)));
 
 
             // Identity and Authorization
@@ -116,6 +122,7 @@ namespace Angular_ASPNETCore_Seed
 
             services.AddTransient<DatabaseSeeder>();
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddScoped<IAccountService, AccountService>();
 
         }
 

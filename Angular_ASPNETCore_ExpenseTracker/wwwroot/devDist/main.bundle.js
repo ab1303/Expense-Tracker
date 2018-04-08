@@ -4,6 +4,10 @@ webpackJsonp(["main"],{
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
+	"../pages/administration/expense-category/expense-category.module": [
+		"./src/app/pages/administration/expense-category/expense-category.module.ts",
+		"expense-category.module"
+	],
 	"../pages/dashboards/dashboards.module": [
 		"./src/app/pages/dashboards/dashboards.module.ts",
 		"dashboards.module"
