@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ETS.DataCore.Seeders
 {
@@ -53,12 +52,16 @@ namespace ETS.DataCore.Seeders
                 new ExpenseCategory
                 {
                     Name="Clothing",
-                    Description="Clothing for daily use"
+                    Description="Clothing for daily use",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
                 },
                 new ExpenseCategory
                 {
                     Name="Zakat",
-                    Description="Islamic zakat of 2.5% on assets on whom a year has passed"
+                    Description="Islamic zakat of 2.5% on assets on whom a year has passed",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
                 }
             };
 

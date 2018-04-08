@@ -16,18 +16,20 @@ namespace ETS.Services.Implementations
             _context = context;
         }
 
-        public async Task<ServiceResult> RegisterUser(string identityId)
+        public async Task<ServiceResult> RegisterUser(string identityId, string location)
         {
-
-            await _context.UserDetails.AddAsync(new UserDetail { IdentityId = identityId });
-            await _context.SaveChangesAsync();
-
             try
             {
 
-                await _context.UserDetails.AddAsync(new UserDetail { IdentityId = identityId });
+                await _context.UserDetails.AddAsync(
+                    new UserDetail
+                    {
+                        IdentityId = identityId,
+                        Location = location,
+                        CreateLogin = "Application",
+                        DateCreated = DateTime.Now
+                    });
                 await _context.SaveChangesAsync();
-
 
                 return new ServiceResult
                 {

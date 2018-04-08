@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Angular_ASPNETCore_ExpenseTracker.Helper;
-using Angular_ASPNETCore_ExpenseTracker.Models.AccountViewModels;
+using Angular_ASPNETCore_ExpenseTracker.ViewModels;
+using AutoMapper;
 using ETS.DomainCore.Model;
 using ETS.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -18,33 +19,40 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsPrincipalFactory;
         private readonly ILogger _logger;
         private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
         public AccountController(UserManager<ApplicationUser> userManager,
           SignInManager<ApplicationUser> signInManager,
            IUserClaimsPrincipalFactory<ApplicationUser> claimsPrincipalFactory,
            ILogger<AccountController> logger,
+           IMapper mapper,
            IAccountService accountService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            this._claimsPrincipalFactory = claimsPrincipalFactory;
+            _claimsPrincipalFactory = claimsPrincipalFactory;
             _logger = logger;
-            this._accountService = accountService;
+            _accountService = accountService;
+            _mapper = mapper;
         }
 
 
         [HttpPost]
         //[HttpPost("register")]
-        public async Task<IActionResult> Post([FromBody]RegisterViewModel model)
+        public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            // TODO: THink of Unit of work
+
+            var userIdentity = _mapper.Map<ApplicationUser>(model);
+            //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var result = await _userManager.CreateAsync(userIdentity, model.Password);
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            var registrationResult = _accountService.RegisterUser(user.Id);
+            var registrationResult = await _accountService.RegisterUser(userIdentity.Id, model.Location);
+            if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
             return new OkObjectResult("Account created");
         }

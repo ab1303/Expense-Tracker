@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Angular_ASPNETCore_ExpenseTracker.Models.AccountViewModels;
+﻿using System.Threading.Tasks;
+using Angular_ASPNETCore_ExpenseTracker.ViewModels;
 using Angular_ASPNETCore_Seed.Controllers;
 using ETS.DomainCore.Model;
 using Microsoft.AspNetCore.Authentication;
@@ -46,7 +43,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
