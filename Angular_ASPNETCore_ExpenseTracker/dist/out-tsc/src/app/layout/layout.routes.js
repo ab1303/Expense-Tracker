@@ -7,6 +7,17 @@ var LAYOUT_ROUTES = [
         path: "",
         component: layout_component_1.LayoutComponent,
         children: [
+            //---------------------------------------------------------->
+            //Authentication
+            //---------------------------------------------------------->
+            {
+                path: "authentication/lock",
+                loadChildren: "../pages/authentication/lock/lock.module#LockModule"
+            },
+            {
+                path: "authentication/login",
+                loadChildren: "../pages/authentication/login/login.module#LoginModule"
+            },
             { path: "", redirectTo: "dashboards", pathMatch: "full" },
             //---------------------------------------------------------->
             //Dashboards
