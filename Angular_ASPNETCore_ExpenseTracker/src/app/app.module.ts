@@ -30,7 +30,7 @@ export interface StoreType {
 @NgModule({
   declarations: [
     AppComponent, 
-    // HasClaimDirective,
+    HasClaimDirective,
   ],
   imports: [
     BrowserModule,
@@ -41,14 +41,14 @@ export interface StoreType {
     ServicesModule,
     ResponsiveModule,
     SharedModule.forRoot(),
-    AppRoutingModule
-    // HttpClientModule,
-    // HttpInterceptorModule
+    AppRoutingModule,
+    HttpClientModule,
+    HttpInterceptorModule
   ],
   providers: [
-    APP_PROVIDERS
-    // SecurityService,
-    // AuthGuard
+    APP_PROVIDERS,
+    SecurityService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
