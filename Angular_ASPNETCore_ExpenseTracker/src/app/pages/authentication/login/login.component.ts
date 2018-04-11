@@ -10,8 +10,8 @@ import {
 	HostListener,
 	HostBinding
 } from "@angular/core";
-import { GlobalState } from "../../app.state";
-import { ConfigService } from "../../shared/services/config/config.service";
+import { GlobalState } from "../../../app.state";
+import { ConfigService } from "../../../shared/services/config/config.service";
 import { Router } from "@angular/router";
 
 @Component({
