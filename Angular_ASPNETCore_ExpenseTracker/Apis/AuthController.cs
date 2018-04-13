@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Angular_ASPNETCore_ExpenseTracker.Helper;
 using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace Angular_ASPNETCore_ExpenseTracker.Apis
 {
@@ -39,7 +41,14 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
             }
 
-            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            var userAppClaims = GetUserApplicationClaims();
+            identity.AddClaims(userAppClaims);
+
+            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, 
+                new JsonSerializerSettings {
+                    Formatting = Formatting.Indented,
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
             return new OkObjectResult(jwt);
         }
 
@@ -63,7 +72,16 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             return await Task.FromResult<ClaimsIdentity>(null);
         }
 
-        //private async Task<Claim> GetUserClaims
+        // TODO: Store and retrieve these claims based on Identity from backend store... dynamic code
+        private IEnumerable<Claim> GetUserApplicationClaims()
+        {
+            var userAppClaims = new List<Claim>
+            {
+              new Claim(Constants.Strings.AppClaims.CanAccessDashboard, "true"),
+            };
+
+            return userAppClaims;
+        }
         //private async Task<Claim> GetRoleClaims
     }
 }
