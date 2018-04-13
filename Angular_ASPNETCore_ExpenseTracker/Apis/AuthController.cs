@@ -62,5 +62,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             // Credentials are invalid, or account doesn't exist
             return await Task.FromResult<ClaimsIdentity>(null);
         }
+
+        //private async Task<Claim> GetUserClaims
+        //private async Task<Claim> GetRoleClaims
     }
 }

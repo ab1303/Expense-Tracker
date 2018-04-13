@@ -7,8 +7,8 @@ import { tap } from 'rxjs/operators/tap';
 import { AppUserAuth } from './app-user-auth';
 import { AppUser } from './app-user';
 
-const API_URL = "http://localhost:5000/api/security/";
-
+// const API_URL = "http://localhost:5000/api/security/";
+const API_URL = "http://localhost:52951/api/auth/";
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'

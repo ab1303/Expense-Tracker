@@ -12,7 +12,8 @@
 					<label class="sr-only">Email: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Email" class="form-control" type="email">
+							<input mdInput placeholder="Email" class="form-control" name="userName" id="userName"  autofocus="autofocus"
+							 [(ngModel)]="user.userName" />
 						</md-input-container>
 					</div>
 				</div>
@@ -20,7 +21,7 @@
 					<label class="sr-only">Password: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Password" class="form-control" type="password">
+							<input mdInput placeholder="Password" class="form-control" name="password" id="password" type="password" [(ngModel)]="user.password" />
 						</md-input-container>
 					</div>
 				</div>
@@ -28,18 +29,19 @@
 				<div class="checkbox inline-block">
 					<md-checkbox name="remember" [(ngModel)]="checked"> Remember Me</md-checkbox>
 				</div>
-				<a href="javascript:void(0)" class="btn btn-info btn-block m-t-40">Sign In</a>
-				<div class="login-options">
+				<a href="javascript:void(0)" class="btn btn-info btn-block m-t-40" (click)="login()">Sign In</a>
+				<!-- <div class="login-options">
 					<span>OR</span>
 					<hr />
 				</div>
 				<button class="btn btn-facebook btn-block"><i class="zmdi zmdi-facebook"></i> Sign In with Facebook</button>
-				<button class="btn btn-google btn-block"><i class="zmdi zmdi-google-plus"></i> Sign In with Twitter</button>
+				<button class="btn btn-google btn-block"><i class="zmdi zmdi-google-plus"></i> Sign In with Twitter</button> -->
 			</form>
 		</div>
 		<div class="login-footer">
 			<p class="p-t-15 text-center">
-				Don't have an account? <a href="javascript:void(0)" (click)="toggleRegister = !toggleRegister">Create an account</a>
+				Don't have an account?
+				<a href="javascript:void(0)" (click)="toggleRegister = !toggleRegister">Create an account</a>
 			</p>
 		</div>
 	</section>
@@ -47,13 +49,13 @@
 		<ul class="actions icons top-right">
 			<li>
 				<a href="javascript:void(0)" (click)="toggleRegister = !toggleRegister">
-						<i class="zmdi zmdi-close"></i>
-					</a>
+					<i class="zmdi zmdi-close"></i>
+				</a>
 			</li>
 		</ul>
 		<h1 class="login-title">
-				Create an account
-			</h1>
+			Create an account
+		</h1>
 		<div class="login-body">
 			<form class="form-horizontal">
 				<div class="form-group row">
@@ -88,16 +90,19 @@
 						</md-input-container>
 					</div>
 				</div>
-				
+
 				<div class="checkbox inline-block">
-					<md-checkbox name="agree" [(ngModel)]="checked"> I agree to the <a href="javascript:void(0)" class="forgot-pass"> terms of service.</a></md-checkbox>
+					<md-checkbox name="agree" [(ngModel)]="checked"> I agree to the
+						<a href="javascript:void(0)" class="forgot-pass"> terms of service.</a>
+					</md-checkbox>
 				</div>
 				<a href="javascript:void(0)" class="btn btn-info btn-block m-t-40">Sign In</a>
 			</form>
 		</div>
 		<div class="login-footer">
 			<p class="p-t-15 text-center">
-				Already have an account? <a href="javascript:void(0)" (click)="toggleRegister = !toggleRegister">Sign In</a>
+				Already have an account?
+				<a href="javascript:void(0)" (click)="toggleRegister = !toggleRegister">Sign In</a>
 			</p>
 		</div>
 	</section>
