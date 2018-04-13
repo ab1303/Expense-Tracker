@@ -26,7 +26,8 @@ const LAYOUT_ROUTES: Routes = [
       {
         path: "dashboards",
         canActivate: [AuthGuard],
-        loadChildren: "../pages/dashboards/dashboards.module#DashboardsModule"
+        loadChildren: "../pages/dashboards/dashboards.module#DashboardsModule",
+        data: { claimType: "canAccessDashboard" }
       },
       //---------------------------------------------------------->
       //Page Layouts

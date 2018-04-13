@@ -14,6 +14,11 @@ namespace Angular_ASPNETCore_ExpenseTracker.Helper
             {
                 public const string ApiAccess = "api_access";
             }
+
+            public static class AppClaims
+            {
+                public const string CanAccessDashboard = "canAccessDashboard";
+            }
         }
     }
 }

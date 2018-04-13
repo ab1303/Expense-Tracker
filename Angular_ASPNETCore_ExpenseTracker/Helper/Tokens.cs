@@ -10,16 +10,23 @@ namespace Angular_ASPNETCore_ExpenseTracker.Helper
 {
     public class Tokens
     {
-      public static async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory,string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
-      {
-        var response = new
+        public static async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
         {
-          id = identity.Claims.Single(c => c.Type == "id").Value,
-          auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),
-          expires_in = (int)jwtOptions.ValidFor.TotalSeconds
-        };
+            var response = new AppUserAuth
+            {
+                Id = identity.Claims.Single(c => c.Type == "id").Value,
+                UserName = userName,
+                BearerToken = await jwtFactory.GenerateEncodedToken(userName, identity),
+                IsAuthenticated = true,
+                Expires_In = (int)jwtOptions.ValidFor.TotalSeconds,
+                Claims = identity.Claims.Select( c => new AppUserClaim
+                {
+                    ClaimType = c.Type,
+                    ClaimValue = c.Value,
+                }).ToList()
+            };
 
-        return JsonConvert.SerializeObject(response, serializerSettings);
-      }
+            return JsonConvert.SerializeObject(response, serializerSettings);
+        }
     }
 }
