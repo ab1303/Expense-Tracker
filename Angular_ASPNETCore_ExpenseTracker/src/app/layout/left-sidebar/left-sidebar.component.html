@@ -1,20 +1,20 @@
 <nav id="app_main-menu-wrapper">
-	<ul class="navbar-nav nav-logo">
-		<li class="nav-item logo-wrapper">
-			<a href="/dashboards">
-				<div class="logo">
-					<img src="assets/img/logo/logo-icon.png" alt="Logo">
-				</div>
-				<h1 class="brand-text">ExpenseTracker</h1>
-			</a>
-		</li>
-		<li class="nav-item">
-			<a md-ripple href="javascript:void(0)" role="button" (click)="toggleMenuSideabar()" class="nav-link menu-trigger">
-				<i class="mdi mdi-backburger"></i>
-			</a>
-		</li>
-	</ul>
-	<div class="sidebar-inner sidebar-push" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+    <ul class="navbar-nav nav-logo">
+        <li class="nav-item logo-wrapper">
+            <a href="/dashboards">
+                <div class="logo">
+                    <img src="assets/img/logo/logo-icon.png" alt="Logo">
+                </div>
+                <h1 class="brand-text">ExpenseTracker</h1>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a md-ripple href="javascript:void(0)" role="button" (click)="toggleMenuSideabar()" class="nav-link menu-trigger">
+                <i class="mdi mdi-backburger"></i>
+            </a>
+        </li>
+    </ul>
+    <div class="sidebar-inner sidebar-push" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
         <ul class="nav nav-pills flex-column">
             <li class="sidebar-header">NAVIGATION</li>
             <!-- Dashboards -->
@@ -142,14 +142,15 @@
                     <i class="zmdi zmdi-view-quilt"></i>Administration
                 </a>
                 <ul class="nav-sub">
+                    <li routerLinkActive="active" [routerLink]="['/administration/users']">
+                        <a md-ripple href="javascript:void(0)" class="">Users</a>
+                    </li>
                     <li routerLinkActive="active" [routerLink]="['/administration/expense-category']">
                         <a md-ripple href="javascript:void(0)" class="">Expense Category</a>
                     </li>
-                    <li routerLinkActive="active">
-                        <a md-ripple href="javascript:void(0)" class="">Users</a>
-                    </li>
+
                 </ul>
             </li>
         </ul>
-	</div>
+    </div>
 </nav>

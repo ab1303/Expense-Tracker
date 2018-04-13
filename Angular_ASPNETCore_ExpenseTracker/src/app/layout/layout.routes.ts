@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from "@angular/router";
 import { LayoutComponent } from "./layout.component";
 import { AuthGuard } from "../security/auth.guard";
+import { AdminComponent } from "../pages/administration/administration.component";
 
 const LAYOUT_ROUTES: Routes = [
   //---------------------------------------------------------->
@@ -108,11 +109,11 @@ const LAYOUT_ROUTES: Routes = [
       //---------------------------------------------------------->
       // Administration
       //---------------------------------------------------------->
-
       {
-        path: "administration/expense-category",
+        path: "administration",
+        // component: AdminComponent,
         loadChildren:
-          "../pages/administration/expense-category/expense-category.module#ExpenseCategoryModule"
+          "../pages/administration/administration.module#AdminModule"
       }
     ]
   },

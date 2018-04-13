@@ -18,16 +18,17 @@ var LayoutComponent = /** @class */ (function () {
         this._elementRef = _elementRef;
         this._state = _state;
     }
-    LayoutComponent.prototype.ngOnInit = function () {
-    };
+    LayoutComponent.prototype.ngOnInit = function () { };
     LayoutComponent = __decorate([
         core_1.Component({
-            selector: 'app-layout',
-            templateUrl: './layout.component.html',
-            styleUrls: ['./layout.component.scss'],
-            encapsulation: core_1.ViewEncapsulation.Emulated,
+            selector: "app-layout",
+            templateUrl: "./layout.component.html",
+            styleUrls: ["./layout.component.scss"],
+            encapsulation: core_1.ViewEncapsulation.Emulated
         }),
-        __metadata("design:paramtypes", [config_service_1.ConfigService, core_1.ElementRef, app_state_1.GlobalState])
+        __metadata("design:paramtypes", [config_service_1.ConfigService,
+            core_1.ElementRef,
+            app_state_1.GlobalState])
     ], LayoutComponent);
     return LayoutComponent;
 }());
