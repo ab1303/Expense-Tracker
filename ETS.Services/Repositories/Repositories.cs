@@ -5,6 +5,11 @@ namespace ETS.Services.Repositories
 {
     public class Repositories : IRepositories
     {
-        public Lazy<IExpenseCategoryRepository> ExpenseCategory { get; set; }
+        public IExpenseCategoryRepository ExpenseCategory { get; set; }
+
+        public Repositories(IExpenseCategoryRepository expenseCategoryRepository)
+        {
+            ExpenseCategory = expenseCategoryRepository;
+        }
     }
 }
