@@ -1,19 +1,21 @@
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import jwtdecode from "jwt-decode";
 import { Observable } from "rxjs/Observable";
 import { of } from "rxjs/observable/of";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { tap } from "rxjs/operators/tap";
-import jwtdecode from "jwt-decode";
+import { Subscriber } from "rxjs";
 
+
+import { API_BASE_ADDRESS } from '../app.constants';
 import { AppUserAuth } from "./app-user-auth";
 import { AppUser } from "./app-user";
-import { Subscriber } from "rxjs";
+
 
 export const BEARER_TOKEN_KEY = "bearerToken";
 const TOKEN_BUFFER_IN_MINUTES = 5;
 
-// const API_URL = "http://localhost:5000/api/security/";
-const API_URL = "http://localhost:52951/api/auth";
+const API_URL = `${API_BASE_ADDRESS}/auth`
 const httpOptions = {
   headers: new HttpHeaders({
     "Content-Type": "application/json"

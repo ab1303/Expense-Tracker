@@ -5,6 +5,14 @@ namespace ETS.Services.Repositories
 {
     public class Repositories : IRepositories
     {
-        public Lazy<IExpenseCategoryRepository> ExpenseCategory { get; set; }
+        // TODO: Consider third party DI Containers for property injection
+        //public IExpenseCategoryRepository ExpenseCategory { get; set; }
+
+        public Repositories(IExpenseCategoryRepository expenseCategoryRepository)
+        {
+            ExpenseCategory = expenseCategoryRepository;
+        }
+
+        public IExpenseCategoryRepository ExpenseCategory { get; }
     }
 }

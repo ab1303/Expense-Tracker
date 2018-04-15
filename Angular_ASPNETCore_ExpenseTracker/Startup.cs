@@ -24,6 +24,9 @@ using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication;
 using Angular_ASPNETCore_ExpenseTracker.Helper;
 using FluentValidation.AspNetCore;
 using AutoMapper;
+using ETS.Services.Repositories;
+using ETS.DataCore;
+using ETS.Services.Interfaces.Repositories;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -136,7 +139,13 @@ namespace Angular_ASPNETCore_Seed
         private void RegisterApplicationServices(IServiceCollection services)
         {
             services.AddTransient<DatabaseSeeder>();
+
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddScoped<IDataContext, DataContext>();
+
+            services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            services.AddScoped<IRepositories, Repositories>();
+            
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
         }
