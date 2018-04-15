@@ -19,26 +19,30 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (!this.securityService.validateIdentity()) {
-      this.router.navigate(["authentication/login"], {
-        queryParams: { returnUrl: state.url }
-      });
-      return false;
-    }
+    // if (!this.securityService.validateIdentity()) {
+    //   this.router.navigate(["authentication/login"], {
+    //     queryParams: { returnUrl: state.url }
+    //   });
+    //   return false;
+    // }
+    return this.securityService.validateIdentity().map(securityObject => {
+      if (!securityObject.isAuthenticated) {
+        this.router.navigate(["authentication/login"], {
+          queryParams: { returnUrl: state.url }
+        });
+        return false;
+      }
+      // Get property name on security object to check
+      let claimType: string = next.data["claimType"];
 
-    // Get property name on security object to check
-    let claimType: string = next.data["claimType"];
-
-    if (
-      this.securityService.securityObject.isAuthenticated &&
-      this.securityService.hasClaim(claimType)
-    ) {
-      return true;
-    } else {
-      this.router.navigate(["authentication/login"], {
-        queryParams: { returnUrl: state.url }
-      });
-      return false;
-    }
+      if (this.securityService.hasClaim(claimType)) {
+        return true;
+      } else {
+        this.router.navigate(["authentication/login"], {
+          queryParams: { returnUrl: state.url }
+        });
+        return false;
+      }
+    });
   }
 }

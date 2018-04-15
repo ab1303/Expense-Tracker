@@ -7,6 +7,7 @@ import jwtdecode from "jwt-decode";
 
 import { AppUserAuth } from "./app-user-auth";
 import { AppUser } from "./app-user";
+import { Subscriber } from "rxjs";
 
 export const BEARER_TOKEN_KEY = "bearerToken";
 const TOKEN_BUFFER_IN_MINUTES = 5;
@@ -51,33 +52,44 @@ export class SecurityService {
     return bearerToken && !this.tokenNearOrHasExpired(bearerToken);
   }
 
-  validateIdentity(): Observable<boolean> | boolean {
+  validateIdentity(): Observable<AppUserAuth> {
+    var securityObjectObservable = new Observable<AppUserAuth>(observer => {
+      observer.next(this.securityObject);
+      observer.complete();
+    });
+
+    //return securityObjectObservable;
+
     if (!this.validateBearerToken()) {
       this.resetSecurityObject();
-      return false;
+      return securityObjectObservable;
     }
 
-    if (this.securityObject.bearerToken) return true;
+    if (this.securityObject.bearerToken) return securityObjectObservable;
 
-    this.getIdentity().subscribe(
-      resp => {
-        // Use object assign to update the current object
-        // NOTE: Don't create a new AppUserAuth object
-        //       because that destroys all references to object
-        Object.assign(this.securityObject, resp);
-        // Store into local storage
-        localStorage.setItem(BEARER_TOKEN_KEY, this.securityObject.bearerToken);
-        return true;
-      },
-      error => {
-        console.log("error fetching details of identity");
-        return false;
-      }
-    )
-    ;
+    return this.getIdentity()
+      .take(1)
+      .map(
+        resp => {
+          // Use object assign to update the current object
+          // NOTE: Don't create a new AppUserAuth object
+          //       because that destroys all references to object
+          Object.assign(this.securityObject, resp);
+          // Store into local storage
+          localStorage.setItem(
+            BEARER_TOKEN_KEY,
+            this.securityObject.bearerToken
+          );
+          return this.securityObject;
+        },
+        error => {
+          console.log("error fetching details of identity");
+          return this.securityObject;
+        }
+      );
   }
 
-  getIdentity(): Observable<AppUserAuth> {
+ private getIdentity(): Observable<AppUserAuth> {
     // Decode bearer token and pass in username
     const decodedToken = jwtdecode(localStorage.getItem(BEARER_TOKEN_KEY));
     return this.http.get<AppUserAuth>(
