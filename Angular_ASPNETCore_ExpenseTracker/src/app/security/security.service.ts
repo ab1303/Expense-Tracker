@@ -1,17 +1,21 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { tap } from 'rxjs/operators/tap';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { of } from "rxjs/observable/of";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { tap } from "rxjs/operators/tap";
+import jwtdecode from "jwt-decode";
 
-import { AppUserAuth } from './app-user-auth';
-import { AppUser } from './app-user';
+import { AppUserAuth } from "./app-user-auth";
+import { AppUser } from "./app-user";
+
+export const BEARER_TOKEN_KEY = "bearerToken";
+const TOKEN_BUFFER_IN_MINUTES = 5;
 
 // const API_URL = "http://localhost:5000/api/security/";
-const API_URL = "http://localhost:52951/api/auth/";
+const API_URL = "http://localhost:52951/api/auth";
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   })
 };
 
@@ -19,30 +23,96 @@ const httpOptions = {
 export class SecurityService {
   securityObject: AppUserAuth = new AppUserAuth();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(entity: AppUser): Observable<AppUserAuth> {
     // Initialize security object
     this.resetSecurityObject();
 
-    return this.http.post<AppUserAuth>(API_URL + "login",
-      entity, httpOptions).pipe(
+    return this.http
+      .post<AppUserAuth>(`${API_URL}/login`, entity, httpOptions)
+      .pipe(
         tap(resp => {
           // Use object assign to update the current object
           // NOTE: Don't create a new AppUserAuth object
           //       because that destroys all references to object
           Object.assign(this.securityObject, resp);
           // Store into local storage
-          localStorage.setItem("bearerToken",
-            this.securityObject.bearerToken);
-        }));
+          localStorage.setItem(
+            BEARER_TOKEN_KEY,
+            this.securityObject.bearerToken
+          );
+        })
+      );
+  }
+
+  validateBearerToken() {
+    const bearerToken = localStorage.getItem(BEARER_TOKEN_KEY);
+    return bearerToken && !this.tokenNearOrHasExpired(bearerToken);
+  }
+
+  validateIdentity(): Observable<boolean> | boolean {
+    if (!this.validateBearerToken()) {
+      this.resetSecurityObject();
+      return false;
+    }
+
+    if (this.securityObject.bearerToken) return true;
+
+    this.getIdentity().subscribe(
+      resp => {
+        // Use object assign to update the current object
+        // NOTE: Don't create a new AppUserAuth object
+        //       because that destroys all references to object
+        Object.assign(this.securityObject, resp);
+        // Store into local storage
+        localStorage.setItem(BEARER_TOKEN_KEY, this.securityObject.bearerToken);
+        return true;
+      },
+      error => {
+        console.log("error fetching details of identity");
+        return false;
+      }
+    )
+    ;
+  }
+
+  getIdentity(): Observable<AppUserAuth> {
+    // Decode bearer token and pass in username
+    const decodedToken = jwtdecode(localStorage.getItem(BEARER_TOKEN_KEY));
+    return this.http.get<AppUserAuth>(
+      `${API_URL}/identity?userName=${decodedToken.sub}`,
+      {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json"
+        })
+      }
+    );
   }
 
   logout(): void {
     this.resetSecurityObject();
   }
 
+  tokenNearOrHasExpired(token) {
+    if (!token) return true;
+
+    try {
+      const decoded = jwtdecode(token);
+      const now = Date.now() / 1000;
+
+      // X minute buffer zone (X * 60 seconds)
+      const nearExpiry = decoded.exp <= now - TOKEN_BUFFER_IN_MINUTES * 60;
+      const expired = decoded.exp <= now;
+
+      return nearExpiry || expired;
+    } catch (e) {
+      return true;
+    }
+  }
+
   resetSecurityObject(): void {
+    console.log("security token reset");
     this.securityObject.userName = "";
     this.securityObject.bearerToken = "";
     this.securityObject.isAuthenticated = false;
@@ -62,8 +132,7 @@ export class SecurityService {
     // See if an array of values was passed in.
     if (typeof claimType === "string") {
       ret = this.isClaimValid(claimType, claimValue);
-    }
-    else {
+    } else {
       let claims: string[] = claimType;
       if (claims) {
         for (let index = 0; index < claims.length; index++) {
@@ -79,7 +148,6 @@ export class SecurityService {
     return ret;
   }
 
-
   private isClaimValid(claimType: string, claimValue?: string): boolean {
     let ret: boolean = false;
     let auth: AppUserAuth = null;
@@ -93,16 +161,17 @@ export class SecurityService {
         let words: string[] = claimType.split(":");
         claimType = words[0].toLowerCase();
         claimValue = words[1];
-      }
-      else {
+      } else {
         claimType = claimType.toLowerCase();
         // Either get the claim value, or assume 'true'
         claimValue = claimValue ? claimValue : "true";
       }
       // Attempt to find the claim
-      ret = auth.claims.find(c =>
-        c.claimType.toLowerCase() == claimType &&
-        c.claimValue == claimValue) != null;
+      ret =
+        auth.claims.find(
+          c =>
+            c.claimType.toLowerCase() == claimType && c.claimValue == claimValue
+        ) != null;
     }
 
     return ret;

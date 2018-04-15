@@ -2,6 +2,7 @@ import {Component, OnInit, trigger, state, style, transition, animate, ElementRe
 import { GlobalState } from "../../app.state";
 import { ConfigService } from "../../shared/services/config/config.service";
 import { ThemesService } from '../../shared/services/themes/themes.service';
+import { SecurityService } from "../../security/security.service";
 
 @Component({
   selector: "app-header",
@@ -13,7 +14,11 @@ export class TopNavbarComponent implements OnInit {
 
   currentTheme: any ;
 	
-  constructor(public config: ConfigService, private _elementRef: ElementRef, private _state: GlobalState, public themes: ThemesService) {
+  constructor( private securityService: SecurityService,
+    private _elementRef: ElementRef, 
+    private _state: GlobalState,
+    public config: ConfigService, 
+    public themes: ThemesService) {
     this._state.subscribe('app.isApp_MobileSidebarLeftOpen', (isApp_MobileSidebarLeftOpen) => {
       this.config.appLayout.isApp_MobileSidebarLeftOpen = isApp_MobileSidebarLeftOpen;
     });
@@ -47,5 +52,9 @@ export class TopNavbarComponent implements OnInit {
     this._state.notifyDataChanged('app.isApp_SidebarRightOpen', this.config.appLayout.isApp_SidebarRightOpen);
     this._state.notifyDataChanged('app.isApp_BackdropVisible', this.config.appLayout.isApp_BackdropVisible);
     return false;
+  }
+
+  logout() {
+    this.securityService.logout();
   }
 }

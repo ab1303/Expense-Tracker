@@ -9,4 +9,8 @@
     <ProjectReference Include="..\ETS.DataCore\ETS.DataCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
 </Project>

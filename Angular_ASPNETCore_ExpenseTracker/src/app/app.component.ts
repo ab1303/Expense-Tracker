@@ -13,6 +13,7 @@ import { ConfigService } from './shared/services/config/config.service';
 import { PreloaderService } from './shared/services/preloader/preloader.service';
 import { SpinnerService } from './shared/services/spinner/spinner.service';
 import { ThemesService } from './shared/services/themes/themes.service';
+import { SecurityService } from './security/security.service';
 @Component({
 	selector: 'app-root',
 	template: '<router-outlet></router-outlet>',
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 	constructor(
 		private _state: GlobalState,
 		public config: ConfigService,
+		public securityService: SecurityService,
 		private viewContainerRef: ViewContainerRef,
 		private _spinner: SpinnerService,
 		private titleService: Title,

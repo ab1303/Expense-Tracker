@@ -138,6 +138,7 @@ namespace Angular_ASPNETCore_Seed
             services.AddTransient<DatabaseSeeder>();
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
