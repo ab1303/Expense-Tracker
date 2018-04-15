@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IExpenseCategory } from './expense-category';
+import { ExpenseCategoryService } from './expense-category.service';
 
 @Component({
   selector: 'expense-category',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExpenseCategoryComponent implements OnInit {
 
-  constructor() { }
+  expenseCategories: IExpenseCategory[] = [];
+  constructor(private expenseCategoryService: ExpenseCategoryService) {}
+
 
   ngOnInit() {
+    this.expenseCategoryService
+    .getExpenseCategories()
+    .subscribe((data) => {
+      this.expenseCategories = data.expenseCategories;
+    });
+
   }
 
 }

@@ -8,9 +8,11 @@ import { SharedModule } from "../../shared/shared.module";
 import { AdminRoutes } from "./administration.routes";
 import { UsersComponent } from "./users/users.component";
 import { ExpenseCategoryComponent } from "./expense-category/expense-category.component";
+import { ExpenseCategoryService } from "./expense-category/expense-category.service";
 
 @NgModule({
   declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent],
-  imports: [CommonModule, SharedModule.forRoot(), AdminRoutes]
+  imports: [CommonModule, SharedModule.forRoot(), AdminRoutes],
+  providers:[ExpenseCategoryService]
 })
 export class AdminModule {}
