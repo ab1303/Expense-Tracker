@@ -1,44 +1,73 @@
-<div id="content_wrapper" class="boxedlayout3-wrapper">
+<div id="content_wrapper" class="fullWidth3-wrapper">
 	<div class="content">
-		<div class="header-wrapper header-sm shadow-none">
-			<div class="container-fluid">
+		<div class="header-wrapper overlay header-md">
+			<header class="container-fluid">
 				<div class="row">
 					<div class="col">
-						<header>
-							<h1>Expense Sheet</h1>
-						</header>
+						<h1>Expense Sheets</h1>
 					</div>
 				</div>
-			</div>
+			</header>
 		</div>
-		<div class="content-body container">
-
-
-
-			<div class="card">
-				<header class="card-header">
-					<h2 class="card-title">Upload Expense Sheet</h2>
-					<small class="card-subtitle">created by on </small>
+		<div class="content-body">
+			<div class="card card-datatable">
+				<header class="card-header p-30">
+					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
+					<md-toolbar class="activeHeaderColor">
+						<span>{{itemCount}} {{itemsSelected}}</span>
+						<span class="demo-fill-remaining"></span>
+						<button md-icon-button>
+						<md-icon class="md-24">delete</md-icon>
+					</button>
+					</md-toolbar>
+				</div>
+					<h2 class="card-title">Manage Customers</h2>
 					<ul class="actions icons top-right">
+						<li>
+							<a href="javascript:void(0)" (click)="isSearchActive = !isSearchActive;">
+									<i class="zmdi zmdi-search"></i>
+							</a>
+						</li>
 						<li class="dropdown" dropdown>
 							<a href="javascript:void(0)" dropdownToggle>
 								<i class="zmdi zmdi-more-vert"></i>
 							</a>
 							<ul class="dropdown-menu btn-primary dropdown-menu-right">
 								<li>
-									<a href="javascript:void(0)">Delete Sheet</a>
+									<a href="javascript:void(0)">Print</a>
 								</li>
+				
 							</ul>
 						</li>
+						<li>
+							<a href="javascript:void(0)">
+								<i class="zmdi zmdi-inbox"></i>
+							</a>
+						</li>
+					</ul>
+					<ul class="actions fab bottom-right">
+					<li>
+						<button class="btn btn-accent btn-fab" md-ripple><i class="zmdi zmdi-plus"></i></button>
+					</li>
 					</ul>
 				</header>
-				<div class="card-block">
-					<p>
-						Upload related expense sheets here
-					</p>
+				<div class="card-block p-0">
+					<div class="data-filter-wrapper" [ngClass]="{'active' : isSearchActive}">
+					<i class="zmdi zmdi-search search filter-icons"></i>
+					<input
+					type='text'
+					class='data-filter'
+					placeholder='Filter customer name...'
+					(keyup)='updateFilter($event)'
+					[(ngModel)]="searchValue"
+				/>
+				<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)"><i class="zmdi zmdi-close"></i></a>
+				</div>
+				
 				</div>
 			</div>
 		</div>
-
 	</div>
-	<footer id="footer_wrapper" class="footer_wrapper"></footer>
+
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>
