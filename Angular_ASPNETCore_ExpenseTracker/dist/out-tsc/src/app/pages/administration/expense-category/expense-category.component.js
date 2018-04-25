@@ -10,10 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var expense_category_service_1 = require("./expense-category.service");
 var ExpenseCategoryComponent = /** @class */ (function () {
-    function ExpenseCategoryComponent() {
+    function ExpenseCategoryComponent(expenseCategoryService) {
+        this.expenseCategoryService = expenseCategoryService;
+        this.expenseCategories = [];
     }
     ExpenseCategoryComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.expenseCategoryService
+            .getExpenseCategories()
+            .subscribe(function (data) {
+            _this.expenseCategories = data.expenseCategories;
+        });
     };
     ExpenseCategoryComponent = __decorate([
         core_1.Component({
@@ -21,7 +30,7 @@ var ExpenseCategoryComponent = /** @class */ (function () {
             templateUrl: './expense-category.component.html',
             styleUrls: ['./expense-category.component.scss']
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [expense_category_service_1.ExpenseCategoryService])
     ], ExpenseCategoryComponent);
     return ExpenseCategoryComponent;
 }());

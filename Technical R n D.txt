@@ -19,3 +19,11 @@ https://fullstackmark.com/post/13/jwt-authentication-with-aspnet-core-2-web-api-
 https://stackoverflow.com/questions/8527597/how-do-i-ignore-files-in-a-directory-in-git
 
 https://stackoverflow.com/questions/43505024/return-boolean-instead-of-subscribe-to-canactivate?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+****** File Upload
+
+https://nehalist.io/uploading-files-in-angular2/
+https://malcoded.com/posts/angular-file-upload-component-with-express
+https://valor-software.com/ng2-file-upload/
+
+https://stackoverflow.com/questions/41889384/angular2-validation-for-input-type-file-wont-trigger-when-changing-the-fi/41938495#41938495

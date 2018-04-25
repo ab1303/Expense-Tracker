@@ -9,10 +9,11 @@ import { AdminRoutes } from "./administration.routes";
 import { UsersComponent } from "./users/users.component";
 import { ExpenseCategoryComponent } from "./expense-category/expense-category.component";
 import { ExpenseCategoryService } from "./expense-category/expense-category.service";
+import { TrackByService } from "../../core/trackby.service";
 
 @NgModule({
   declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent],
   imports: [CommonModule, SharedModule.forRoot(), AdminRoutes],
-  providers:[ExpenseCategoryService]
+  providers: [ExpenseCategoryService, TrackByService]
 })
 export class AdminModule {}

@@ -28,6 +28,7 @@ namespace ETS.Services.Implementations
           return  _repositories.ExpenseCategory.Get()
                 .Select(c => new ExpenseCategoryDTO
                 {
+                    Id = c.Id,
                     Name = c.Name,
                     Description = c.Description
                 }).ToList();
