@@ -31,6 +31,7 @@
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@angular/router": "4.4.4",
+    "@ngtools/webpack": "1.7.5",
     "@swimlane/ngx-charts": "6.0.2",
     "@swimlane/ngx-datatable": "10.2.3",
     "angular2-masonry": "0.4.0",
@@ -121,7 +122,7 @@
     "tslint": "5.7.0",
     "typescript": "2.5.3",
     "url-loader": "0.5.7",
-    "webpack": "3.5.5",
+    "webpack": "3.7.1",
     "webpack-concat-plugin": "1.4.0",
     "webpack-dev-server": "2.7.1"
   }
