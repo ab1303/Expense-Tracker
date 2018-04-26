@@ -4,7 +4,7 @@ import { AuthGuard } from "../../security/auth.guard";
 import { ExpenseCategoryComponent } from "./expense-category/expense-category.component";
 import { UsersComponent } from "./users/users.component";
 
-const ADMIN_ROUTES = [
+export const ADMIN_ROUTES = [
     {
         path: "users",
         component: UsersComponent,
@@ -14,5 +14,3 @@ const ADMIN_ROUTES = [
         component: ExpenseCategoryComponent,
       },
 ];
-
-export const AdminRoutes = RouterModule.forChild(ADMIN_ROUTES);

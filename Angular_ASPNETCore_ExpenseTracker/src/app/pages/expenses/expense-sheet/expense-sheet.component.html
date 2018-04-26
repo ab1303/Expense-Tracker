@@ -4,7 +4,7 @@
 			<header class="container-fluid">
 				<div class="row">
 					<div class="col">
-						<h1>Expense Sheets</h1>
+						<h1>Monthly Expense Sheets</h1>
 					</div>
 				</div>
 			</header>
@@ -13,57 +13,40 @@
 			<div class="card card-datatable">
 				<header class="card-header p-30">
 					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
-					<md-toolbar class="activeHeaderColor">
-						<span>{{itemCount}} {{itemsSelected}}</span>
-						<span class="demo-fill-remaining"></span>
-						<button md-icon-button>
-						<md-icon class="md-24">delete</md-icon>
-					</button>
-					</md-toolbar>
-				</div>
-					<h2 class="card-title">Manage Customers</h2>
+						<md-toolbar class="activeHeaderColor">
+							<span>{{itemCount}} {{itemsSelected}}</span>
+							<span class="demo-fill-remaining"></span>
+							<button md-icon-button>
+								<md-icon class="md-24">delete</md-icon>
+							</button>
+						</md-toolbar>
+					</div>
+					<h2 class="card-title">Manage Exepnse Sheets</h2>
 					<ul class="actions icons top-right">
 						<li>
 							<a href="javascript:void(0)" (click)="isSearchActive = !isSearchActive;">
-									<i class="zmdi zmdi-search"></i>
-							</a>
-						</li>
-						<li class="dropdown" dropdown>
-							<a href="javascript:void(0)" dropdownToggle>
-								<i class="zmdi zmdi-more-vert"></i>
-							</a>
-							<ul class="dropdown-menu btn-primary dropdown-menu-right">
-								<li>
-									<a href="javascript:void(0)">Print</a>
-								</li>
-				
-							</ul>
-						</li>
-						<li>
-							<a href="javascript:void(0)">
-								<i class="zmdi zmdi-inbox"></i>
+								<i class="zmdi zmdi-search"></i>
 							</a>
 						</li>
 					</ul>
 					<ul class="actions fab bottom-right">
-					<li>
-						<button class="btn btn-accent btn-fab" md-ripple><i class="zmdi zmdi-plus"></i></button>
-					</li>
+						<li>
+							<button class="btn btn-accent btn-fab" (click)="uploadSheetModal.show()" md-ripple>
+								<i class="zmdi zmdi-plus"></i>
+							</button>
+						</li>
 					</ul>
 				</header>
 				<div class="card-block p-0">
 					<div class="data-filter-wrapper" [ngClass]="{'active' : isSearchActive}">
-					<i class="zmdi zmdi-search search filter-icons"></i>
-					<input
-					type='text'
-					class='data-filter'
-					placeholder='Filter customer name...'
-					(keyup)='updateFilter($event)'
-					[(ngModel)]="searchValue"
-				/>
-				<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)"><i class="zmdi zmdi-close"></i></a>
-				</div>
-				
+						<i class="zmdi zmdi-search search filter-icons"></i>
+						<input type='text' class='data-filter' placeholder='Filter customer name...' (keyup)='updateFilter($event)' [(ngModel)]="searchValue"
+						/>
+						<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)">
+							<i class="zmdi zmdi-close"></i>
+						</a>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -71,3 +54,116 @@
 
 </div>
 <footer id="footer_wrapper" class="footer_wrapper"></footer>
+
+
+<!-- Modal Basic ===========================================================-->
+
+<div class="modal fade" bsModal #uploadSheetModal="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+ aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title float-left">Upload Expense Sheet</h4>
+				<button type="button" class="close pull-right" aria-label="Close" (click)="uploadSheetModal.hide()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+
+					<div class="navbar navbar-default">
+						<div class="navbar-header">
+							<a class="navbar-brand" href>Angular2 File Upload</a>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<div class="col-md-3">
+
+							<h3>Select files</h3>
+
+							<div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader"
+							 class="well my-drop-zone">
+								Base drop zone
+							</div>
+
+							<br/> Single
+							<input type="file" ng2FileSelect [uploader]="uploader" />
+						</div>
+
+						<div class="col-md-9" style="margin-bottom: 40px">
+
+							<h3>Upload queue</h3>
+							<p>Queue length: {{ uploader?.queue?.length }}</p>
+
+							<table class="table">
+								<thead>
+									<tr>
+										<th width="50%">Name</th>
+										<th>Size</th>
+										<th>Progress</th>
+										<th>Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of uploader.queue">
+										<td>
+											<strong>{{ item?.file?.name }}</strong>
+										</td>
+										<td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+										<td *ngIf="uploader.isHTML5">
+											<div class="progress" style="margin-bottom: 0;">
+												<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+											</div>
+										</td>
+										<td class="text-center">
+											<span *ngIf="item.isSuccess">
+												<i class="glyphicon glyphicon-ok"></i>
+											</span>
+											<span *ngIf="item.isCancel">
+												<i class="glyphicon glyphicon-ban-circle"></i>
+											</span>
+											<span *ngIf="item.isError">
+												<i class="glyphicon glyphicon-remove"></i>
+											</span>
+										</td>
+										<td nowrap>
+											<button type="button" class="btn btn-success btn-xs" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+												<span class="glyphicon glyphicon-upload"></span> Upload
+											</button>
+											<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+												<span class="glyphicon glyphicon-ban-circle"></span> Cancel
+											</button>
+											<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+												<span class="glyphicon glyphicon-trash"></span> Remove
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<div>
+								<div>
+									Queue progress:
+									<div class="progress" style="">
+										<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default btn-flat" (click)="uploadSheetModal.hide()">Cancel</button>
+				<button type="button" class="btn btn-accent">Ok</button>
+			</div>
+		</div>
+	</div>
+</div>

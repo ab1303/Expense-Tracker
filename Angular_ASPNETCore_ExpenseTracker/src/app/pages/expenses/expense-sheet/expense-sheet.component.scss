@@ -1,3 +1,7 @@
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; }
+
+
 :host /deep/ {
 	.header-wrapper {
 		background-image: url("/assets/img/ecom/ecom-header.jpg") !important;
