@@ -7,7 +7,10 @@ import {
 
 import { TrackByService } from "../../../core/trackby.service";
 
+import { API_BASE_ADDRESS } from "../../../app.constants";
+
 const URL = "path_to_api";
+const API_URL = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
 
 @Component({
   selector: "expense-sheet",
@@ -16,7 +19,7 @@ const URL = "path_to_api";
  
 })
 export class ExpenseSheetComponent implements OnInit {
-  public uploader: FileUploader = new FileUploader({ url: URL });
+  public uploader: FileUploader = new FileUploader({ url: API_URL });
   public hasBaseDropZoneOver: boolean = false;
   constructor(public trackby: TrackByService) {}
 

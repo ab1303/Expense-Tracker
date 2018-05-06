@@ -9,9 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.DataCore", "ETS.DataCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.DomainCore", "ETS.DomainCore\ETS.DomainCore.csproj", "{D78C5AC6-2392-46BC-869A-92FD78A5D670}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.Core", "ETS.Core\ETS.Core.csproj", "{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.Core", "ETS.Core\ETS.Core.csproj", "{206E4A2F-43A1-4492-948C-6BBEC18BB2C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETS.Services", "ETS.Services\ETS.Services.csproj", "{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.Services", "ETS.Services\ETS.Services.csproj", "{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure", "Azure", "{8B20A2A4-847C-4F1A-9BC0-74337F64B3DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ETS.Azure", "ETS.Azure\ETS.Azure.csproj", "{5E63FEAE-464C-426C-A546-83229535CEE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,16 @@ Global
 		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD9746A8-A49F-43FE-9EAC-C89C47BD9376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E63FEAE-464C-426C-A546-83229535CEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E63FEAE-464C-426C-A546-83229535CEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E63FEAE-464C-426C-A546-83229535CEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E63FEAE-464C-426C-A546-83229535CEE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E63FEAE-464C-426C-A546-83229535CEE0} = {8B20A2A4-847C-4F1A-9BC0-74337F64B3DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB12EC9D-6C68-4AB5-AD64-92BBFA3077C8}

@@ -36,6 +36,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\ETS.Azure\ETS.Azure.csproj" />
     <ProjectReference Include="..\ETS.Core\ETS.Core.csproj" />
     <ProjectReference Include="..\ETS.DataCore\ETS.DataCore.csproj" />
     <ProjectReference Include="..\ETS.DomainCore\ETS.DomainCore.csproj" />

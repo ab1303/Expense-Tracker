@@ -27,6 +27,7 @@ using AutoMapper;
 using ETS.DataCore;
 using ETS.Services.Interfaces.Repositories;
 using ETS.Services.Repositories;
+using ETS.Azure;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -148,6 +149,9 @@ namespace Angular_ASPNETCore_Seed
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+            services.AddScoped<IFileStorage, FileStorage>();
+
+
 
         }
 
@@ -169,6 +173,9 @@ namespace Angular_ASPNETCore_Seed
 
             // Add Auto Mapper
             services.AddAutoMapper();
+
+            // Angular's default header name for sending the XSRF token.
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
             // Add MVC Framework Services.
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
@@ -206,9 +213,6 @@ namespace Angular_ASPNETCore_Seed
           
 
         }
-
-   
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,

@@ -45,5 +45,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 return BadRequest(new BaseApiResponse { Code = InternalApiStatusCode.Error });
             }
         }
+
     }
 }
