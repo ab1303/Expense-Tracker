@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.IO;
-using System.Web;
-
-namespace ETS.Core.Extensions
+﻿namespace ETS.Core.Extensions
 {
     public static class HttpRequestExtensions
     {
