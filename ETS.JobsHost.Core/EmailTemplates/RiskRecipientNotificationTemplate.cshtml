@@ -1,0 +1,38 @@
+
+<p>
+    Hi @Model.RecipientName,
+</p>
+
+
+<p>For the <strong>@Model.TenantName</strong> tenancy one or more risks has a status of &quot;Pending Response&quot; and 
+   these risks are raised for various business units.</p>
+
+<p>The name of the business unit and the number of risks in pending response status are mentioned below:</p>
+
+<ol>
+    @foreach (var risksPerBU in Model.RisksPerBusinessUnits)
+    {
+
+        <li>@risksPerBU.CompanyName - <span> @string.Format("Count: ({0})", @risksPerBU.NumberOfRisks) </span> </li>
+    }
+</ol>
+
+
+<p>As you are the recipient for the activities on which these risks are raised, your attention is required. Kindly log in and perform the required actions.</p>
+
+<p>
+    <strong>Hints</strong>
+</p>
+
+<ul>
+    <li>Don't share login credentials with other people - you can delegate the questionnaire to others after login.</li>
+    <li>Continue editing the answers until you are satisfied to submit the completed questionnaire to the security assessor.</li>
+    <li>After submitting your completed answers, we may need to contact you to discuss further.</li>
+    <li>For assistance, contact the security consultant or access Help (link to external site).</li>
+</ul>
+
+<p>
+
+<p>Do you have a question or need help? Please refer to our <a href="https://aleronsecurity.freshdesk.com/support/home">helpdesk</a>.</p>
+
+<p>Regards,<br />Aleron</p>

@@ -209,9 +209,6 @@ namespace Angular_ASPNETCore_Seed
 
             // Add Application Services
             RegisterApplicationServices(services);
-
-          
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
