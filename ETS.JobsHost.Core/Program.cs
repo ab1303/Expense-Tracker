@@ -1,5 +1,8 @@
 ﻿using System;
+using Cyrisk.JobsHost;
 using ETS.JobsHost.Core;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
 using Serilog;
 using Serilog.Events;
 
@@ -17,9 +20,9 @@ namespace ETS.JobsHost
                 .CreateLogger();
 
 
-            //WebHost.CreateDefaultBuilder(args)
-            //    .UseStartup<Startup>()
-            //    .Build();
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
 
             //using (var server = new BackgroundJobServer())
             //{
