@@ -6,7 +6,7 @@ using ETS.Services.Interfaces.ChangeTracking;
 using ETS.Services.Repositories;
 using Serilog;
 
-namespace Cyrisk.Jobs.Service.JobRequestHandlers
+namespace ETS.Jobs.Service.JobRequestHandlers
 {
     public class SendEmailRequestHandler : AbstractRequestHandler<SendEmailRequest>, ISendEmailRequest
     {

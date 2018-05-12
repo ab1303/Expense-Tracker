@@ -1,8 +1,9 @@
 ﻿using System;
 using Hangfire;
-using Hangfire.Common;
 using Hangfire.Logging;
 using Hangfire.Server;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Logging;
 
 namespace ETS.JobsHost.Core
 {
@@ -18,14 +19,17 @@ namespace ETS.JobsHost.Core
             if (loggerEnabled) logger.Info(message);
         }
 
-        //public static HostConfigurator UseOwin(this HostConfigurator configurator, string baseAddress)
-        //{
-        //    if (string.IsNullOrEmpty(baseAddress)) throw new ArgumentNullException(nameof(baseAddress));
+        public static IApplicationBuilder ConfigureHangfire(this IApplicationBuilder app, ILoggerFactory loggerFactory)
+        {
+           
+            //The following line is also optional, if you required to monitor your jobs.
+            //Make sure you're adding required authentication 
+            app.UseHangfireDashboard();
+            app.UseHangfireServer();
 
-        //    configurator.Service(() => new Bootstrap { Address = baseAddress });
+            return app;
 
-        //    return configurator;
-        //}
+        }
 
     }
 }
