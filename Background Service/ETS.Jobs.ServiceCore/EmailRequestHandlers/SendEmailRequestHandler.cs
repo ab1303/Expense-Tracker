@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using ETS.Jobs.Request.EmailRequests;
-using ETS.Jobs.Service.JobRequestHandlers;
+using ETS.Jobs.Request;
 using ETS.Services.Interfaces.ChangeTracking;
 using ETS.Services.Repositories;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace ETS.Jobs.Service.JobRequestHandlers
 {
@@ -14,7 +13,7 @@ namespace ETS.Jobs.Service.JobRequestHandlers
         private readonly IUnitOfWork _unitOfWork;
 
         public SendEmailRequestHandler(
-            ILogger logger,
+            ILogger<SendEmailRequest> logger,
             IRepositories repositories,
             IUnitOfWork unitOfWork
             )

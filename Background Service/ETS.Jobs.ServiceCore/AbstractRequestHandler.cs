@@ -1,6 +1,6 @@
 ﻿using System;
 using ETS.Jobs.Request;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace ETS.Jobs.Service.JobRequestHandlers
 {   
@@ -8,29 +8,29 @@ namespace ETS.Jobs.Service.JobRequestHandlers
     {
         protected readonly ILogger Logger;
 
-        protected AbstractRequestHandler(ILogger logger)
+        protected AbstractRequestHandler(ILogger<TRequest> logger)
         {
-            Logger = logger.ForContext<TRequest>();
+            Logger = logger;
         }
 
         public void Handle(TRequest request)
         {
-            Logger.Information("----------------------------------");
-            Logger.Information("BEGIN {0} handler. Request: {@Request} ", request.GetType().Name, request);
+            Logger.LogInformation("----------------------------------");
+            Logger.LogInformation("BEGIN {0} handler. Request: {@Request} ", request.GetType().Name, request);
             try
             {
                 HandleRequest(request);
             }
             catch (Exception ex)
             {
-                Logger.Error(ex.Message);
+                Logger.LogError(ex.Message);
                 throw;
                 
             }
             finally
             {
-                Logger.Information("END {0} handler.", request.GetType().Name);
-                Logger.Information("----------------------------------");
+                Logger.LogInformation("END {0} handler.", request.GetType().Name);
+                Logger.LogInformation("----------------------------------");
             }
 
         }

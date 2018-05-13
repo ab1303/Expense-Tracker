@@ -12,6 +12,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="fluentvalidation.aspnetcore" Version="7.5.2" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.19" />
+    <PackageReference Include="HangFire.Core" Version="1.6.19" />
+    <PackageReference Include="HangFire.SqlServer" Version="1.6.19" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.3" />
     <PackageReference Include="Microsoft.TypeScript.Compiler" Version="2.6.1" />
@@ -36,6 +39,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\Background Service\ETS.Jobs.RequestCore\ETS.Jobs.RequestCore.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.AzureCore\ETS.Azure.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.Core\ETS.Core.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.ServicesCore\ETS.Services.csproj" />

@@ -1,26 +1,23 @@
-﻿using ETS.Jobs.RequestCore.Jobs;
+﻿using ETS.Jobs.Request;
 using ETS.Jobs.Service.JobRequestHandlers;
 using ETS.Services.Repositories;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
 {
     class ProcessMonthlyExpenseFileUploadRequestHandler : AbstractRequestHandler<ProcessMonthlyExpenseFileUploadRequest>, IProcessMonthlyExpenseFileUploadRequest
     {
-        private readonly IRepositories _repositories;
 
         public ProcessMonthlyExpenseFileUploadRequestHandler(
-            ILogger logger,
-            IRepositories repositories
+            ILogger<ProcessMonthlyExpenseFileUploadRequest> logger
         )
             : base(logger)
         {
-            _repositories = repositories;
         }
 
         protected override void HandleRequest(ProcessMonthlyExpenseFileUploadRequest request)
         {
-            Logger.Information($"Process handler ProcessMonthlyExpenseFileUploadRequestHandler implemenation");
+            Logger.LogInformation($"Process handler ProcessMonthlyExpenseFileUploadRequestHandler implemenation");
         }
     }
 }

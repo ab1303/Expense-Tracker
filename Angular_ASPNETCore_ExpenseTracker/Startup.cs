@@ -25,6 +25,8 @@ using ETS.DataCore.Seeders;
 using ETS.Core.Interfaces;
 using ETS.DomainCore.Model;
 using ETS.Services;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -139,7 +141,6 @@ namespace Angular_ASPNETCore_Seed
             services.RegisterDatabaseService();
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();
-
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -163,6 +164,9 @@ namespace Angular_ASPNETCore_Seed
 
             // Angular's default header name for sending the XSRF token.
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
+            //// Add Hangfire
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DataConnection")));
 
             // Add MVC Framework Services.
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
@@ -196,6 +200,13 @@ namespace Angular_ASPNETCore_Seed
 
             // Add Application Services
             RegisterApplicationServices(services);
+
+            // Register Hangfire
+            //JobStorage.Current = new SqlServerStorage(Configuration.GetConnectionString("DataConnection"), new SqlServerStorageOptions
+            //{
+            //    PrepareSchemaIfNecessary = false
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

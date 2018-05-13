@@ -56,6 +56,7 @@
     <ProjectReference Include="..\..\DotNetCore\ETS.AzureCore\ETS.Azure.csproj" />
     <ProjectReference Include="..\..\DotNetCore\ETS.DataCore\ETS.DataCore.csproj" />
     <ProjectReference Include="..\..\DotNetCore\ETS.ServicesCore\ETS.Services.csproj" />
+    <ProjectReference Include="..\ETS.Jobs.ServiceCore\ETS.Jobs.ServiceCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

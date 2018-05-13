@@ -1,5 +1,5 @@
 ﻿
-namespace ETS.Jobs.Request.EmailRequests
+namespace ETS.Jobs.Request
 {
     public interface ISendEmailRequest : IRequestHandler<SendEmailRequest>
     {

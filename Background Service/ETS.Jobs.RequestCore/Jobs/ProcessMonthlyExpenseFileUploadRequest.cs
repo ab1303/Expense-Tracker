@@ -1,6 +1,4 @@
-﻿using ETS.Jobs.Request;
-
-namespace ETS.Jobs.RequestCore.Jobs
+﻿namespace ETS.Jobs.Request
 {
     public interface IProcessMonthlyExpenseFileUploadRequest : IRequestHandler<ProcessMonthlyExpenseFileUploadRequest>
     {

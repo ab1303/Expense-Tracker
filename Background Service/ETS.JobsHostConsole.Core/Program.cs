@@ -51,13 +51,22 @@ namespace ETS.JobsHostConsole.Core
             //}
         }
 
-        static IWebHost BuildWebHost(string[] args, IConfigurationRoot configuration) => WebHost
+        static IWebHost BuildWebHost(string[] args, IConfigurationRoot configuration)
+        {
+
+            return
+                WebHost
                 .CreateDefaultBuilder(args)
-                 .UseKestrel()
-                 .UseStartup<Startup>()
-                 .UseUrls("http://localhost:9000")
-                 .UseConfiguration(configuration)
+                .UseKestrel()
+                .UseStartup<Startup>()
+                .UseUrls("http://localhost:9000")
+                .UseConfiguration(configuration)
+                //.ConfigureLogging((hostingContext, logging) =>
+                //{
+                //    logging.AddSerilog(dispose: true);
+                //})
                 .UseSerilog() // <-- Add this line
                 .Build();
+        }
     }
 }

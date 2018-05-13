@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Angular_ASPNETCore_ExpenseTracker.Infrastructure;
 using ETS.Core.Interfaces;
+using ETS.Jobs.Request;
+using Hangfire;
 
 namespace Angular_ASPNETCore_ExpenseTracker.Apis
 {
@@ -19,15 +21,17 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
     {
         private readonly ILogger<ExpensesController> _logger;
         private readonly IFileStorage _fileStorage;
+        private readonly IBackgroundJobClient _backgroundJobClient;
 
         // Get the default form options so that we can use them to set the default limits for
         // request body data
         private static readonly FormOptions _defaultFormOptions = new FormOptions();
 
-        public ExpensesController(ILogger<ExpensesController> logger, IFileStorage fileStorage)
+        public ExpensesController(ILogger<ExpensesController> logger, IFileStorage fileStorage, IBackgroundJobClient backgroundJobClient)
         {
             _logger = logger;
             _fileStorage = fileStorage;
+            _backgroundJobClient = backgroundJobClient;
         }
 
 
@@ -76,6 +80,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                                 targetStream.ToArray());
 
                             _logger.LogInformation($"Copied the uploaded file '{uploadedFileUri}'");
+
+                            _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(x => x.Handle(new ProcessMonthlyExpenseFileUploadRequest()));
                         }
 
                     }

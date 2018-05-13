@@ -1,6 +1,7 @@
 ﻿using Angular_ASPNETCore_Jobs.Controllers;
 using ETS.Azure;
 using ETS.DataCore;
+using ETS.Jobs.ServiceCore;
 using ETS.JobsHost.Core;
 using ETS.Services;
 using Hangfire;
@@ -26,6 +27,7 @@ namespace ETS.JobsHost
             services.RegisterDatabaseService();
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();
+            services.RegisterBackgroundJobServices();
 
         }
 
