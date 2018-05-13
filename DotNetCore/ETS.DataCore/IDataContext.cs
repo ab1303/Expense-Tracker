@@ -1,10 +1,8 @@
 ﻿using ETS.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ETS.DataCore
+namespace ETS.DataCore.Intefaces
 {
     public interface IDataContext : IDisposable
     {

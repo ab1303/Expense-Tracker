@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Text;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,28 +9,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.FileProviders;
-using System.IO;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.EntityFrameworkCore;
-using ETS.Data;
-using ETS.DataCore.Seeders;
-using ETS.Core.Interfaces;
-using ETS.Services.Implementations;
-using Microsoft.AspNetCore.Identity;
-using ETS.DomainCore.Model;
-using System.Reflection;
-using ETS.Services.Interfaces;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication;
 using Angular_ASPNETCore_ExpenseTracker.Helper;
 using FluentValidation.AspNetCore;
 using AutoMapper;
-using ETS.DataCore;
-using ETS.Services.Interfaces.Repositories;
-using ETS.Services.Repositories;
 using ETS.Azure;
+using ETS.DataCore.Implementations;
+using ETS.DataCore;
+using ETS.DataCore.Seeders;
+using ETS.Core.Interfaces;
+using ETS.DomainCore.Model;
+using ETS.Services;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -139,19 +136,9 @@ namespace Angular_ASPNETCore_Seed
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.AddTransient<DatabaseSeeder>();
-
-            services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
-            services.AddScoped<IDataContext, DataContext>();
-
-            services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
-            services.AddScoped<IRepositories, Repositories>();
-
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
-            services.AddScoped<IFileStorage, FileStorage>();
-
-
+            services.RegisterDatabaseService();
+            services.RegisterInternalServices();
+            services.RegisterAzureStorageService();
 
         }
 

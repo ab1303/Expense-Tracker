@@ -1,5 +1,4 @@
-﻿using ETS.Data;
-using ETS.Services.Interfaces.ChangeTracking;
+﻿using ETS.Services.Interfaces.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;

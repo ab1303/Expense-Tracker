@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Implementations\DatabaseInitializer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Queries\" />
   </ItemGroup>
 

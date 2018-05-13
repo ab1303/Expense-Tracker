@@ -1,10 +1,8 @@
-﻿using ETS.Data;
+﻿using ETS.DataCore.Implementations;
 using ETS.Domain;
-using ETS.DomainCore.Model;
 using ETS.Services.Interfaces;
 using ETS.Services.Results;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ETS.Services.Implementations

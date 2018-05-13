@@ -1,4 +1,4 @@
-﻿using ETS.DataCore;
+﻿using ETS.DataCore.Intefaces;
 using ETS.Domain;
 using ETS.Services.DTO;
 using ETS.Services.Interfaces;

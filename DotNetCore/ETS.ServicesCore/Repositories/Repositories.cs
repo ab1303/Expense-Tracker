@@ -1,5 +1,4 @@
-﻿using System;
-using ETS.Services.Interfaces.Repositories;
+﻿using ETS.Services.Interfaces.Repositories;
 
 namespace ETS.Services.Repositories
 {

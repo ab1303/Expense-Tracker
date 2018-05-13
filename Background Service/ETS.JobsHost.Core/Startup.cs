@@ -1,5 +1,8 @@
 ﻿using Angular_ASPNETCore_Jobs.Controllers;
+using ETS.Azure;
+using ETS.DataCore;
 using ETS.JobsHost.Core;
+using ETS.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +21,14 @@ namespace ETS.JobsHost
             Configuration = configuration;
         }
 
+        private void RegisterApplicationServices(IServiceCollection services)
+        {
+            services.RegisterDatabaseService();
+            services.RegisterInternalServices();
+            services.RegisterAzureStorageService();
+
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -27,8 +38,7 @@ namespace ETS.JobsHost
             services.AddMvc();
 
             //Following line is only required if your jobs are failing.
-
-            services.AddTransient<HomeController, HomeController>();
+            RegisterApplicationServices(services);
         }
 
         public void Configure(IApplicationBuilder app,

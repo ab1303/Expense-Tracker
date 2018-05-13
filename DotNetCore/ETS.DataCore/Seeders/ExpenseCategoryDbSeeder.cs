@@ -1,10 +1,10 @@
-﻿using ETS.Data;
-using ETS.Domain;
+﻿using ETS.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using ETS.DataCore.Implementations;
 
 namespace ETS.DataCore.Seeders
 {

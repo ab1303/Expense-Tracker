@@ -1,12 +1,10 @@
 ﻿using ETS.Core.Interfaces;
-using ETS.DataCore.Implementations;
-using ETS.DataCore.Intefaces;
 using ETS.DataCore.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Collections.Generic;
 
-namespace ETS.Services.Implementations
+namespace ETS.DataCore.Implementations
 {
     public class DatabaseInitializer : IDatabaseInitializer
     {

@@ -53,6 +53,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DotNetCore\ETS.AzureCore\ETS.Azure.csproj" />
+    <ProjectReference Include="..\..\DotNetCore\ETS.DataCore\ETS.DataCore.csproj" />
+    <ProjectReference Include="..\..\DotNetCore\ETS.ServicesCore\ETS.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

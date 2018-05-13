@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using System;
@@ -14,39 +13,51 @@ namespace ETS.JobsHostConsole.Core
     {
         static void Main(string[] args = null)
         {
-            Log.Logger = new LoggerConfiguration()
+            var configuration = new ConfigurationBuilder()
+                          .SetBasePath(Directory.GetCurrentDirectory())
+                          .AddJsonFile("appSettings.json")
+                          .AddCommandLine(args)
+                          .Build();
+
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration)
                 .Enrich.WithProperty("SourceContext", null)
-                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
                 .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {Message} ({SourceContext:l}){NewLine}{Exception}")
                 .WriteTo.RollingFile(AppDomain.CurrentDomain.BaseDirectory + "logs\\ETS Background Service Log Dated-{Date}.log", LogEventLevel.Information, "[{Timestamp:HH:mm:ss} {Level}] {Message} ({SourceContext:l}){NewLine}{Exception}")
                 .CreateLogger();
 
-
-            var config = new ConfigurationBuilder()
-               .SetBasePath(Directory.GetCurrentDirectory())
-               .AddJsonFile("appSettings.json")
-               .AddCommandLine(args)
-               .Build();
-
-        var host=    WebHost
-                .CreateDefaultBuilder(args)
-                .ConfigureLogging((hostingContext, logging) =>
-                 {
-                     logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
-                     logging.AddConsole();
-                     logging.AddDebug();
-                 })
-                 .UseKestrel()
-                 .UseStartup<Startup>()                    
-                 .UseUrls("http://localhost:9000")
-                 .UseConfiguration(config)
-                 .Build();
-
-            using (host)
+            try
             {
-                host.Start();
+                Log.Information("Starting web host");
+                BuildWebHost(args, configuration).Run();
                 Console.ReadLine();
             }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+
+            //var host = BuildWebHost(args);
+
+            //using (host)
+            //{
+            //    host.Start();
+            //    Console.ReadLine();
+            //}
         }
+
+        static IWebHost BuildWebHost(string[] args, IConfigurationRoot configuration) => WebHost
+                .CreateDefaultBuilder(args)
+                 .UseKestrel()
+                 .UseStartup<Startup>()
+                 .UseUrls("http://localhost:9000")
+                 .UseConfiguration(configuration)
+                .UseSerilog() // <-- Add this line
+                .Build();
     }
 }

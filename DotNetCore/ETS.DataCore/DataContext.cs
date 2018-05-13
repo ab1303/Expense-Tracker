@@ -1,4 +1,4 @@
-﻿using ETS.DataCore;
+﻿using ETS.DataCore.Intefaces;
 using ETS.Domain;
 using ETS.DomainCore.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
-namespace ETS.Data
+namespace ETS.DataCore.Implementations
 {
     public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {

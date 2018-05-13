@@ -1,5 +1,5 @@
-﻿using ETS.Data;
-using ETS.DataCore;
+﻿using ETS.DataCore.Implementations;
+using ETS.DataCore.Intefaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Diagnostics.Contracts;

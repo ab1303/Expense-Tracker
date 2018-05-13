@@ -27,7 +27,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         public ExpensesController(ILogger<ExpensesController> logger, IFileStorage fileStorage)
         {
             _logger = logger;
-            this._fileStorage = fileStorage;
+            _fileStorage = fileStorage;
         }
 
 
