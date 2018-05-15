@@ -24,7 +24,7 @@ namespace ETS.JobsHost
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.RegisterDatabaseService();
+            services.RegisterDatabaseService(Configuration);
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();
             services.RegisterBackgroundJobServices();

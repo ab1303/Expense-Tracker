@@ -22,11 +22,9 @@ using ETS.Azure;
 using ETS.DataCore.Implementations;
 using ETS.DataCore;
 using ETS.DataCore.Seeders;
-using ETS.Core.Interfaces;
 using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
-using Hangfire.SqlServer;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -138,7 +136,7 @@ namespace Angular_ASPNETCore_Seed
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.RegisterDatabaseService();
+            services.RegisterDatabaseService(Configuration);
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();
         }
@@ -146,12 +144,6 @@ namespace Angular_ASPNETCore_Seed
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            //Add SQL Server support
-            var migrationAssembly = typeof(DataContext).GetTypeInfo().Assembly.GetName().Name;
-            services.AddDbContext<DataContext>(options => options.UseSqlServer(
-                Configuration.GetConnectionString("DataConnection"),
-                sql => sql.MigrationsAssembly(migrationAssembly)));
 
             // JWT Bearer
             ConfigureJwtAuth(services);

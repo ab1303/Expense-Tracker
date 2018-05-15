@@ -81,7 +81,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 
                             _logger.LogInformation($"Copied the uploaded file '{uploadedFileUri}'");
 
-                            _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(x => x.Handle(new ProcessMonthlyExpenseFileUploadRequest()));
+                            _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(
+                                x => x.Handle(
+                                    new ProcessMonthlyExpenseFileUploadRequest
+                                    {
+                                        FileUri = uploadedFileUri
+                                    }));
                         }
 
                     }

@@ -9,9 +9,9 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
     {
 
         public ProcessMonthlyExpenseFileUploadRequestHandler(
-            ILogger<ProcessMonthlyExpenseFileUploadRequest> logger
-        )
-            : base(logger)
+            ILogger<ProcessMonthlyExpenseFileUploadRequest> logger,
+            IRepositories repositories
+        ) : base(logger)
         {
         }
 
