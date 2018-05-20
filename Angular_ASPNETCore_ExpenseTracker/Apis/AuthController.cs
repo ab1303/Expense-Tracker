@@ -6,6 +6,7 @@ using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication;
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.ViewModels;
 using ETS.DomainCore.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -29,6 +30,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet("identity", Name = "GetIdentity")]
+        [Authorize(Policy = "ApiUser")]
         public async Task<IActionResult> Get(string userName)
         {
             // get the user to verifty

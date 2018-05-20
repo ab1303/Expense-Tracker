@@ -1,6 +1,10 @@
 https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro
 
 
+// TODO: Consider third party DI Containers for property injection
+
+**** 
+
 https://github.com/aspnet/Docs/blob/master/aspnetcore/security/authentication/identity/sample/src/ASPNETCore-IdentityDemoComplete/IdentityDemo/Controllers/AccountController.cs
 
 *** Logging ***
@@ -29,3 +33,5 @@ https://malcoded.com/posts/angular-file-upload-component-with-express
 https://valor-software.com/ng2-file-upload/
 
 https://stackoverflow.com/questions/41889384/angular2-validation-for-input-type-file-wont-trigger-when-changing-the-fi/41938495#41938495
+
+https://stackoverflow.com/questions/22885995/how-do-i-initialize-a-typescript-object-with-a-json-object
