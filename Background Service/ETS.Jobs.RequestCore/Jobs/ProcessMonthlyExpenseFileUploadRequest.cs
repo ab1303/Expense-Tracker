@@ -7,5 +7,6 @@
     public class ProcessMonthlyExpenseFileUploadRequest : AbstractRequest
     {
         public string FileUri { get; set; }
+        public string FileName { get; set; }
     }
 }

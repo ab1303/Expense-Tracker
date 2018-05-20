@@ -30,7 +30,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet("identity", Name = "GetIdentity")]
-        [Authorize(Policy = "ApiUser")]
+        //[Authorize(Policy = "ApiUser")]
         public async Task<IActionResult> Get(string userName)
         {
             // get the user to verifty

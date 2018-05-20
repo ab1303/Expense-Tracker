@@ -35,3 +35,5 @@ https://valor-software.com/ng2-file-upload/
 https://stackoverflow.com/questions/41889384/angular2-validation-for-input-type-file-wont-trigger-when-changing-the-fi/41938495#41938495
 
 https://stackoverflow.com/questions/22885995/how-do-i-initialize-a-typescript-object-with-a-json-object
+https://stackoverflow.com/questions/46866849/multipartformdatastreamprovider-for-asp-net-core-2?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+https://blog.bitscry.com/2018/03/12/uploading-files-in-asp-net-core-from-an-mvc-view/

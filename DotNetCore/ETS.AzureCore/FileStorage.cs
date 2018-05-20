@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,7 +24,7 @@ namespace ETS.Azure
 
         #region Private Methods/Functions
 
-        private string CreateBlob(string containerName, string fileName, byte[] fileBytes, bool publicAccess = false)
+        private async Task<string> CreateBlobAsync(string containerName, string fileName, byte[] fileBytes, bool publicAccess = false)
         {
             if (string.IsNullOrWhiteSpace(fileName))
                 throw new ArgumentNullException("fileName", "The fileName cannot be null.");
@@ -37,7 +36,7 @@ namespace ETS.Azure
 
             if (fileBytes.Length <= MaxBlobSize)
             {
-                blob.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
+                await blob.UploadFromByteArrayAsync(fileBytes, 0, fileBytes.Length);
                 return blob.Uri.ToString();
             }
 
@@ -50,12 +49,12 @@ namespace ETS.Azure
                         (bytesWritten + MaxBlobSize) < fileBytes.Length ? MaxBlobSize : (fileBytes.Length - bytesWritten)))
                 {
                     blockIDs.Add(Convert.ToBase64String(BitConverter.GetBytes(index)));
-                    blob.PutBlockAsync(blockIDs.Last(), memoryStream, null);
+                    await blob.PutBlockAsync(blockIDs.Last(), memoryStream, null);
                     bytesWritten += MaxBlobSize;
                 }
             }
 
-            blob.PutBlockListAsync(blockIDs);
+            await blob.PutBlockListAsync(blockIDs);
             return blob.Uri.ToString();
         }
 
@@ -93,7 +92,7 @@ namespace ETS.Azure
 
         #region IFileStorage implementation
 
-        public byte[] GetFile(string containerName, string fileName)
+        public async Task<byte[]> GetFileAsync(string containerName, string fileName)
         {
             var client = _cloudStorageAccount.CreateCloudBlobClient();
             var container = client.GetContainerReference(containerName);
@@ -101,22 +100,22 @@ namespace ETS.Azure
             byte[] blobBytes;
             using (var stream = new MemoryStream())
             {
-                container.GetBlockBlobReference(fileName).DownloadToStreamAsync(stream);
+                await container.GetBlockBlobReference(fileName).DownloadToStreamAsync(stream);
                 blobBytes = stream.ToArray();
             }
             return blobBytes;
         }
 
-        public byte[] GetFile(FileFolder fileFolder, string fileName)
+        public async Task<byte[]> GetFileAsync(FileFolder fileFolder, string fileName)
         {
-            return GetFile(fileFolder.ToString().ToLower(), fileName);
+            return await GetFileAsync(fileFolder.ToString().ToLower(), fileName);
         }
 
-        public byte[] TryGetFile(FileFolder fileFolder, string fileName)
+        public async Task<byte[]> TryGetFileAsync(FileFolder fileFolder, string fileName)
         {
             try
             {
-                return GetFile(fileFolder, fileName);
+                return await GetFileAsync(fileFolder, fileName);
             }
             catch (StorageException)
             {
@@ -124,7 +123,7 @@ namespace ETS.Azure
             }
         }
 
-        public byte[] AwaitFile(FileFolder fileFolder, string fileName, TimeSpan timeOut)
+        public async Task<byte[]> AwaitFileAsync(FileFolder fileFolder, string fileName, TimeSpan timeOut)
         {
             byte[] fileBytes = null;
             var elapsed = 0;
@@ -134,7 +133,7 @@ namespace ETS.Azure
                 elapsed += 5000;
                 try
                 {
-                    fileBytes = GetFile(fileFolder, fileName);
+                    fileBytes = await GetFileAsync(fileFolder, fileName);
                 }
                 catch (Exception)
                 {
@@ -144,22 +143,22 @@ namespace ETS.Azure
             return fileBytes;
         }
 
-        public string StorePublicFile(string fileName, byte[] fileBytes)
+        public async Task<string> StorePublicFileAsync(string fileName, byte[] fileBytes)
         {
-            return CreateBlob(FileFolder.PublicFile.ToString(), fileName, fileBytes, true);
+            return await CreateBlobAsync(FileFolder.PublicFile.ToString(), fileName, fileBytes, true);
         }
 
-        public string StoreFile(FileFolder fileFolder, string fileName, byte[] fileBytes)
+        public async Task<string> StoreFileAsync(FileFolder fileFolder, string fileName, byte[] fileBytes)
         {
-            return CreateBlob(fileFolder.ToString(), fileName, fileBytes); ;
+            return await CreateBlobAsync(fileFolder.ToString(), fileName, fileBytes); ;
         }
 
-        public Task<bool> DeletePublicFile(string fileName)
+        public Task<bool> DeletePublicFileAsync(string fileName)
         {
-            return DeleteFile(FileFolder.PublicFile, fileName);
+            return DeleteFileAsync(FileFolder.PublicFile, fileName);
         }
 
-        public Task<bool> DeleteFile(FileFolder fileFolder, string fileName)
+        public Task<bool> DeleteFileAsync(FileFolder fileFolder, string fileName)
         {
             var client = _cloudStorageAccount.CreateCloudBlobClient();
             var container = client.GetContainerReference(fileFolder.ToString().ToLower());

@@ -74,10 +74,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                         {
                             await section.Body.CopyToAsync(targetStream);
 
-                            uploadedFileUri = _fileStorage.StoreFile(
+                            var fileName = HeaderUtilities.RemoveQuotes(contentDisposition.FileName).ToString();
+                            uploadedFileUri = await _fileStorage.StoreFileAsync(
                                 ETS.Core.Enums.FileFolder.MonthlyExpenseSheets,
-                                HeaderUtilities.RemoveQuotes(contentDisposition.FileName).ToString(),
-                                targetStream.ToArray());
+                                fileName, targetStream.ToArray());
 
                             _logger.LogInformation($"Copied the uploaded file '{uploadedFileUri}'");
 
@@ -85,7 +85,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                                 x => x.Handle(
                                     new ProcessMonthlyExpenseFileUploadRequest
                                     {
-                                        FileUri = uploadedFileUri
+                                        FileUri = uploadedFileUri,
+                                        FileName = fileName
                                     }));
                         }
 

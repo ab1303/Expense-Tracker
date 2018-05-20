@@ -7,21 +7,21 @@ namespace ETS.Core.Interfaces
 {
     public interface IFileStorage
     {
-        byte[] GetFile(string containerName, string fileName);
-        byte[] GetFile(FileFolder fileFolder, string fileName);
-        byte[] TryGetFile(FileFolder fileFolder, string fileName);
+        Task<byte[]> GetFileAsync(string containerName, string fileName);
+        Task<byte[]> GetFileAsync(FileFolder fileFolder, string fileName);
+        Task<byte[]> TryGetFileAsync(FileFolder fileFolder, string fileName);
 
         // TODO: Later
         //IList<StoredFile> GetFiles(FileFolder fileFolder, string filePrefix);
 
         // poll a none existing file
-        byte[] AwaitFile(FileFolder fileFolder, string fileName, TimeSpan timeOut);
+        Task<byte[]> AwaitFileAsync(FileFolder fileFolder, string fileName, TimeSpan timeOut);
 
-        string StorePublicFile(string fileName, byte[] fileBytes);
-        string StoreFile(FileFolder fileFolder, string fileName, byte[] fileBytes);
+        Task<string> StorePublicFileAsync(string fileName, byte[] fileBytes);
+        Task<string> StoreFileAsync(FileFolder fileFolder, string fileName, byte[] fileBytes);
 
-        Task<bool> DeletePublicFile(string fileName);
-        Task<bool> DeleteFile(FileFolder fileFolder, string fileName);
+        Task<bool> DeletePublicFileAsync(string fileName);
+        Task<bool> DeleteFileAsync(FileFolder fileFolder, string fileName);
         string StoreFile(FileFolder fileFolder, string fileName, string data);
         Task<bool> IsFileExists(FileFolder fileFolder, string fileName);
         Task<string> GetFileUrl(FileFolder fileFolder, string fileName);
