@@ -17,6 +17,7 @@ const TOKEN_BUFFER_IN_MINUTES = 5;
 // const API_URL = "http://localhost:5000/api/security/";
 // const API_URL = "http://localhost:52951/api/auth";
 const API_URL = `${API_BASE_ADDRESS}/auth`
+const ACCOUNT_API_URL = `${API_BASE_ADDRESS}/account`
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -36,6 +37,27 @@ export class SecurityService {
 
     return this.http
       .post<AppUserAuth>(`${API_URL}/login`, entity, httpOptions)
+      .pipe(
+        tap(resp => {
+          // Use object assign to update the current object
+          // NOTE: Don't create a new AppUserAuth object
+          //       because that destroys all references to object
+          Object.assign(this.securityObject, resp);
+          // Store into local storage
+          localStorage.setItem(
+            BEARER_TOKEN_KEY,
+            this.securityObject.bearerToken
+          );
+        })
+      );
+  }
+
+  create(entity: AppUser): Observable<AppUserAuth> {
+    // Initialize security object
+    this.resetSecurityObject();
+
+    return this.http
+      .post<AppUserAuth>(`${ACCOUNT_API_URL}/register`, entity, httpOptions)
       .pipe(
         tap(resp => {
           // Use object assign to update the current object

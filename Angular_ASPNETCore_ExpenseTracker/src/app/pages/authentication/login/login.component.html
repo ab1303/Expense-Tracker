@@ -62,7 +62,7 @@
 					<label class="sr-only">Name: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Name" class="form-control" type="text">
+							<input mdInput placeholder="Name" class="form-control" name="fullName" id="fullName" type="text" [(ngModel)]="registerUser.fullName">
 						</md-input-container>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 					<label class="sr-only">Email: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Email" class="form-control" type="email">
+							<input mdInput placeholder="Email" class="form-control"  name="userName" id="userName" type="email" [(ngModel)]="registerUser.userName">
 						</md-input-container>
 					</div>
 				</div>
@@ -78,7 +78,7 @@
 					<label class="sr-only">Password: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Password" class="form-control" type="password">
+							<input mdInput placeholder="Password" class="form-control" name="password" id="password" type="password" [(ngModel)]="registerUser.password">
 						</md-input-container>
 					</div>
 				</div>
@@ -86,7 +86,7 @@
 					<label class="sr-only">Confirm Password: </label>
 					<div class="col-md">
 						<md-input-container floatPlaceholder="auto" class="float-auto">
-							<input mdInput placeholder="Confirm Password" class="form-control" type="password">
+							<input mdInput placeholder="Confirm Password" class="form-control" name="confirmPassword" id="confirmPassword" type="password" [(ngModel)]="registerUser.confirmPassword">
 						</md-input-container>
 					</div>
 				</div>
@@ -96,7 +96,7 @@
 						<a href="javascript:void(0)" class="forgot-pass"> terms of service.</a>
 					</md-checkbox>
 				</div>
-				<a href="javascript:void(0)" class="btn btn-info btn-block m-t-40">Sign In</a>
+				<a (click)="register()" class="btn btn-info btn-block m-t-40">Register</a>
 			</form>
 		</div>
 		<div class="login-footer">

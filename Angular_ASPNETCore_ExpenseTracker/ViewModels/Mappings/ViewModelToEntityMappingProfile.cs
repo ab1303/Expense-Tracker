@@ -8,7 +8,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.ViewModels.Mappings
     {
         public ViewModelToEntityMappingProfile()
         {
-            CreateMap<RegistrationViewModel, ApplicationUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.Email));
+            CreateMap<RegistrationViewModel, ApplicationUser>().ForMember(au => au.UserName, map => map.MapFrom(vm => vm.UserName));
+            CreateMap<RegistrationViewModel, ApplicationUser>().ForMember(au => au.Email, map => map.MapFrom(vm => vm.UserName));
         }
     }
 }

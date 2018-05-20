@@ -37,8 +37,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
 
-        [HttpPost]
-        //[HttpPost("register")]
+        //[HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Post([FromBody]RegistrationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -47,11 +47,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             // TODO: THink of Unit of work
 
             var userIdentity = _mapper.Map<ApplicationUser>(model);
-            //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await _userManager.CreateAsync(userIdentity, model.Password);
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            var registrationResult = await _accountService.RegisterUser(userIdentity.Id, model.Location);
+            var registrationResult = await _accountService.RegisterUser(userIdentity.Id);
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
             return new OkObjectResult("Account created");

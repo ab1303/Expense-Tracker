@@ -14,8 +14,9 @@ import { GlobalState } from "../../../app.state";
 import { ConfigService } from "../../../shared/services/config/config.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { SecurityService } from "../../../security/security.service";
-import { AppUser } from "../../../security/app-user";
+import { AppUser, RegisterUser } from "../../../security/app-user";
 import { AppUserAuth } from "../../../security/app-user-auth";
+import { AlertService } from "../../../shared/services/alert/alert.service";
 
 @Component({
   selector: ".content_inner_wrapper",
@@ -24,6 +25,7 @@ import { AppUserAuth } from "../../../security/app-user-auth";
 })
 export class LoginComponent implements OnInit {
   user: AppUser = new AppUser();
+  registerUser: AppUser = new RegisterUser();
   securityObject: AppUserAuth = null;
   returnUrl: string;
   checked: boolean = false;
@@ -33,6 +35,7 @@ export class LoginComponent implements OnInit {
    *
    */
   constructor(
+    private alertService: AlertService,
     private securityService: SecurityService,
     private route: ActivatedRoute,
     private router: Router
@@ -56,4 +59,17 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+    register() {
+        this.securityService.create(this.registerUser)
+            .subscribe(
+                data => {
+                    this.alertService.success('Registration successful', true);
+                    this.toggleRegister = !this.toggleRegister
+                },
+                error => {
+                    this.alertService.error(error);
+                });
+    }
+    
 }

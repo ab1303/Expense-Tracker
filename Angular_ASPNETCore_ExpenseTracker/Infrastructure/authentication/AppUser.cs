@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication
 {
-  public partial class AppUser
+    public partial class AppUser
   {
     [Required()]
     [Key()]

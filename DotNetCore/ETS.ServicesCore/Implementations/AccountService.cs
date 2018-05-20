@@ -16,7 +16,7 @@ namespace ETS.Services.Implementations
             _context = context;
         }
 
-        public async Task<ServiceResult> RegisterUser(string identityId, string location)
+        public async Task<ServiceResult> RegisterUser(string identityId)
         {
             try
             {
@@ -25,7 +25,6 @@ namespace ETS.Services.Implementations
                     new UserDetail
                     {
                         IdentityId = identityId,
-                        Location = location,
                         CreateLogin = "Application",
                         DateCreated = DateTime.Now
                     });
