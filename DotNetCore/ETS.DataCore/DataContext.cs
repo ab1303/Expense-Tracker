@@ -13,7 +13,8 @@ namespace ETS.DataCore.Implementations
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-
+        public DbSet<FieldCategoryMapping> FieldCategoryMappings { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         public static readonly LoggerFactory MyConsoleLoggerFactor = new LoggerFactory(new[]
         {
@@ -33,7 +34,7 @@ namespace ETS.DataCore.Implementations
                 .EnableSensitiveDataLogging(true);
 
 
-                base.OnConfiguring(optionsBuilder);
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

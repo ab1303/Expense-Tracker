@@ -13,9 +13,10 @@ using System;
 namespace ETS.DataCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180523105849_Add_table_FieldCategoryMapping")]
+    partial class Add_table_FieldCategoryMapping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,13 +117,9 @@ namespace ETS.DataCore.Migrations
                     b.Property<string>("UpdateLogin")
                         .HasMaxLength(100);
 
-                    b.Property<long?>("UserGroupId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityId");
-
-                    b.HasIndex("UserGroupId");
 
                     b.ToTable("UserDetails");
                 });
@@ -233,7 +230,11 @@ namespace ETS.DataCore.Migrations
                     b.Property<string>("UpdateLogin")
                         .HasMaxLength(100);
 
+                    b.Property<long>("UserDetailId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserDetailId");
 
                     b.ToTable("UserGroups");
                 });
@@ -366,10 +367,14 @@ namespace ETS.DataCore.Migrations
                     b.HasOne("ETS.DomainCore.Model.ApplicationUser", "Identity")
                         .WithMany()
                         .HasForeignKey("IdentityId");
+                });
 
-                    b.HasOne("ETS.DomainCore.Model.UserGroup", "UserGroup")
+            modelBuilder.Entity("ETS.DomainCore.Model.UserGroup", b =>
+                {
+                    b.HasOne("ETS.Domain.UserDetail", "UserDetail")
                         .WithMany()
-                        .HasForeignKey("UserGroupId");
+                        .HasForeignKey("UserDetailId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -13,9 +13,10 @@ using System;
 namespace ETS.DataCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180523110424_Add_table_UserGroup_changes")]
+    partial class Add_table_UserGroup_changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,7 +117,7 @@ namespace ETS.DataCore.Migrations
                     b.Property<string>("UpdateLogin")
                         .HasMaxLength(100);
 
-                    b.Property<long?>("UserGroupId");
+                    b.Property<long>("UserGroupId");
 
                     b.HasKey("Id");
 
@@ -369,7 +370,8 @@ namespace ETS.DataCore.Migrations
 
                     b.HasOne("ETS.DomainCore.Model.UserGroup", "UserGroup")
                         .WithMany()
-                        .HasForeignKey("UserGroupId");
+                        .HasForeignKey("UserGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
