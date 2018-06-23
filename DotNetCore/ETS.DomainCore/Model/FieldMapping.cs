@@ -1,5 +1,6 @@
 ﻿using ETS.Domain;
 using ETS.DomainCore.Enums;
+using System;
 
 namespace ETS.DomainCore.Model
 {
@@ -13,6 +14,7 @@ namespace ETS.DomainCore.Model
             private set { }
         }
         public string SourceValue { get; set; }
+        [Obsolete("I think not required")]
         public string Destination { get; set; }
         public string DestinationValue { get; set; }
     }

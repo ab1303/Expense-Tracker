@@ -1,5 +1,6 @@
 ﻿using ETS.DataCore.Intefaces;
 using ETS.Domain;
+using ETS.DomainCore.Mappings;
 using ETS.DomainCore.Model;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,18 @@ namespace ETS.DataCore.Implementations
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
 
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            // TPH Classes
+            builder.Entity<IndividualExpense>();
+            builder.Entity<GroupExpense>();
+
+            // Mapping Classes
+            builder.ApplyConfiguration(new IndividualExpenseMap());
+            builder.ApplyConfiguration(new GroupExpenseMap());
+            base.OnModelCreating(builder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

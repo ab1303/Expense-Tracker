@@ -3,8 +3,8 @@
     public enum FieldCategory
     {
         ExpenseCategory = 0,
-        Frequency = 1,
-        PaidFor = 2,
-        PaidBy = 3
+        PaidForIndividual = 1,
+        PaidForGroup = 2,
+        PaidByIndividual = 3
     }
 }

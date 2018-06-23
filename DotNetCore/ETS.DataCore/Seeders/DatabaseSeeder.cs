@@ -27,6 +27,7 @@ namespace ETS.DataCore.Seeders
         public void SeedAsync(DataContext dataContext)
         {
             new ExpenseCategoryDbSeeder(LoggerFactory).SeedAsync(dataContext).Wait();
+            new FieldMappingSeeder(LoggerFactory).SeedAsync(dataContext).Wait();
 
         }
 
