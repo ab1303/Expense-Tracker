@@ -1,36 +1,17 @@
-﻿using ETS.Core.Helpers;
-using ETS.Domain;
-using ETS.Domain.Enums;
-using ETS.DomainCore.Enums;
+﻿using ETS.Domain;
 using ETS.Services.Repositories;
-using System;
 using System.Linq;
 
 namespace ETS.Jobs.ServiceCore
 {
-    public class GroupExpenseMapping
+    public class GroupExpenseMapping : BaseExpenseMapping<GroupExpense>
     {
-        private readonly IRepositories Repositories;
-
-        private string expenseCategory;
-        private string paidFor;
-        private string paidBy;
-        private string details;
-        private ExpenseFrequency expenseFrequency;
-        private decimal Amount;
-        private string expenseName;
-        private DateTime date;
-
-        private GroupExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord)
+        private GroupExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord) : base(repositories, importRecord)
         {
-            Repositories = repositories;
 
-            Amount = importRecord.Amount;
-            expenseName = importRecord.ExpenseItem;
-            details = importRecord.Details;
         }
 
-        public static IndividualExpense Create(IRepositories repositories, MonthlyExpenseFileImport importRecord)
+        public static GroupExpense Create(IRepositories repositories, MonthlyExpenseFileImport importRecord)
         {
             return new GroupExpenseMapping(repositories, importRecord)
                 .MapExpenseCategory(importRecord.ExpenseCategory)
@@ -41,85 +22,28 @@ namespace ETS.Jobs.ServiceCore
                 ;
         }
 
-        public IndividualExpense Build()
+        public override GroupExpense Build()
         {
 
-            var paidBy = Repositories.UserDetail.Get().Single(ud => ud.FirstName == this.paidBy);
-            var paidFor = Repositories.UserDetail.Get().Single(ud => ud.FirstName == this.paidFor);
-            var category = Repositories.ExpenseCategory.Get().Single(c => c.Name == expenseCategory);
+            var paidBy = Repositories.UserDetail.Get().Single(ud => ud.FirstName == PaidBy);
+            var paidFor = Repositories.UserGroup.Get().Single(ud => ud.Name == PaidFor);
+            var category = Repositories.ExpenseCategory.Get().Single(c => c.Name == Category);
 
-            var individualExpense = new IndividualExpense
+            var groupExpense = new GroupExpense
             {
                 Amount = Amount,
                 PaidBy = paidBy,
                 PaidFor = paidFor,
-                Name = expenseName,
+                Name = ExpenseName,
                 Category = category,
-                Details = details,
-                Frequency = expenseFrequency,
+                Details = Details,
+                TransactionDate = Date,
+                Frequency = Frequency,
             };
 
-            return individualExpense;
+            return groupExpense;
         }
 
-        private GroupExpenseMapping MapPaidBy(string paidBy)
-        {
-
-            var paidByFieldMapping =
-                Repositories.FieldCategoryMapping.Get()
-                .SingleOrDefault(f => f.FieldCategory == FieldCategory.PaidByIndividual &&
-                    f.SourceValue == paidFor
-                );
-
-            if (paidByFieldMapping == null) throw new ArgumentException($"{nameof(paidFor)}");
-
-            paidBy = paidByFieldMapping.DestinationValue;
-            return this;
-        }
-
-        private GroupExpenseMapping MapPaidFor(string paidFor)
-        {
-
-            var paidForFieldMapping =
-                Repositories.FieldCategoryMapping.Get()
-                .SingleOrDefault(f => f.FieldCategory == FieldCategory.PaidForIndividual &&
-                    f.SourceValue == paidFor
-                );
-
-            if (paidForFieldMapping == null) throw new ArgumentException($"{nameof(paidFor)}");
-
-            paidFor = paidForFieldMapping.DestinationValue;
-            return this;
-        }
-
-        private GroupExpenseMapping MapExpenseCategory(string category)
-        {
-            var expenseCategoryFieldMapping =
-                Repositories.FieldCategoryMapping.Get()
-                .SingleOrDefault(f => f.FieldCategory == FieldCategory.ExpenseCategory &&
-                    f.SourceValue == category
-                );
-
-            if (expenseCategoryFieldMapping == null) throw new ArgumentException($"{nameof(category)}");
-
-            expenseCategory = expenseCategoryFieldMapping.DestinationValue;
-
-            return this;
-        }
-
-        private GroupExpenseMapping MapExpenseFrequency(string expenseFrequency)
-        {
-
-            if (string.IsNullOrEmpty(expenseFrequency) || string.IsNullOrWhiteSpace(expenseFrequency)) throw new ArgumentException($"{nameof(ExpenseFrequency)}");
-
-            var expenseFrequencyEnum = expenseFrequency.ToEnum<ExpenseFrequency>();
-
-            if (!expenseFrequencyEnum.HasValue) throw new ArgumentException($"{nameof(ExpenseFrequency)}");
-
-            this.expenseFrequency = expenseFrequencyEnum.Value;
-
-            return this;
-        }
     }
 
 

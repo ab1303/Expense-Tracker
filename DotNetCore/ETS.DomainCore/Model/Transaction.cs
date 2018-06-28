@@ -1,5 +1,6 @@
 ﻿using ETS.Domain.Enums;
 using ETS.DomainCore.Model;
+using System;
 
 namespace ETS.Domain
 {
@@ -13,6 +14,7 @@ namespace ETS.Domain
         public string FrequencyString { get { return Frequency.ToString(); } private set { } }
         public ExpenseCategory Category { get; set; }
         public string Details { get; set; }
+        public DateTime TransactionDate { get; set; }
 
     }
 
