@@ -4,6 +4,11 @@ namespace ETS.Services.Repositories
 {
     public interface IRepositories
     {
-        IExpenseCategoryRepository ExpenseCategoryRepository { get; set; }
+        IExpenseCategoryRepository ExpenseCategory { get; set; }
+        IFieldCategoryMappingRepository FieldCategoryMapping { get; set; }
+        IGroupExpenseRepository GroupExpense { get; set; }
+        IIndividualExpenseRepository IndividualExpense { get; set; }
+        IUserDetailRepository UserDetail { get; set; }
+        IUserGroupRepository UserGroup { get; set; }
     }
 }

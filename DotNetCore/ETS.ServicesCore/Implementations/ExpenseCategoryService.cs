@@ -16,7 +16,7 @@ namespace ETS.Services.Implementations
         private readonly IRepositories _repositories;
 
         public ExpenseCategoryService(IDataContext dataContex, IRepositories repositories, ILoggerFactory loggerFactory) 
-            :base(repositories.ExpenseCategoryRepository)
+            :base(repositories.ExpenseCategory)
         {
             _logger = loggerFactory.CreateLogger<ExpenseCategory>();
             _dataContex = dataContex;
@@ -25,7 +25,7 @@ namespace ETS.Services.Implementations
 
         public List<ExpenseCategoryDTO> GetExpenseCategories()
         {
-          return  _repositories.ExpenseCategoryRepository.Get()
+          return  _repositories.ExpenseCategory.Get()
                 .Select(c => new ExpenseCategoryDTO
                 {
                     Id = c.Id,

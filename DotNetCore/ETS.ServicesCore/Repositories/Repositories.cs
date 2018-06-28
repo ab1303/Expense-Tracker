@@ -4,11 +4,11 @@ namespace ETS.Services.Repositories
 {
     public class Repositories : IRepositories
     {
-        public IExpenseCategoryRepository ExpenseCategoryRepository { get; set; }
-
-        public Repositories(IExpenseCategoryRepository expenseCategoryRepository)
-        {
-            ExpenseCategoryRepository = expenseCategoryRepository;
-        }
+        public IExpenseCategoryRepository ExpenseCategory { get; set; }
+        public IFieldCategoryMappingRepository FieldCategoryMapping { get; set; }
+        public IGroupExpenseRepository GroupExpense { get; set; }
+        public IIndividualExpenseRepository IndividualExpense { get; set; }
+        public IUserDetailRepository UserDetail { get; set; }
+        public IUserGroupRepository UserGroup { get; set; }
     }
 }

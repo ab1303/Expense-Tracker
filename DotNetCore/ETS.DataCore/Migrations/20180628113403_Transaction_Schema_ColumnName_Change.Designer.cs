@@ -14,9 +14,10 @@ using System;
 namespace ETS.DataCore.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20180628113403_Transaction_Schema_ColumnName_Change")]
+    partial class Transaction_Schema_ColumnName_Change
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
