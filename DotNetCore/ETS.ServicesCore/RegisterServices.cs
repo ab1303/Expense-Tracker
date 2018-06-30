@@ -10,8 +10,16 @@ namespace ETS.Services
     {
         public static IServiceCollection RegisterInternalServices(this IServiceCollection services)
         {
-            services.AddScoped<IRepositories, Repositories.Repositories>();
+            // Register Repositories
             services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            services.AddScoped<IFieldCategoryMappingRepository, FieldCategoryMappingRepository>();
+            services.AddScoped<IGroupExpenseRepository, GroupExpenseRepository>();
+            services.AddScoped<IIndividualExpenseRepository, IndividualExpenseRepository>();
+            services.AddScoped<IUserDetailRepository, UserDetailRepository>();
+            services.AddScoped<IUserGroupRepository, UserGroupRepository>();
+
+            services.AddScoped<IRepositories, Repositories.Repositories>();
+           
            
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();

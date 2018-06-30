@@ -29,6 +29,9 @@ namespace ETS.JobsHost
             services.RegisterAzureStorageService();
             services.RegisterBackgroundJobServices();
 
+            // Regiser Internal Services
+            services.AddScoped<ITransactionMapping, TransactionMapping>();
+
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -39,7 +42,6 @@ namespace ETS.JobsHost
             // Add MVC Framework Services.
             services.AddMvc();
 
-            //Following line is only required if your jobs are failing.
             RegisterApplicationServices(services);
         }
 
@@ -50,7 +52,11 @@ namespace ETS.JobsHost
             app.UseStaticFiles();
 
             app.ConfigureHangfire(loggerFactory);
-           
+
+            // Configure Services on startup based on Cron Expressions
+
+            app.ScheduleRecurringRiskPeerReviewEmail("*/1 * * * MON-FRI");
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

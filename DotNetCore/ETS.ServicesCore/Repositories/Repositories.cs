@@ -10,5 +10,22 @@ namespace ETS.Services.Repositories
         public IIndividualExpenseRepository IndividualExpense { get; set; }
         public IUserDetailRepository UserDetail { get; set; }
         public IUserGroupRepository UserGroup { get; set; }
+        
+        public Repositories(
+            IExpenseCategoryRepository expenseCategoryRepository,
+            IFieldCategoryMappingRepository fieldCategoryMappingRepository,
+            IGroupExpenseRepository groupExpenseRepository,
+            IIndividualExpenseRepository individualExpenseRepository,
+            IUserDetailRepository userDetailRepository,
+            IUserGroupRepository userGroupRepository
+            )
+        {
+            ExpenseCategory = expenseCategoryRepository;
+            FieldCategoryMapping = fieldCategoryMappingRepository;
+            GroupExpense = groupExpenseRepository;
+            IndividualExpense = individualExpenseRepository;
+            UserDetail = userDetailRepository;
+            UserGroup = userGroupRepository;
+        }
     }
 }

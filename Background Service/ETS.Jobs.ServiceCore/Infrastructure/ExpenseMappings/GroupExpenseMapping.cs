@@ -1,5 +1,7 @@
 ﻿using ETS.Domain;
+using ETS.DomainCore.Enums;
 using ETS.Services.Repositories;
+using System;
 using System.Linq;
 
 namespace ETS.Jobs.ServiceCore
@@ -22,6 +24,21 @@ namespace ETS.Jobs.ServiceCore
                 ;
         }
 
+        public override IExpenseMapping<GroupExpense> MapPaidFor(string paidFor)
+        {
+
+            var paidForFieldMapping =
+                Repositories.FieldCategoryMapping.Get()
+                .SingleOrDefault(f => f.FieldCategory == FieldCategory.PaidForGroup &&
+                    f.SourceValue == paidFor
+                );
+
+            if (paidForFieldMapping == null) throw new ArgumentException($"{nameof(paidFor)}");
+
+            PaidFor = paidForFieldMapping.DestinationValue;
+            return this;
+        }
+
         public override GroupExpense Build()
         {
 
@@ -37,8 +54,9 @@ namespace ETS.Jobs.ServiceCore
                 Name = ExpenseName,
                 Category = category,
                 Details = Details,
-                TransactionDate = Date,
                 Frequency = Frequency,
+                TransactionDate = Date,
+                DateCreated = DateTime.UtcNow
             };
 
             return groupExpense;

@@ -5,6 +5,6 @@
         ExpenseCategory = 0,
         PaidForIndividual = 1,
         PaidForGroup = 2,
-        PaidByIndividual = 3
+        PaidByIndividual = 3,
     }
 }

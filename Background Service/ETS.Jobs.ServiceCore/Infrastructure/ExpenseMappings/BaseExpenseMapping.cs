@@ -57,21 +57,7 @@ namespace ETS.Jobs.ServiceCore
             return this;
         }
 
-        public IExpenseMapping<T> MapPaidFor(string paidFor)
-        {
-
-            var paidForFieldMapping =
-                Repositories.FieldCategoryMapping.Get()
-                .SingleOrDefault(f => f.FieldCategory == FieldCategory.PaidForIndividual &&
-                    f.SourceValue == paidFor
-                );
-
-            if (paidForFieldMapping == null) throw new ArgumentException($"{nameof(paidFor)}");
-
-            PaidFor = paidForFieldMapping.DestinationValue;
-            return this;
-        }
-
+      
         public IExpenseMapping<T> MapExpenseCategory(string category)
         {
             var expenseCategoryFieldMapping =
@@ -87,12 +73,13 @@ namespace ETS.Jobs.ServiceCore
             return this;
         }
 
+   
         public IExpenseMapping<T> MapExpenseFrequency(string expenseFrequency)
         {
 
             if (string.IsNullOrEmpty(expenseFrequency) || string.IsNullOrWhiteSpace(expenseFrequency)) throw new ArgumentException($"{nameof(ExpenseFrequency)}");
 
-            var expenseFrequencyEnum = expenseFrequency.ToEnum<ExpenseFrequency>();
+            var expenseFrequencyEnum = expenseFrequency.Replace(" ","").ToEnum<ExpenseFrequency>();
 
             if (!expenseFrequencyEnum.HasValue) throw new ArgumentException($"{nameof(ExpenseFrequency)}");
 
@@ -102,7 +89,9 @@ namespace ETS.Jobs.ServiceCore
         }
 
         public abstract T Build();
+        public abstract IExpenseMapping<T> MapPaidFor(string paidFor);
 
-      
+
+
     }
 }

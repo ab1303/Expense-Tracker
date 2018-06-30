@@ -6,7 +6,13 @@ using System.Linq;
 
 namespace ETS.Jobs.ServiceCore
 {
-    public class TransactionMapping
+
+    public interface ITransactionMapping
+    {
+        Transaction MapRecord(MonthlyExpenseFileImport importRecord);
+    }
+
+    public class TransactionMapping : ITransactionMapping
     {
         private readonly IRepositories repositories;
 
@@ -23,7 +29,7 @@ namespace ETS.Jobs.ServiceCore
 
             if (fieldCategoryMapping == null) throw new ArgumentException($"{nameof(importRecord.PaidFor)}");
 
-            if (fieldCategoryMapping.FieldCategory == FieldCategory.PaidByIndividual)
+            if (fieldCategoryMapping.FieldCategory == FieldCategory.PaidForIndividual)
                 return IndividualExpenseMapping.Create(repositories, importRecord);
 
             return GroupExpenseMapping.Create(repositories, importRecord);
