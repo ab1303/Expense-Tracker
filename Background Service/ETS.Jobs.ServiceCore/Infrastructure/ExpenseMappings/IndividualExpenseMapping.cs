@@ -8,7 +8,8 @@ namespace ETS.Jobs.ServiceCore
 {
     public class IndividualExpenseMapping : BaseExpenseMapping<IndividualExpense>
     {
-        private IndividualExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord) : base(repositories, importRecord)
+        private IndividualExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord) 
+            : base(repositories, importRecord)
         {
             
         }
@@ -48,15 +49,15 @@ namespace ETS.Jobs.ServiceCore
 
             var individualExpense = new IndividualExpense
             {
-                Amount = Amount,
-                PaidBy = paidBy,
-                PaidFor = paidFor,
                 Name = ExpenseName,
-                Category = category,
+                Amount = Amount,
                 Details = Details,
                 Frequency = Frequency,
                 TransactionDate = Date,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
+                PaidById = paidBy.Id,
+                PaidForId = paidFor.Id,
+                CategoryId = category.Id,
             };
 
             return individualExpense;

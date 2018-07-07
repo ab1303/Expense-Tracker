@@ -20,14 +20,6 @@ namespace ETS.DataCore.Seeders
 
         public async Task SeedAsync(DataContext dataContext)
         {
-            //if (await dataContext.Database.EnsureCreatedAsync())
-            //{
-            //    if (!await dataContext.ExpenseCategories.AnyAsync())
-            //    {
-            //        await InsertFieldMappingsSampleData(dataContext);
-            //    }
-            //}
-
             if (!await dataContext.FieldCategoryMappings.AnyAsync())
             {
                 await InsertFieldMappingsSampleData(dataContext);
@@ -217,6 +209,30 @@ namespace ETS.DataCore.Seeders
                     FieldCategory=FieldCategory.PaidByIndividual,
                     SourceValue="Wahab",
                     DestinationValue="Abdul",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                  new FieldCategoryMapping
+                {
+                    FieldCategory=FieldCategory.ExpenseCategory,
+                    SourceValue="Food",
+                    DestinationValue="Eating Out",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                    new FieldCategoryMapping
+                {
+                    FieldCategory=FieldCategory.ExpenseCategory,
+                    SourceValue="Investment",
+                    DestinationValue="Investment",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                       new FieldCategoryMapping
+                {
+                    FieldCategory=FieldCategory.ExpenseCategory,
+                    SourceValue="Misc.",
+                    DestinationValue="Uncategorised",
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },

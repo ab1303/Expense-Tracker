@@ -9,10 +9,16 @@ namespace ETS.Domain
         public long Id { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
-        public UserDetail PaidBy { get; set; }
+
+        public long PaidById { get; set; }
+        public virtual UserDetail PaidBy { get; set; }
+
         public ExpenseFrequency Frequency { get; set; }
         public string FrequencyString { get { return Frequency.ToString(); } private set { } }
-        public ExpenseCategory Category { get; set; }
+
+        public long CategoryId { get; set; }
+        public virtual ExpenseCategory Category { get; set; }
+
         public string Details { get; set; }
         public DateTime TransactionDate { get; set; }
 
@@ -20,12 +26,14 @@ namespace ETS.Domain
 
     public class IndividualExpense : Transaction
     {
-        public UserDetail PaidFor { get; set; }
+        public long PaidForId { get; set; }
+        public virtual UserDetail PaidFor { get; set; }
     }
 
     public class GroupExpense : Transaction
     {
-        public UserGroup PaidFor { get; set; }
+        public long PaidForId { get; set; }
+        public virtual UserGroup PaidFor { get; set; }
     }
 
 }

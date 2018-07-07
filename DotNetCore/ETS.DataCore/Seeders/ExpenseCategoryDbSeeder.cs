@@ -124,6 +124,20 @@ namespace ETS.DataCore.Seeders
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },
+                  new ExpenseCategory
+                {
+                    Name="Investment",
+                    Description="This includes different investments for the sake of profit, both short and long term.",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                  new ExpenseCategory
+                {
+                    Name="Uncategorised",
+                    Description="This includes different expenses which could not be categorised at that time.",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
 
             };
 

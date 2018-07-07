@@ -1,5 +1,6 @@
 ﻿using System;
 using ETS.Jobs.Request;
+using Hangfire;
 using Microsoft.Extensions.Logging;
 
 namespace ETS.Jobs.Service.JobRequestHandlers
@@ -13,6 +14,7 @@ namespace ETS.Jobs.Service.JobRequestHandlers
             Logger = logger;
         }
 
+        [DisableConcurrentExecution(timeoutInSeconds: 10 * 60)]
         public void Handle(TRequest request)
         {
             Logger.LogInformation("----------------------------------");

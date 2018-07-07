@@ -1,4 +1,5 @@
-﻿using ETS.Domain;
+﻿using ETS.DataCore.Implementations;
+using ETS.Domain;
 using ETS.DomainCore.Enums;
 using ETS.Services.Repositories;
 using System;
@@ -8,7 +9,8 @@ namespace ETS.Jobs.ServiceCore
 {
     public class GroupExpenseMapping : BaseExpenseMapping<GroupExpense>
     {
-        private GroupExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord) : base(repositories, importRecord)
+        private GroupExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord) 
+            : base(repositories, importRecord)
         {
 
         }
@@ -49,14 +51,14 @@ namespace ETS.Jobs.ServiceCore
             var groupExpense = new GroupExpense
             {
                 Amount = Amount,
-                PaidBy = paidBy,
-                PaidFor = paidFor,
                 Name = ExpenseName,
-                Category = category,
                 Details = Details,
                 Frequency = Frequency,
                 TransactionDate = Date,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
+                PaidById = paidBy.Id,
+                PaidForId = paidFor.Id,
+                CategoryId = category.Id,
             };
 
             return groupExpense;

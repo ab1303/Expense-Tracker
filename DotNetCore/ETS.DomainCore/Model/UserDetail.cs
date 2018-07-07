@@ -10,9 +10,10 @@ namespace ETS.Domain
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string IdentityId { get; set; }
-        public ApplicationUser Identity { get; set; }
+        public virtual ApplicationUser Identity { get; set; }
+
         public long? UserGroupId { get; set; }
-        public UserGroup UserGroup { get; set; }
+        public virtual UserGroup UserGroup { get; set; }
 
     }
 }

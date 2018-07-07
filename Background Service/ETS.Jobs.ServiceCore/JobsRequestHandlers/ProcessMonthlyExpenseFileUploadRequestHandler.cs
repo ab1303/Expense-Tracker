@@ -1,9 +1,9 @@
 ﻿using ETS.Core.Helpers;
 using ETS.Core.Interfaces;
-using ETS.DataCore.Intefaces;
+using ETS.DataCore.Implementations;
+using ETS.Domain;
 using ETS.Jobs.Request;
 using ETS.Jobs.Service.JobRequestHandlers;
-using ETS.Services.Interfaces;
 using ETS.Services.Repositories;
 using Microsoft.Extensions.Logging;
 
@@ -13,7 +13,7 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
     {
         private readonly IFileStorage _fileStorage;
         private readonly IRepositories _repositories;
-        private readonly IDataContext _dataContext;
+        private readonly IBackgroundServiceDataContext _dataContext;
         private readonly ITransactionMapping _transactionMapping;
 
         public ProcessMonthlyExpenseFileUploadRequestHandler(
@@ -21,7 +21,7 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
             IFileStorage fileStorage,
             IRepositories repositories,
             ITransactionMapping transactionMapping,
-            IDataContext dataContext
+            IBackgroundServiceDataContext dataContext
         ) : base(logger)
         {
             this._fileStorage = fileStorage;
@@ -40,8 +40,10 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
             foreach (var record in monthlyExpensesResults)
             {
                 var expenseRecord = _transactionMapping.MapRecord(record);
+                if(expenseRecord != null)
+                    _dataContext.Transactions.Add(expenseRecord);
 
-                _dataContext.Transactions.Add(expenseRecord);
+                _dataContext.SaveChanges();
             }
 
             Logger.LogInformation($"Process handler ProcessMonthlyExpenseFileUploadRequestHandler implemenation");

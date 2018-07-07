@@ -24,6 +24,7 @@ namespace ETS.DataCore
             services.AddTransient<DatabaseSeeder>();
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();
             services.AddScoped<IDataContext, DataContext>();
+            services.AddScoped<IBackgroundServiceDataContext, BackgroundServiceDataContext>();
 
             return services;
         }

@@ -37,11 +37,8 @@ namespace ETS.DataCore.Implementations
         readonly HashSet<long> _changeSet = new HashSet<long>(); // To handle unique Monitor Invoke
         private int _callCount = 0; // To handle recursive Monitor Invokes
 
-        public override int SaveChanges()
+        protected virtual string LoggedInUser()
         {
-            // Incremented for every SaveChanges() call
-            _callCount++;
-
             var principal = Thread.CurrentPrincipal;
 
             if (!principal.Identity.IsAuthenticated)
@@ -49,10 +46,18 @@ namespace ETS.DataCore.Implementations
                 throw new UnauthorizedAccessException();
             }
 
+            return principal.LoggedInUser();
+        }
+
+        public override int SaveChanges()
+        {
+            // Incremented for every SaveChanges() call
+            _callCount++;
+
             if (ChangeTracker.HasChanges())
             {
                 var changedEntities = ChangeTracker.Entries<BaseEntity>().Where(e => e.State != EntityState.Unchanged).ToArray();
-                var userLogin = principal.LoggedInUser();
+                var userLogin = LoggedInUser();
 
                 try
                 {
