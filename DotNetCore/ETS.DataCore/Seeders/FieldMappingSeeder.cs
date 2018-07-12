@@ -220,7 +220,7 @@ namespace ETS.DataCore.Seeders
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },
-                    new FieldCategoryMapping
+                 new FieldCategoryMapping
                 {
                     FieldCategory=FieldCategory.ExpenseCategory,
                     SourceValue="Investment",
@@ -228,11 +228,19 @@ namespace ETS.DataCore.Seeders
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },
-                       new FieldCategoryMapping
+                 new FieldCategoryMapping
                 {
                     FieldCategory=FieldCategory.ExpenseCategory,
                     SourceValue="Misc.",
                     DestinationValue="Uncategorised",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                 new FieldCategoryMapping
+                {
+                    FieldCategory=FieldCategory.ExpenseCategory,
+                    SourceValue="Education",
+                    DestinationValue="Education",
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },

@@ -55,7 +55,7 @@ namespace ETS.JobsHost
 
             // Configure Services on startup based on Cron Expressions
 
-            app.ScheduleRecurringRiskPeerReviewEmail("*/1 * * * MON-FRI");
+            app.ScheduleRecurringRiskPeerReviewEmail("*/30 * * * MON-FRI");
 
             app.UseMvc(routes =>
             {

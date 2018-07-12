@@ -138,6 +138,27 @@ namespace ETS.DataCore.Seeders
                     CreateLogin="seeder@application.com",
                     DateCreated=DateTime.Now
                 },
+                   new ExpenseCategory
+                {
+                    Name="Migration",
+                    Description="Immigration expenses for family members.",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                    new ExpenseCategory
+                {
+                    Name="Saving",
+                    Description="This includes cash savings or savings in form of gold, Forex etc.",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
+                         new ExpenseCategory
+                {
+                    Name="Asset",
+                    Description="This includes long term assets or assets having less liquidity such as car, land etc.",
+                    CreateLogin="seeder@application.com",
+                    DateCreated=DateTime.Now
+                },
 
             };
 

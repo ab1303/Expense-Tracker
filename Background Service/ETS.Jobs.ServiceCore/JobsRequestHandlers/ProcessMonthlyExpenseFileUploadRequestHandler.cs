@@ -32,7 +32,7 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
 
         protected override void HandleRequest(ProcessMonthlyExpenseFileUploadRequest request)
         {
-            var fileBytes = _fileStorage.GetFileAsync(Core.Enums.FileFolder.MonthlyExpenseSheets, "Expense Tracker.xlsx").Result;
+            var fileBytes = _fileStorage.GetFileAsync(Core.Enums.FileFolder.MonthlyExpenseSheets, "Expense Tracker - 2017.xlsx").Result;
 
             var monthlyExpensesResults = FileHelper.ReadExcel<MonthlyExpenseFileImport>(fileBytes);
             Logger.LogInformation($"Number of records in the file is {monthlyExpensesResults.Length}");
@@ -42,9 +42,9 @@ namespace ETS.Jobs.ServiceCore.JobsRequestHandlers
                 var expenseRecord = _transactionMapping.MapRecord(record);
                 if(expenseRecord != null)
                     _dataContext.Transactions.Add(expenseRecord);
-
-                _dataContext.SaveChanges();
             }
+
+            _dataContext.SaveChanges();
 
             Logger.LogInformation($"Process handler ProcessMonthlyExpenseFileUploadRequestHandler implemenation");
         }
