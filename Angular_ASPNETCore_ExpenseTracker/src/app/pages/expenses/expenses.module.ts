@@ -12,14 +12,16 @@ import { ExpensesComponent } from "./expenses.component";
 import { EXPENSES_ROUTES } from "./expenses.routes";
 import { ExpenseSheetComponent } from "./expense-sheet/expense-sheet.component";
 import { ExpenseSheetService } from './expense-sheet/expense-sheet.service';
+import { ExpenseRegisterService } from './expense-register/expense-register.service';
+import { ExpenseRegisterComponent } from './expense-register/expense-register.component';
 
 @NgModule({
-  declarations: [ExpensesComponent, ExpenseSheetComponent],
+  declarations: [ExpensesComponent, ExpenseSheetComponent, ExpenseRegisterComponent],
   imports: [
     CommonModule, 
     FileUploadModule, 
     NgxDatatableModule, 
     SharedModule.forRoot(), RouterModule.forChild(EXPENSES_ROUTES)],
-  providers: [TrackByService, ExpenseSheetService]
+  providers: [TrackByService, ExpenseSheetService, ExpenseRegisterService]
 })
 export class ExpensesModule {}
