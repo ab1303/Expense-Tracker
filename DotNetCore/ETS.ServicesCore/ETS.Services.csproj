@@ -11,7 +11,11 @@
   <ItemGroup>
     <Folder Include="Interfaces\Queries\" />
     <Folder Include="Services\" />
-    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic" Version="1.0.7" />
+    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
