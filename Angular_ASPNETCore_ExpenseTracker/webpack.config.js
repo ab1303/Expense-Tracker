@@ -508,9 +508,11 @@ module.exports = {
 	},
 	"devServer": {
 		historyApiFallback: true,
-		contentBase: path.resolve('dist'),
+		//contentBase: path.resolve('dist'),
+        contentBase: path.resolve(outputPath),
 		host: '0.0.0.0',
 		port: 5000,
+		//port: 52951,
 		disableHostCheck: true,
 		headers: {
 			'Access-Control-Allow-Origin': '*',

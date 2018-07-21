@@ -8,7 +8,7 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-const API_URL = `${API_BASE_ADDRESS}/ExpenseRegister`;
+const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 @Injectable()
 export class ExpenseRegisterService {
   constructor(private http: HttpClient) {}

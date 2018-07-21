@@ -158,6 +158,16 @@ namespace Angular_ASPNETCore_Seed
             //// Add Hangfire
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DataConnection")));
 
+            // Add service and create Policy with options
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             // Add MVC Framework Services.
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
@@ -245,12 +255,14 @@ namespace Angular_ASPNETCore_Seed
             });
 
             //This would need to be locked down as needed (very open right now)
-            app.UseCors((corsPolicyBuilder) =>
-            {
-                corsPolicyBuilder.AllowAnyOrigin();
-                corsPolicyBuilder.AllowAnyMethod();
-                corsPolicyBuilder.AllowAnyHeader();
-            });
+            //app.UseCors((corsPolicyBuilder) =>
+            //{
+            //    corsPolicyBuilder.AllowAnyOrigin();
+            //    corsPolicyBuilder.AllowAnyMethod();
+            //    corsPolicyBuilder.AllowAnyHeader();
+            //});
+
+            app.UseCors("CorsPolicy");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();

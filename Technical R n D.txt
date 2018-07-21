@@ -1,3 +1,9 @@
+****** COrs Issue
+https://stackoverflow.com/questions/45108307/angular4-asp-net-core-1-2-windows-authentication-cors-for-put-and-post-gives-401/50354772#50354772
+
+
+
+
 https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro
 
 

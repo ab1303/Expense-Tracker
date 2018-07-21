@@ -1,4 +1,5 @@
-﻿using ETS.Services.Implementations;
+﻿using ETS.Service.Services;
+using ETS.Services.Implementations;
 using ETS.Services.Interfaces;
 using ETS.Services.Interfaces.Repositories;
 using ETS.Services.Repositories;
@@ -23,6 +24,7 @@ namespace ETS.Services
            
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+            services.AddScoped<IQueryService, QueryService>();
 
             return services;
         }

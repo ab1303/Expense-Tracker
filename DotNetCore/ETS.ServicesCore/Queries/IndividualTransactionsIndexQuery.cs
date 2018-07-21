@@ -1,7 +1,6 @@
 ﻿using ETS.Domain.Enums;
 using ETS.Service.DTO;
 using ETS.Service.Services;
-using ETS.Services.Interfaces.ChangeTracking;
 using ETS.Services.Repositories;
 using System;
 using System.Linq;
@@ -15,7 +14,12 @@ namespace ETS.Services.Queries
         public PagedListArgs PagedListArgs { get; }
         public bool ReturnAllResults { get; }
 
-        public Result[] GetResults(IRepositories repositories, IUnitOfWork unitOfWork, out int totalFound)
+        public IndividualTransactionsIndexQuery(bool returnAllResults = true)
+        {
+            ReturnAllResults = returnAllResults;
+        }
+
+        public Result[] GetResults(IRepositories repositories, out int totalFound)
         {
 
 
@@ -41,7 +45,7 @@ namespace ETS.Services.Queries
 
             totalFound = query.Count();
 
-            var orderBy = $"{PagedListArgs.SortBy} {(PagedListArgs.SortOrder == SortOrder.Asc ? "ASC" : "DESC")}";
+            var orderBy = $"{DefaultSortBy.TransactionDate} {"DESC"}";
 
             var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
                 query.OrderBy(orderBy).Skip(PagedListArgs.PageSize * PagedListArgs.PageNumber).Take(PagedListArgs.PageSize).ToArray();
@@ -61,6 +65,11 @@ namespace ETS.Services.Queries
             public string PaidForName { get; set; }
             public DateTime TransactionDate { get; set; }
             public ExpenseFrequency Frequency { get; set; }
+        }
+
+        public static class DefaultSortBy
+        {
+            public const string TransactionDate = "TransactionDate";
         }
     }
 }

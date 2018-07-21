@@ -22,13 +22,13 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<ExpenseCategoryResponse>), 200)]
+        [ProducesResponseType(typeof(ExpenseCategoryResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         public ActionResult Get()
         {
             try
             {
-                var expenseCategoryResposne = new ExpenseCategoryResponse
+                var expenseCategoryResponse = new ExpenseCategoryResponse
                 {
                     ExpenseCategories = _expenseCategoryService.GetExpenseCategories(),
                     Code = InternalApiStatusCode.Success,
@@ -36,7 +36,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 
                 };
 
-                return Ok(expenseCategoryResposne);
+                return Ok(expenseCategoryResponse);
 
             }
             catch (Exception ex)
