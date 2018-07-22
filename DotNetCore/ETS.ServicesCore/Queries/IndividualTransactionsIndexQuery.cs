@@ -4,7 +4,7 @@ using ETS.Service.Services;
 using ETS.Services.Repositories;
 using System;
 using System.Linq;
-using System.Linq.Dynamic;
+using System.Linq.Dynamic.Core;
 using System.Collections.Generic;
 
 namespace ETS.Services.Queries

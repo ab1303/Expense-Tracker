@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { ITransaction, TransactionApiResponse } from "./transaction";
+import { ITransaction, IndividualTransactionsApiResponse } from "./transaction";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
@@ -13,7 +13,7 @@ const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 export class ExpenseRegisterService {
   constructor(private http: HttpClient) {}
 
-  getTransactions(): Observable<TransactionApiResponse> {
+  getTransactions(): Observable<IndividualTransactionsApiResponse> {
     return this.http
       .get(API_URL)
       .map((response: Response) => {

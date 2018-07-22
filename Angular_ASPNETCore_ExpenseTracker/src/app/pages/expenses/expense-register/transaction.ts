@@ -3,17 +3,18 @@ import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-re
 export interface ITransaction {
   id: number;
   amount: number;
-  category: string;
+  categoryName: string;
   name: string;
   details: string;
   paidBy: string;
   paidFor: string;
   paidForType: number;
   frequency: number;
+  transactionDate: Date;
   dateCreated: Date;
   dateChanged: Date;
 }
 
-export interface TransactionApiResponse extends BaseApiResponse {
-  transactions: ITransaction[];
+export interface IndividualTransactionsApiResponse extends BaseApiResponse {
+  individualTransactions: ITransaction[];
 }
