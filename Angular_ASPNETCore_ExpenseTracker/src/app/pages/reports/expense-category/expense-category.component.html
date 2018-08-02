@@ -1,3 +1,35 @@
-<p>
-  expense-category reporting works!
-</p>
+<div id="content_wrapper" class="fullWidth1-wrapper">
+	<div class="content">
+		<div class="header-wrapper header-sm">
+			<header>
+				<h1>Fiscal Expense Category Report</h1>
+			</header>
+		</div>
+		<div class="content-body">
+			<div class="card card-datatable">
+				<header class="card-header p-30">
+					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
+						<md-toolbar class="activeHeaderColor">
+							<span>{{itemCount}} {{itemsSelected}}</span>
+							<span class="demo-fill-remaining"></span>
+						</md-toolbar>
+					</div>
+					<h2 class="card-title">Fiscal Expense Category Report</h2>
+					<ul class="actions icons top-right">
+					</ul>
+					<ul class="actions fab bottom-right">
+						<li>
+							<button class="btn btn-accent btn-fab" md-ripple>
+								<i class="zmdi zmdi-plus"></i>
+							</button>
+						</li>
+					</ul>
+				</header>
+				<div class="card-block p-0">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>
