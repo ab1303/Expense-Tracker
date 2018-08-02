@@ -18,7 +18,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         private readonly IExpenseCategoryService _expenseCategoryService;
         private readonly IQueryService _queryService;
 
-        //public TransactionsController(IQueryService queryService, ILoggerFactory loggerFactory)
         public TransactionsController(IQueryService queryService, IExpenseCategoryService expenseCategoryService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(TransactionsController));
