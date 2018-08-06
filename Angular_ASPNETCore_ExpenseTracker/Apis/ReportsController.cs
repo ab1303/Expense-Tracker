@@ -10,12 +10,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 {
     [Produces("application/json")]
     [Route("api/Users")]
-    public class UsersController : Controller
+    public class ReportsController : Controller
     {
         private readonly IQueryService _queryService;
         private readonly ILogger _logger;
 
-        public UsersController(IQueryService queryService, ILoggerFactory loggerFactory)
+        public ReportsController(IQueryService queryService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(UsersController));
             _queryService = queryService;
@@ -32,9 +32,9 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 
                 var result = _queryService.Execute(usersIndexQuery, out int totalCount);
 
-                var userDetailsResponse = new UserDetailsResponse
+                var userDetailsResponse = new ExpenseCategoryStatementResponse
                 {
-                    UserDetails = result,
+                    expenseCategories = result,
                     Code = InternalApiStatusCode.Success,
                     Message = "list of individual users in application",
 
