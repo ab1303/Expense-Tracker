@@ -29,7 +29,7 @@ namespace ETS.Services.Queries
                         on i.PaidFor equals u
                         join ug in repositories.UserGroup.Get()
                         on u.UserGroupId equals ug.Id
-                        select new 
+                        select new
                         {
                             UserId = u.Id,
                             FirstName = u.FirstName,
@@ -38,19 +38,33 @@ namespace ETS.Services.Queries
                             GroupName = ug.Name,
                             CategoryId = c.Id,
                             CategoryName = c.Name,
+                            Id = i.Id,
                             DateCreated = i.DateCreated,
                             Amount = i.Amount
                         }
                         into tempResult
-                        group tempResult by tempResult.CategoryName into groupedCategory
+                        group tempResult by
+                        new
+                        {
+                            tempResult.UserId,
+                            tempResult.FirstName,
+                            tempResult.LastName,
+                            tempResult.GroupId,
+                            tempResult.GroupName,
+                            tempResult.CategoryId,
+                            tempResult.CategoryName,
+                            tempResult.Id,
+                            tempResult.DateCreated,
+                        } into groupedCategory
                         select new Result
                         {
-                            Id = groupedCategory.,
-                            FirstName = u.FirstName,
-                            LastName = u.LastName,
-                            GroupId = ug.Id,
-                            GroupName = ug.Name,
-                            DateCreated = u.DateCreated
+                            Id = groupedCategory.Key.Id,
+                            FirstName = groupedCategory.Key.FirstName,
+                            LastName = groupedCategory.Key.LastName,
+                            GroupId = groupedCategory.Key.GroupId,
+                            GroupName = groupedCategory.Key.GroupName,
+                            DateCreated = groupedCategory.Key.DateCreated,
+                            Amount = groupedCategory.Sum(g => g.Amount),
                         };
 
             totalFound = query.Count();
@@ -72,6 +86,7 @@ namespace ETS.Services.Queries
             public long GroupId { get; set; }
             public string GroupName { get; set; }
             public DateTime DateCreated { get; set; }
+            public decimal Amount { get; set; }
         }
 
         public static class DefaultSortBy
