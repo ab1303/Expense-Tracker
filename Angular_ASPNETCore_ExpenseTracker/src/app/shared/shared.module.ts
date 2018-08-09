@@ -30,6 +30,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 
+
 // UI Shared Components
 import { FooterComponent } from '../layout/footer/footer.component';
 import { AppBackdropComponent } from './components/app_backdrop/app_backdrop.component';

@@ -14,7 +14,12 @@
 							<span class="demo-fill-remaining"></span>
 						</md-toolbar>
 					</div>
-					<h2 class="card-title">Fiscal Expense Category Report</h2>
+					<div class="card">
+						<div class="card-block">
+							<ng-daterangepicker [(ngModel)]="value" [options]="options"></ng-daterangepicker>
+						</div>
+					</div>
+
 					<ul class="actions icons top-right">
 					</ul>
 					<ul class="actions fab bottom-right">
@@ -26,7 +31,7 @@
 					</ul>
 				</header>
 				<div class="card-block p-0">
-					
+
 				</div>
 			</div>
 		</div>
