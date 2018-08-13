@@ -36,7 +36,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 {
                     expenseCategories = result,
                     Code = InternalApiStatusCode.Success,
-                    Message = "list of individual users in application",
+                    Message = "list of expense categories",
 
                 };
 

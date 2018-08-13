@@ -11,6 +11,20 @@ namespace ETS.Services.Queries
 {
     public class ExpenseCategoryStatementQuery : IPagedQuery<ExpenseCategoryStatementQuery.Result>
     {
+
+        public class Result
+        {
+            public long Id { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public long GroupId { get; set; }
+            public string GroupName { get; set; }
+            public long CategoryId { get; set; }
+            public string CategoryName { get; set; }
+            public DateTime TransactionDate { get; set; }
+            public decimal Amount { get; set; }
+        }
+
         public PagedListArgs PagedListArgs { get; }
         public bool ReturnAllResults { get; }
 
@@ -39,7 +53,7 @@ namespace ETS.Services.Queries
                             CategoryId = c.Id,
                             CategoryName = c.Name,
                             Id = i.Id,
-                            DateCreated = i.DateCreated,
+                            TransactionDate = i.TransactionDate,
                             Amount = i.Amount
                         }
                         into tempResult
@@ -54,16 +68,18 @@ namespace ETS.Services.Queries
                             tempResult.CategoryId,
                             tempResult.CategoryName,
                             tempResult.Id,
-                            tempResult.DateCreated,
+                            tempResult.TransactionDate,
                         } into groupedCategory
                         select new Result
                         {
                             Id = groupedCategory.Key.Id,
                             FirstName = groupedCategory.Key.FirstName,
                             LastName = groupedCategory.Key.LastName,
+                            CategoryId = groupedCategory.Key.CategoryId,
+                            CategoryName = groupedCategory.Key.CategoryName,
                             GroupId = groupedCategory.Key.GroupId,
                             GroupName = groupedCategory.Key.GroupName,
-                            DateCreated = groupedCategory.Key.DateCreated,
+                            TransactionDate = groupedCategory.Key.TransactionDate,
                             Amount = groupedCategory.Sum(g => g.Amount),
                         };
 
@@ -78,16 +94,7 @@ namespace ETS.Services.Queries
 
         }
 
-        public class Result
-        {
-            public long Id { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public long GroupId { get; set; }
-            public string GroupName { get; set; }
-            public DateTime DateCreated { get; set; }
-            public decimal Amount { get; set; }
-        }
+       
 
         public static class DefaultSortBy
         {

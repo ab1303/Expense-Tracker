@@ -9,8 +9,8 @@
   "scripts": {
     "clean": "del-cli \"wwwroot/app/**/*.js\" \"wwwroot/app/**/*.js.map\" \"wwwroot/devDist\" \"wwwroot/dist\"",
     "oldbuild": "npm run clean && webpack --progress --watch",
-    "build": "webpack --progress --watch",
-    "start": "webpack-dev-server --port=5000",
+    "build": "webpack --progress --watch --color",
+    "start": "webpack-dev-server --port=5000 --color",
     "webpack:hot": "node_modules/.bin/webpack-dev-server --hot --color",
     "webpack:watch": "node_modules/.bin/webpack -d -w --color",
     "webpack": "node_modules/.bin/webpack -p",
@@ -70,7 +70,6 @@
     "ngx-malihu-scrollbar": "1.2.2",
     "ngx-perfect-scrollbar": "4.8.4",
     "ngx-uploader": "4.0.0",
-    "node-sass": "4.5.3",
     "rxjs": "5.5.8",
     "sweetalert2": "6.10.1",
     "ts-helper": "0.0.1",
