@@ -1,0 +1,9 @@
+diff a/Angular_ASPNETCore_ExpenseTracker/package.json b/Angular_ASPNETCore_ExpenseTracker/package.json	(rejected hunks)
+@@ -70,7 +70,6 @@
+     "ngx-malihu-scrollbar": "1.2.2",
+     "ngx-perfect-scrollbar": "4.8.4",
+     "ngx-uploader": "4.0.0",
+-    "node-sass": "4.5.3",
+     "rxjs": "5.5.8",
+     "sweetalert2": "6.10.1",
+     "ts-helper": "0.0.1",
