@@ -14,14 +14,13 @@ namespace ETS.Services.Queries
 
         public class Result
         {
-            public long Id { get; set; }
+            public long? UserId { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
             public long GroupId { get; set; }
             public string GroupName { get; set; }
             public long CategoryId { get; set; }
             public string CategoryName { get; set; }
-            public DateTime TransactionDate { get; set; }
             public decimal Amount { get; set; }
         }
 
@@ -36,7 +35,7 @@ namespace ETS.Services.Queries
         public Result[] GetResults(IRepositories repositories, out int totalFound)
         {
 
-            var query = (from i in repositories.IndividualExpense.Get()
+            var individualExpenseCategories = (from i in repositories.IndividualExpense.Get()
                          join c in repositories.ExpenseCategory.Get()
                          on i.Category equals c
                          join u in repositories.UserDetail.Get()
@@ -55,7 +54,7 @@ namespace ETS.Services.Queries
                          } into groupedCategory
                          select new Result
                          {
-                             Id = groupedCategory.Key.Id,
+                             UserId = groupedCategory.Key.Id,
                              FirstName = groupedCategory.Key.FirstName,
                              LastName = groupedCategory.Key.LastName,
                              CategoryId = groupedCategory.Key.CategoryId,
@@ -63,13 +62,39 @@ namespace ETS.Services.Queries
                              GroupId = groupedCategory.Key.GroupId,
                              GroupName = groupedCategory.Key.GroupName,
                              Amount = groupedCategory.Sum(g => g.i.Amount),
-                         }).AsQueryable();
+                         }).ToList();
+
+
+            var groupExpenseCategories = (from g in repositories.GroupExpense.Get()
+                                               join c in repositories.ExpenseCategory.Get()
+                                               on g.Category equals c
+                                               join ug in repositories.UserGroup.Get()
+                                               on g.PaidFor equals ug
+                                               group new { g, c, ug } by new
+                                               {
+                                                   GroupId = ug.Id,
+                                                   GroupName = ug.Name,
+                                                   CategoryId = c.Id,
+                                                   CategoryName = c.Name,
+                                               } into groupedCategory
+                                               select new Result
+                                               {
+                                                   UserId = null,
+                                                   FirstName = null,
+                                                   LastName = null,
+                                                   CategoryId = groupedCategory.Key.CategoryId,
+                                                   CategoryName = groupedCategory.Key.CategoryName,
+                                                   GroupId = groupedCategory.Key.GroupId,
+                                                   GroupName = groupedCategory.Key.GroupName,
+                                                   Amount = groupedCategory.Sum(g => g.g.Amount),
+                                               }).ToList();
 
 
 
+            var expenseCategory = individualExpenseCategories.Union(groupExpenseCategories);
 
-            totalFound = query.Count();
-            var result = query.ToArray();
+            totalFound = expenseCategory.Count();
+            var result = expenseCategory.ToArray();
 
             return result;
         }

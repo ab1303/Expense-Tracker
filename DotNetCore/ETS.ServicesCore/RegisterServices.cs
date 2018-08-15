@@ -14,6 +14,7 @@ namespace ETS.Services
             // Register Repositories
             services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
             services.AddScoped<IFieldCategoryMappingRepository, FieldCategoryMappingRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IGroupExpenseRepository, GroupExpenseRepository>();
             services.AddScoped<IIndividualExpenseRepository, IndividualExpenseRepository>();
             services.AddScoped<IUserDetailRepository, UserDetailRepository>();
