@@ -43,32 +43,15 @@ namespace ETS.Services.Queries
                          on i.PaidFor equals u
                          join ug in repositories.UserGroup.Get()
                          on u.UserGroupId equals ug.Id
-                         select new
+                         group new { i, c, u, ug } by new
                          {
-                             UserId = u.Id,
-                             FirstName = u.FirstName,
-                             LastName = u.LastName,
                              GroupId = ug.Id,
                              GroupName = ug.Name,
                              CategoryId = c.Id,
                              CategoryName = c.Name,
-                             Id = i.Id,
-                             TransactionDate = i.TransactionDate,
-                             Amount = i.Amount
-                         }
-                        into tempResult
-                         group tempResult by
-                         new
-                         {
-                             tempResult.UserId,
-                             tempResult.FirstName,
-                             tempResult.LastName,
-                             tempResult.GroupId,
-                             tempResult.GroupName,
-                             tempResult.CategoryId,
-                             tempResult.CategoryName,
-                             tempResult.Id,
-                             tempResult.TransactionDate,
+                             u.Id,
+                             u.FirstName,
+                             u.LastName,
                          } into groupedCategory
                          select new Result
                          {
@@ -79,20 +62,16 @@ namespace ETS.Services.Queries
                              CategoryName = groupedCategory.Key.CategoryName,
                              GroupId = groupedCategory.Key.GroupId,
                              GroupName = groupedCategory.Key.GroupName,
-                             TransactionDate = groupedCategory.Key.TransactionDate,
-                             Amount = groupedCategory.Sum(g => g.Amount),
+                             Amount = groupedCategory.Sum(g => g.i.Amount),
                          }).AsQueryable();
 
+
+
+
             totalFound = query.Count();
+            var result = query.ToArray();
 
-            var orderBy = $"{DefaultSortBy.CategoryName} {"DESC"}";
-
-            //var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
-            //    query.OrderBy(orderBy).Skip(PagedListArgs.PageSize * PagedListArgs.PageNumber).Take(PagedListArgs.PageSize).ToArray();
-
-            //return results;
-
-            return query.OrderBy(orderBy).ToArray();
+            return result;
         }
 
 
