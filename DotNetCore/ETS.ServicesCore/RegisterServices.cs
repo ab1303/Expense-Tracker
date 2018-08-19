@@ -25,6 +25,7 @@ namespace ETS.Services
            
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+            services.AddScoped<IReportingService, ReportingService>();
             services.AddScoped<IQueryService, QueryService>();
 
             return services;

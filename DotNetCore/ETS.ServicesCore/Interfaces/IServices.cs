@@ -6,6 +6,7 @@ namespace ETS.Services.Interfaces
     public interface IServices
     {
         Lazy<IExpenseCategoryService> ExpenseCategoryService { get; }
+        Lazy<IReportingService> ReportingService { get; }
         Lazy<IQueryService> QueryService { get; }
     }
 }

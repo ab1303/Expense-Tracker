@@ -93,10 +93,10 @@ namespace ETS.Services.Queries
 
             var expenseCategory = individualExpenseCategories.Union(groupExpenseCategories);
 
-            totalFound = expenseCategory.Count();
-            var result = expenseCategory.ToArray();
+            var expenseCategoryEnumerable = expenseCategory as Result[] ?? expenseCategory.ToArray();
+            totalFound = expenseCategoryEnumerable.Count();
 
-            return result;
+            return expenseCategoryEnumerable;
         }
 
 

@@ -1,5 +1,5 @@
-﻿using ETS.Services.Queries;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ETS.Services.DTO.Reports;
 
 namespace Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Users
 {
@@ -8,6 +8,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Users
         /// <summary>
         /// List of cities in a country
         /// </summary>
-        public IEnumerable<ExpenseCategoryStatementQuery.Result> expenseCategories { get; set; }
+        public IEnumerable<ReportGroupDTO> ExpenseReportGroups { get; set; }
     }
 }
