@@ -1,14 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AssemblyName>Angular_ASPNETCore_ExpenseTracker</AssemblyName>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="fluentvalidation.aspnetcore" Version="7.5.2" />
@@ -22,14 +20,12 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="1.0.0" />
   </ItemGroup>
-  
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
   </ItemGroup>
-  
   <ItemGroup>
     <Folder Include="src\app\security\" />
     <Folder Include="src\app\shared\model\" />
@@ -37,12 +33,19 @@
     <Folder Include="Views\Account\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Background Service\ETS.Jobs.RequestCore\ETS.Jobs.RequestCore.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.AzureCore\ETS.Azure.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.Core\ETS.Core.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.ServicesCore\ETS.Services.csproj" />
+    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category-report.model.ts" />
+    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category.ts" />
+    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category-report.service.ts" />
+    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category.component.ts" />
+    <Content Include="src\app\pages\reports\expense-category\expense-category.component.html" />
+    <Content Include="src\app\pages\expenses\expense-register\expense-register.component.html" />
+    <TypeScriptCompile Include="src\app\pages\expenses\expense-register\expense-register.component.ts" />
+    <TypeScriptCompile Include="src\app\pages\reports\reports.module.ts" />
+    <TypeScriptCompile Include="src\app\pages\expenses\expenses.module.ts" />
   </ItemGroup>
-
 </Project>

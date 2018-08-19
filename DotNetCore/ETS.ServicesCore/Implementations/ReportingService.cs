@@ -34,7 +34,7 @@ namespace ETS.Services.Implementations
                         GroupingName = s.Key.CategoryName,
                         GroupingTotal = s.Sum(t => t.Amount),
                     },
-                    SubCategory = s.GroupBy(g2 => new { g2.CategoryId, g2.CategoryName, g2.GroupId, g2.GroupName })
+                    SubCategories = s.GroupBy(g2 => new { g2.CategoryId, g2.CategoryName, g2.GroupId, g2.GroupName })
                     .Select(s2 => new ReportGroupDTO
                     {
                         Category = new GroupedTotalDTO
@@ -42,7 +42,7 @@ namespace ETS.Services.Implementations
                             GroupingName = s2.Key.GroupName,
                             GroupingTotal = s2.Sum(t2 => t2.Amount)
                         },
-                        SubCategory = s.GroupBy(g3 => new { g3.CategoryId, g3.CategoryName, g3.GroupId, g3.GroupName, g3.UserId, UserName = g3.FirstName + " " + g3.LastName })
+                        SubCategories = s.GroupBy(g3 => new { g3.CategoryId, g3.CategoryName, g3.GroupId, g3.GroupName, g3.UserId, UserName = g3.FirstName + " " + g3.LastName })
                                 .Select(s3 => new ReportGroupDTO
                                 {
                                     Category = new GroupedTotalDTO

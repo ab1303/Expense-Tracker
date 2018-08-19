@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { NgDateRangePickerModule } from "ng-daterangepicker";
 
 import { SharedModule } from "../../shared/shared.module";
@@ -16,6 +17,7 @@ import { ExpenseCategoryReportService } from "./expense-category/expense-categor
   imports: [
     CommonModule,
     NgDateRangePickerModule,
+    NgxDatatableModule, 
     SharedModule.forRoot(),
     RouterModule.forChild(REPORTS_ROUTES)
   ],

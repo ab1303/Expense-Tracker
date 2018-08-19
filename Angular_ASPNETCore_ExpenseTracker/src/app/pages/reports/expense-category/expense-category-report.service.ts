@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { IExpenseCategory, ExpenseCategoryReportApiResponse } from "./expense-category";
+import { ExpenseCategoryReportApiResponse } from "./expense-category-report.model";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";

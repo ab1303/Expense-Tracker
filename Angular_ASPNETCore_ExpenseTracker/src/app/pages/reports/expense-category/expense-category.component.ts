@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgDateRangePickerOptions } from 'ng-daterangepicker';
 
-import { IExpenseCategory } from './expense-category';
 import { ExpenseCategoryReportService } from './expense-category-report.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { ExpenseCategoryReportService } from './expense-category-report.service'
   styleUrls: ['./expense-category.component.scss']
 })
 export class ExpenseCategoryComponent implements OnInit {
-  expenseCategories: IExpenseCategory[] = [];
   rows = [];
   options: NgDateRangePickerOptions;
 
@@ -30,8 +28,7 @@ export class ExpenseCategoryComponent implements OnInit {
   };
   
   this.expenseCategoryReportService.getExpenseCategories().subscribe(data => {
-    // this.transactions = data.transactions;
-    this.rows = data.expenseCategories;
+    this.rows = data.expenseReportGroups;
   });
 
   }
