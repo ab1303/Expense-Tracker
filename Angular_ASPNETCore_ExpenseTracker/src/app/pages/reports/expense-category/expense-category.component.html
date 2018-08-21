@@ -11,7 +11,7 @@
 					<ng-daterangepicker [(ngModel)]="value" [options]="options"></ng-daterangepicker>
 				</header>
 				<div class="card-block m-10">
-					<ngx-datatable #table style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+					<!-- <ngx-datatable #table style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
 					 [rowHeight]="'auto'">
 						<ngx-datatable-column name="Category" prop="category.groupingName"></ngx-datatable-column>
 						<ngx-datatable-column name="Total" prop="category.groupingTotal">
@@ -19,7 +19,21 @@
 								{{value | currency:'USD':true:'1.2-4'}}
 							  </ng-template>
 						</ngx-datatable-column>
+					</ngx-datatable> -->
+					<ngx-datatable #table style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
+					 [rowHeight]="'auto'" [columns]="columns">
+
 					</ngx-datatable>
+
+					<ng-template #Tmpl2015 let-column="column" let-row="row" let-value="value">
+						{{value.year2015 | currency:'USD':true:'1.2-4'}}
+					</ng-template>
+					<ng-template #Tmpl2016 let-column="column" let-row="row" let-value="value">
+						{{value.year2016 | currency:'USD':true:'1.2-4'}}
+					</ng-template>
+					<ng-template #Tmpl2017 let-column="column" let-row="row" let-value="value">
+						{{value.year2017 | currency:'USD':true:'1.2-4'}}
+					</ng-template>
 				</div>
 			</div>
 		</div>

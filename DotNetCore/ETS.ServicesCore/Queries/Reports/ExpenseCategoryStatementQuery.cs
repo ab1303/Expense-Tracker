@@ -14,6 +14,7 @@ namespace ETS.Services.Queries
 
         public class Result
         {
+            public int Year { get; set; }
             public long? UserId { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -44,6 +45,7 @@ namespace ETS.Services.Queries
                          on u.UserGroupId equals ug.Id
                          group new { i, c, u, ug } by new
                          {
+                             Year = i.TransactionDate.Year,
                              GroupId = ug.Id,
                              GroupName = ug.Name,
                              CategoryId = c.Id,
@@ -54,6 +56,7 @@ namespace ETS.Services.Queries
                          } into groupedCategory
                          select new Result
                          {
+                             Year = groupedCategory.Key.Year,
                              UserId = groupedCategory.Key.Id,
                              FirstName = groupedCategory.Key.FirstName,
                              LastName = groupedCategory.Key.LastName,
@@ -72,6 +75,7 @@ namespace ETS.Services.Queries
                                                on g.PaidFor equals ug
                                                group new { g, c, ug } by new
                                                {
+                                                   Year = g.TransactionDate.Year,
                                                    GroupId = ug.Id,
                                                    GroupName = ug.Name,
                                                    CategoryId = c.Id,
@@ -79,6 +83,7 @@ namespace ETS.Services.Queries
                                                } into groupedCategory
                                                select new Result
                                                {
+                                                   Year = groupedCategory.Key.Year,
                                                    UserId = null,
                                                    FirstName = null,
                                                    LastName = null,

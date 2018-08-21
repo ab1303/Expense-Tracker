@@ -8,7 +8,7 @@ interface GroupedTotalDTO {
 
 export interface ReportGroupDTO {
     category: GroupedTotalDTO;
-    SubCategories: ReportGroupDTO;
+    subCategories: ReportGroupDTO[];
 }
 
 

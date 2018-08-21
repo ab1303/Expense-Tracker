@@ -25,34 +25,44 @@ namespace ETS.Services.Implementations
             var expenseCategoryReportQuery = new ExpenseCategoryStatementQuery();
             var expenseItems = _queryService.Execute(expenseCategoryReportQuery, out int totalCount);
 
-           
-            var report = expenseItems.GroupBy(g => new { g.CategoryId, g.CategoryName })
-                .Select(s => new ReportGroupDTO
-                {
-                    Category = new GroupedTotalDTO
-                    {
-                        GroupingName = s.Key.CategoryName,
-                        GroupingTotal = s.Sum(t => t.Amount),
-                    },
-                    SubCategories = s.GroupBy(g2 => new { g2.CategoryId, g2.CategoryName, g2.GroupId, g2.GroupName })
-                    .Select(s2 => new ReportGroupDTO
+
+            var report =
+                expenseItems.GroupBy(g => new { g.Year })
+                    .Select(s0 => new ReportGroupDTO
                     {
                         Category = new GroupedTotalDTO
                         {
-                            GroupingName = s2.Key.GroupName,
-                            GroupingTotal = s2.Sum(t2 => t2.Amount)
+                            GroupingName = s0.Key.Year.ToString(),
+                            GroupingTotal = s0.Sum(t => t.Amount),
                         },
-                        SubCategories = s.GroupBy(g3 => new { g3.CategoryId, g3.CategoryName, g3.GroupId, g3.GroupName, g3.UserId, UserName = g3.FirstName + " " + g3.LastName })
-                                .Select(s3 => new ReportGroupDTO
+                        SubCategories = s0.GroupBy(g => new { g.Year, g.CategoryId, g.CategoryName })
+                        .Select(s => new ReportGroupDTO
+                        {
+                            Category = new GroupedTotalDTO
+                            {
+                                GroupingName = s.Key.CategoryName,
+                                GroupingTotal = s.Sum(t => t.Amount),
+                            },
+                            SubCategories = s.GroupBy(g2 => new {g2.Year, g2.CategoryId, g2.CategoryName, g2.GroupId, g2.GroupName })
+                            .Select(s2 => new ReportGroupDTO
+                            {
+                                Category = new GroupedTotalDTO
                                 {
-                                    Category = new GroupedTotalDTO
-                                    {
-                                        GroupingName = s3.Key.UserName,
-                                        GroupingTotal = s3.Sum(t3 => t3.Amount)
-                                    },
-                                })
-                    })
-                });
+                                    GroupingName = s2.Key.GroupName,
+                                    GroupingTotal = s2.Sum(t2 => t2.Amount)
+                                },
+                                SubCategories = s.GroupBy(g3 => new { g3.Year, g3.CategoryId, g3.CategoryName, g3.GroupId, g3.GroupName, g3.UserId, UserName = g3.FirstName + " " + g3.LastName })
+                                        .Select(s3 => new ReportGroupDTO
+                                        {
+                                            Category = new GroupedTotalDTO
+                                            {
+                                                GroupingName = s3.Key.UserName,
+                                                GroupingTotal = s3.Sum(t3 => t3.Amount)
+                                            },
+                                        })
+                            })
+                        })
+                    });
 
             return report.ToArray();
 
