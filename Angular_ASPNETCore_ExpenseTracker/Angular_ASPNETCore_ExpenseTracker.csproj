@@ -47,6 +47,5 @@
     <TypeScriptCompile Include="src\app\pages\expenses\expense-register\expense-register.component.ts" />
     <TypeScriptCompile Include="src\app\pages\reports\reports.module.ts" />
     <TypeScriptCompile Include="src\app\pages\expenses\expenses.module.ts" />
-    <Content Include="src\tsconfig.app.json" />
   </ItemGroup>
 </Project>

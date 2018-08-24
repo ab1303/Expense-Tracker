@@ -34,6 +34,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 // UI Shared Components
 import { FooterComponent } from '../layout/footer/footer.component';
 import { AppBackdropComponent } from './components/app_backdrop/app_backdrop.component';
+import { SearchSidebarComponent } from './components/search-sidebar/search-sidebar.component';
 
 
 
@@ -61,6 +62,7 @@ import { AppBackdropComponent } from './components/app_backdrop/app_backdrop.com
 	],
 	declarations: [
 		AppBackdropComponent,
+		SearchSidebarComponent,
 		FooterComponent
 	],
 	exports: [
@@ -83,7 +85,8 @@ import { AppBackdropComponent } from './components/app_backdrop/app_backdrop.com
 		AlertModule,
 		MalihuScrollbarModule,
 		ModalModule,
-		PopoverModule
+		PopoverModule,
+		SearchSidebarComponent,
 	]
 })
 export class SharedModule {
