@@ -31,9 +31,7 @@ namespace ETS.Jobs.ServiceCore
         protected DateTime Date;
         protected string Details;
       
-        private MonthlyExpenseFileImport importRecord;
-
-        public BaseExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord)
+        protected BaseExpenseMapping(IRepositories repositories, MonthlyExpenseFileImport importRecord)
         {
             Repositories = repositories;
 

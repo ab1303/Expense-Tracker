@@ -35,6 +35,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { AppBackdropComponent } from './components/app_backdrop/app_backdrop.component';
 import { SearchSidebarComponent } from './components/search-sidebar/search-sidebar.component';
+import { SearchCardComponent } from './components/search-card/search-card.component';
 
 
 
@@ -63,6 +64,7 @@ import { SearchSidebarComponent } from './components/search-sidebar/search-sideb
 	declarations: [
 		AppBackdropComponent,
 		SearchSidebarComponent,
+		SearchCardComponent,
 		FooterComponent
 	],
 	exports: [
@@ -87,6 +89,7 @@ import { SearchSidebarComponent } from './components/search-sidebar/search-sideb
 		ModalModule,
 		PopoverModule,
 		SearchSidebarComponent,
+		SearchCardComponent,
 	]
 })
 export class SharedModule {

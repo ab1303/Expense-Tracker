@@ -11,12 +11,25 @@ namespace ETS.Services.Queries
 {
     public class IndividualTransactionsIndexQuery : IPagedQuery<IndividualTransactionsIndexQuery.Result>
     {
-        public PagedListArgs PagedListArgs { get; }
-        public bool ReturnAllResults { get; }
 
-        public IndividualTransactionsIndexQuery(bool returnAllResults = true)
+        private NgxDataTableArgs _pagedListArgs;
+        public bool ReturnAllResults { get; set; }
+
+        public IndividualTransactionsIndexQuery()
         {
-            ReturnAllResults = returnAllResults;
+            ReturnAllResults = false;
+            _pagedListArgs = new NgxDataTableArgs();
+        }
+
+        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
+        {
+            _pagedListArgs = new NgxDataTableArgs
+            {
+                PageNumber = pageInfo.PageNumber,
+                PageSize = pageInfo.PageSize,
+            };
+
+            return this;
         }
 
         public Result[] GetResults(IRepositories repositories, out int totalFound)
@@ -45,10 +58,10 @@ namespace ETS.Services.Queries
 
             totalFound = query.Count();
 
-            var orderBy = $"{DefaultSortBy.TransactionDate} {"DESC"}";
+            var orderBy = $"{DefaultSortBy.TransactionDate} DESC";
 
             var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
-                query.OrderBy(orderBy).Skip(PagedListArgs.PageSize * PagedListArgs.PageNumber).Take(PagedListArgs.PageSize).ToArray();
+                query.OrderBy(orderBy).Skip(_pagedListArgs.PageSize * _pagedListArgs.PageNumber).Take(_pagedListArgs.PageSize).ToArray();
 
             return results;
 

@@ -5,18 +5,29 @@ using ETS.Services.Repositories;
 using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Collections.Generic;
 
 namespace ETS.Services.Queries
 {
     public class UsersIndexQuery : IPagedQuery<UsersIndexQuery.Result>
     {
-        public PagedListArgs PagedListArgs { get; }
-        public bool ReturnAllResults { get; }
-
-        public UsersIndexQuery(bool returnAllResults = true)
+        private NgxDataTableArgs _pagedListArgs;
+        public bool ReturnAllResults { get; set; }
+       
+        public UsersIndexQuery()
         {
-            ReturnAllResults = returnAllResults;
+            ReturnAllResults = false;
+            _pagedListArgs = new NgxDataTableArgs();
+        }
+
+        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
+        {
+            _pagedListArgs = new NgxDataTableArgs
+            {
+                PageNumber = pageInfo.PageNumber,
+                PageSize = pageInfo.PageSize,
+            };
+
+            return this;
         }
 
         public Result[] GetResults(IRepositories repositories, out int totalFound)
@@ -42,7 +53,7 @@ namespace ETS.Services.Queries
             var orderBy = $"{DefaultSortBy.DateCreated} {"DESC"}";
 
             var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
-                query.OrderBy(orderBy).Skip(PagedListArgs.PageSize * PagedListArgs.PageNumber).Take(PagedListArgs.PageSize).ToArray();
+                query.OrderBy(orderBy).Skip(_pagedListArgs.PageSize * _pagedListArgs.PageNumber).Take(_pagedListArgs.PageSize).ToArray();
 
             return results;
 

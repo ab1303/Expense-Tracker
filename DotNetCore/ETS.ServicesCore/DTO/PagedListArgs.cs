@@ -1,13 +1,13 @@
 ﻿namespace ETS.Service.DTO
 {
-    public class PagedListArgs
+    public class NgxDataTableArgs
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
         public string SortBy { get; set; }
         public SortOrder SortOrder { get; set; }
 
-        public PagedListArgs()
+        public NgxDataTableArgs()
         {
             SortOrder = SortOrder.Asc;
             PageNumber = 0;

@@ -1,11 +1,7 @@
-﻿using ETS.Domain.Enums;
-using ETS.Service.DTO;
+﻿using ETS.Service.DTO;
 using ETS.Service.Services;
 using ETS.Services.Repositories;
-using System;
 using System.Linq;
-using System.Linq.Dynamic.Core;
-using System.Collections.Generic;
 
 namespace ETS.Services.Queries
 {
@@ -25,12 +21,24 @@ namespace ETS.Services.Queries
             public decimal Amount { get; set; }
         }
 
-        public PagedListArgs PagedListArgs { get; }
-        public bool ReturnAllResults { get; }
+        private NgxDataTableArgs _pagedListArgs;
+        public bool ReturnAllResults { get; set; }
 
-        public ExpenseCategoryStatementQuery(bool returnAllResults = true)
+        public ExpenseCategoryStatementQuery()
         {
-            ReturnAllResults = returnAllResults;
+            ReturnAllResults = false;
+            _pagedListArgs = new NgxDataTableArgs();
+        }
+
+        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
+        {
+            _pagedListArgs = new NgxDataTableArgs
+            {
+                PageNumber = pageInfo.PageNumber,
+                PageSize = pageInfo.PageSize,
+            };
+
+            return this;
         }
 
         public Result[] GetResults(IRepositories repositories, out int totalFound)

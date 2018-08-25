@@ -1,6 +1,6 @@
 <div id="content_wrapper"
      class="fullWidth2-wrapper rightSidenav2-wrapper">
-	<md-sidenav-container>
+	<md-sidenav-container class="sidenav-container">
 		<div class="content">
 			<div class="header-wrapper header-sm">
 				<header>
@@ -66,6 +66,11 @@
 						               [limit]="10"
 						               [selected]="selected"
 						               [selectionType]="'checkbox'"
+						               [externalPaging]="true"
+						               [count]="page.totalElements"
+						               [offset]="page.pageNumber"
+						               [limit]="page.size"
+						               (page)='setPage($event)'
 						               (activate)="onActivate($event)"
 						               (select)='onSelect($event)'>
 							<ngx-datatable-column [width]="60"
@@ -128,9 +133,18 @@
 		            mode="{{navMode}}"
 		            align="end"
 		            class="sidenav">
-			<aside id="rightSidenav2"
-			       class="p-20">
-
+			<aside id="rightSidenav2">
+				<app-search-card>
+					<input type="text"
+					       placeholder="Control 1..."
+					       class="form-control" />
+					<input type="text"
+					       placeholder="Control 2..."
+					       class="form-control" />
+					<input type="text"
+					       placeholder="Control 3..."
+					       class="form-control" />
+				</app-search-card>
 			</aside>
 		</md-sidenav>
 

@@ -7,13 +7,14 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
+import { Page } from "../../../shared/model/paging/page";
 
 const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 @Injectable()
 export class ExpenseRegisterService {
   constructor(private http: HttpClient) {}
 
-  getTransactions(): Observable<IndividualTransactionsApiResponse> {
+  getTransactions(page: Page): Observable<IndividualTransactionsApiResponse> {
     return this.http
       .get(API_URL)
       .map((response: Response) => {

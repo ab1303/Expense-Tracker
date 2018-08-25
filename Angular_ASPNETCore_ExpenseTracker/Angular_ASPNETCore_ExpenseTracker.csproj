@@ -7,6 +7,9 @@
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AssemblyName>Angular_ASPNETCore_ExpenseTracker</AssemblyName>
   </PropertyGroup>
+  <PropertyGroup>
+     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="fluentvalidation.aspnetcore" Version="7.5.2" />
@@ -38,14 +41,5 @@
     <ProjectReference Include="..\DotNetCore\ETS.AzureCore\ETS.Azure.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.Core\ETS.Core.csproj" />
     <ProjectReference Include="..\DotNetCore\ETS.ServicesCore\ETS.Services.csproj" />
-    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category-report.model.ts" />
-    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category.ts" />
-    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category-report.service.ts" />
-    <TypeScriptCompile Include="src\app\pages\reports\expense-category\expense-category.component.ts" />
-    <Content Include="src\app\pages\reports\expense-category\expense-category.component.html" />
-    <Content Include="src\app\pages\expenses\expense-register\expense-register.component.html" />
-    <TypeScriptCompile Include="src\app\pages\expenses\expense-register\expense-register.component.ts" />
-    <TypeScriptCompile Include="src\app\pages\reports\reports.module.ts" />
-    <TypeScriptCompile Include="src\app\pages\expenses\expenses.module.ts" />
   </ItemGroup>
 </Project>

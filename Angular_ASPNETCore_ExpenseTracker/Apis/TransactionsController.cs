@@ -1,6 +1,8 @@
 ﻿using System;
 using Angular_ASPNETCore_ExpenseTracker.Models;
+using Angular_ASPNETCore_ExpenseTracker.Models.AngularDataTable;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
+using ETS.Service.DTO;
 using ETS.Service.Services;
 using ETS.Services.Interfaces;
 using ETS.Services.Queries;
@@ -27,12 +29,21 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         [HttpGet]
         [ProducesResponseType(typeof(IndividualTransactionResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
-        public ActionResult Get()
+        public ActionResult Get(AngularDataTableParam ngxDataTableParam)
         {
             try
             {
-                var individualTransactionQuery = new IndividualTransactionsIndexQuery();
-               
+                var individualTransactionQuery = new IndividualTransactionsIndexQuery()
+                    .SetPage(new NgxDataTableArgs
+                    {
+                        PageNumber = ngxDataTableParam.PageIndex,
+                        SortBy = ngxDataTableParam.SortColumnName ?? IndividualTransactionsIndexQuery.DefaultSortBy.TransactionDate,
+                        SortOrder = ngxDataTableParam.SortOrder,
+                        PageSize = ngxDataTableParam.PageSize
+                    })
+                    ;
+
+
 
 
                 var result = _queryService.Execute(individualTransactionQuery, out int totalCount);
@@ -40,6 +51,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 var individualTransactionResponse = new IndividualTransactionResponse
                 {
                     IndividualTransactions = result,
+                    //Page = new NgxDataTablePage
+                    //{
+
+                    //},
                     Code = InternalApiStatusCode.Success,
                     Message = "list of individual categories",
 

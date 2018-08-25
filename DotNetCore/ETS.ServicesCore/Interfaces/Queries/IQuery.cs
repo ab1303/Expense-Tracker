@@ -22,8 +22,9 @@ namespace ETS.Service.Services
 
     public interface IPagedQuery<out T>: IQuery<T>
     {
-        PagedListArgs PagedListArgs { get; }
-        bool ReturnAllResults { get; }
+        IPagedQuery<T> SetPage(NgxDataTableArgs pageInfo);
+        //PagedListArgs PagedListArgs { set; }
+        bool ReturnAllResults { set; }
         
     }
 
