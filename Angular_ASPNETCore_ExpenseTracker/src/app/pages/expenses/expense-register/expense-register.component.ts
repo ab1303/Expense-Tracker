@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
-import {FormControl, NgModel} from '@angular/forms';
+import { FormControl, NgModel } from '@angular/forms';
 import { MdSidenav } from "@angular/material";
 
 
@@ -30,7 +30,9 @@ export class ExpenseRegisterComponent implements OnInit {
 	isToolbarActive: boolean = false;
 	itemsSelected: string = "";
 	itemCount: number = 0;
-
+	searchModel = {
+		expenseCategoryId: null
+	};
 
 	// Search SideBar
 
@@ -41,7 +43,8 @@ export class ExpenseRegisterComponent implements OnInit {
 	expenseCategories: any[];
 	tdExpenseCategories: any[];
 	expenseCategoryCtrl: FormControl;
-	currentExpenseCategory: string = "";
+	currentExpenseCategory: any;
+	@ViewChild(NgModel) modelDir: NgModel;
 
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
@@ -63,7 +66,11 @@ export class ExpenseRegisterComponent implements OnInit {
   */
 	setPage(pageInfo) {
 		this.page.pageNumber = pageInfo.offset;
-		this.expenseRegisterService.getTransactions(this.page).subscribe(pagedData => {
+		this.searchModel.expenseCategoryId =
+			!!this.currentExpenseCategory
+				? this.currentExpenseCategory.id
+				: null;
+		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
 
@@ -93,6 +100,22 @@ export class ExpenseRegisterComponent implements OnInit {
 		}
 
 		return this.expenseCategories;
+	}
+
+	search() {
+		console.log(this.modelDir);
+		this.page.pageNumber = 0;
+		this.searchModel.expenseCategoryId =
+			!!this.currentExpenseCategory
+				? this.currentExpenseCategory.id
+				: null;
+		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
+			this.page.totalElements = pagedData.page.totalElements;
+			this.rows = pagedData.individualTransactions;
+
+			this.expenseCategories = pagedData.lookups.expenseCategories;
+			this.tdExpenseCategories = [...this.expenseCategories];
+		});
 	}
 
 	onSelect({ selected }) {

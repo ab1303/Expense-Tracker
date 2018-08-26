@@ -14,12 +14,14 @@ const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 export class ExpenseRegisterService {
   constructor(private http: HttpClient) { }
 
-  getTransactions(page: Page): Observable<IndividualTransactionsApiResponse> {
+  getTransactions(page: Page, searchModel: any): Observable<IndividualTransactionsApiResponse> {
 
     let parameters =
       new HttpParams()
         .append('PageIndex', `${page.pageNumber}`)
-        .append('PageSize', `${page.size}`);
+        .append('PageSize', `${page.size}`)
+        .append('expenseCategoryId', `${searchModel.expenseCategoryId}`)
+        ;
 
     // let parameters = new HttpParams({
     //   fromObject : {

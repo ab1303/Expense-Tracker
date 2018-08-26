@@ -135,17 +135,18 @@
 		            align="end"
 		            class="sidenav">
 			<aside id="rightSidenav2">
-				<app-search-card>
+				<app-search-card (searchHandler)="search($event)">
 					<input type="text"
 					       placeholder="Expense Name..."
 					       class="form-control" />
 					<md-input-container *ngIf="true">
 						<input mdInput
-							   placeholder="Expense Category"
-							   class="form-control"
-						       [mdAutocomplete]="tdAuto"
+						       placeholder="Expense Category"
+						       class="form-control"
+							   [mdAutocomplete]="tdAuto"
+							   [value]="currentExpenseCategory?.name"
 						       [(ngModel)]="currentExpenseCategory"
-						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory)">
+						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory.name)">
 					</md-input-container>
 				</app-search-card>
 			</aside>
@@ -154,7 +155,7 @@
 		<!-- Auto Complete Expense Categories -->
 		<md-autocomplete #tdAuto="mdAutocomplete">
 			<md-option *ngFor="let expenseCategory of tdExpenseCategories"
-			            [value]="expenseCategory.name">
+			           [value]="expenseCategory">
 				<span>{{ expenseCategory.name }}</span>
 			</md-option>
 		</md-autocomplete>

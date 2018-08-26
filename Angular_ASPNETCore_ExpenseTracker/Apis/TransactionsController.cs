@@ -2,6 +2,7 @@
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.AngularDataTable;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
+using Angular_ASPNETCore_ExpenseTracker.Models.ExpenseRegister;
 using ETS.Service.DTO;
 using ETS.Service.Services;
 using ETS.Services.Interfaces;
@@ -31,11 +32,11 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         [HttpGet]
         [ProducesResponseType(typeof(IndividualTransactionResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
-        public ActionResult Get(AngularDataTableParam ngxDataTableParam)
+        public ActionResult Get(AngularDataTableParam ngxDataTableParam, ExpenseRegisterSearchModel searchModel)
         {
             try
             {
-                var individualTransactionQuery = new IndividualTransactionsIndexQuery()
+                var individualTransactionQuery = new IndividualTransactionsIndexQuery(expenseCategoryId:searchModel.ExpenseCategoryId)
                     .SetPage(new NgxDataTableArgs
                     {
                         PageNumber = ngxDataTableParam.PageIndex,
