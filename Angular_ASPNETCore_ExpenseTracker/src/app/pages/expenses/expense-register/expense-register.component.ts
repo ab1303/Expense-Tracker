@@ -50,7 +50,7 @@ export class ExpenseRegisterComponent implements OnInit {
 	setPage(pageInfo) {
 		this.page.pageNumber = pageInfo.offset;
 		this.expenseRegisterService.getTransactions(this.page).subscribe(pagedData => {
-			// this.page = pagedData.page;
+			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
 		});
 	}

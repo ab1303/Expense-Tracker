@@ -51,10 +51,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 var individualTransactionResponse = new IndividualTransactionResponse
                 {
                     IndividualTransactions = result,
-                    //Page = new NgxDataTablePage
-                    //{
-
-                    //},
+                    Page = new NgxDataTablePage
+                    {
+                        TotalElements = totalCount,
+                        Size = ngxDataTableParam.PageSize,
+                        PageNumber = ngxDataTableParam.PageIndex,
+                    },
                     Code = InternalApiStatusCode.Success,
                     Message = "list of individual categories",
 

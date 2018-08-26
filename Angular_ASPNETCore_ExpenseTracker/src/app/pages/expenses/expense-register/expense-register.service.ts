@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { ITransaction, IndividualTransactionsApiResponse } from "./transaction";
@@ -12,11 +12,26 @@ import { Page } from "../../../shared/model/paging/page";
 const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 @Injectable()
 export class ExpenseRegisterService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getTransactions(page: Page): Observable<IndividualTransactionsApiResponse> {
+
+    let parameters =
+      new HttpParams()
+        .append('PageIndex', `${page.pageNumber}`)
+        .append('PageSize', `${page.size}`);
+
+    // let parameters = new HttpParams({
+    //   fromObject : {
+    //     'PageIndex' : `${page.pageNumber}`,
+    //     'PageIndex' : `${page.size}`
+    //   },
+    // });
+
     return this.http
-      .get(API_URL)
+      .get(API_URL, {
+        params: parameters,
+      })
       .map((response: Response) => {
         // let response = res.json();
         return response;
@@ -29,7 +44,7 @@ export class ExpenseRegisterService {
     if (error instanceof Response) {
       let errMessage = "";
       try {
-          // TODO: 
+        // TODO: 
         // errMessage = error.json().error;
         errMessage = "what the fuck"
       } catch (err) {
