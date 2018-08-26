@@ -1,6 +1,6 @@
 <div id="content_wrapper"
      class="fullWidth2-wrapper rightSidenav2-wrapper">
-	<md-sidenav-container class="sidenav-container">
+	<mat-sidenav-container class="sidenav-container">
 		<div class="content">
 			<div class="header-wrapper header-sm">
 				<header>
@@ -21,13 +21,13 @@
 					<header class="card-header p-30">
 						<div class="selected-toolbar"
 						     [ngClass]="{'active' : isToolbarActive}">
-							<md-toolbar class="activeHeaderColor">
+							<mat-toolbar class="activeHeaderColor">
 								<span>{{itemCount}} {{itemsSelected}}</span>
 								<span class="demo-fill-remaining"></span>
-								<button md-icon-button>
-									<md-icon class="md-24">delete</md-icon>
+								<button mat-icon-button>
+									<mat-icon class="mat-24">delete</mat-icon>
 								</button>
-							</md-toolbar>
+							</mat-toolbar>
 						</div>
 						<h2 class="card-title">Expense Register</h2>
 						<ul class="actions icons top-right">
@@ -40,7 +40,7 @@
 							<!-- <li>
 							<button class="btn btn-accent btn-fab"
 							        (click)="isSearchActive = !isSearchActive;"
-							        md-ripple>
+							        mat-ripple>
 								<i class="zmdi zmdi-search"></i>
 							</button>
 						</li> -->
@@ -48,7 +48,7 @@
 						<ul class="actions fab bottom-right">
 							<li>
 								<button class="btn btn-accent btn-fab"
-								        md-ripple>
+								        mat-ripple>
 									<i class="zmdi zmdi-plus"></i>
 								</button>
 							</li>
@@ -81,17 +81,17 @@
 								             let-value="value"
 								             let-allRowsSelected="allRowsSelected"
 								             let-selectFn="selectFn">
-									<md-checkbox class="example-margin"
+									<mat-checkbox class="example-margin"
 									             [checked]="allRowsSelected"
-									             (change)="selectFn(!allRowsSelected)"></md-checkbox>
+									             (change)="selectFn(!allRowsSelected)"></mat-checkbox>
 								</ng-template>
 								<ng-template ngx-datatable-cell-template
 								             let-value="value"
 								             let-isSelected="isSelected"
 								             let-onCheckboxChangeFn="onCheckboxChangeFn">
-									<md-checkbox class="example-margin"
+									<mat-checkbox class="example-margin"
 									             [checked]="isSelected"
-									             (change)="onCheckboxChangeFn($event)"></md-checkbox>
+									             (change)="onCheckboxChangeFn($event)"></mat-checkbox>
 								</ng-template>
 							</ngx-datatable-column>
 							<ngx-datatable-column name="Name"></ngx-datatable-column>
@@ -130,7 +130,7 @@
 
 
 		<!-- Sidenav -->
-		<md-sidenav #rightSidenav2
+		<mat-sidenav #rightSidenav2
 		            mode="{{navMode}}"
 		            align="end"
 		            class="sidenav">
@@ -139,7 +139,7 @@
 					<input type="text"
 					       placeholder="Expense Name..."
 					       class="form-control" />
-					<md-input-container *ngIf="true">
+					<mat-input-container *ngIf="true">
 						<input mdInput
 						       placeholder="Expense Category"
 						       class="form-control"
@@ -147,21 +147,21 @@
 							   [value]="currentExpenseCategory?.name"
 						       [(ngModel)]="currentExpenseCategory"
 						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory.name)">
-					</md-input-container>
+					</mat-input-container>
 				</app-search-card>
 			</aside>
-		</md-sidenav>
+		</mat-sidenav>
 
 		<!-- Auto Complete Expense Categories -->
-		<md-autocomplete #tdAuto="mdAutocomplete">
-			<md-option *ngFor="let expenseCategory of tdExpenseCategories"
+		<mat-autocomplete #tdAuto="mdAutocomplete">
+			<mat-option *ngFor="let expenseCategory of tdExpenseCategories"
 			           [value]="expenseCategory">
 				<span>{{ expenseCategory.name }}</span>
-			</md-option>
-		</md-autocomplete>
+			</mat-option>
+		</mat-autocomplete>
 
 		<footer id="footer_wrapper"
 		        class="footer_wrapper"></footer>
 
-	</md-sidenav-container>
+	</mat-sidenav-container>
 </div>

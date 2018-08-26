@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { GlobalState } from "../../app.state";
 import { ConfigService } from "../../shared/services/config/config.service";
-import { MdSidenav } from "@angular/material";
+import { MatDrawer } from "@angular/material";
 
 @Component({
 	selector: ".content_inner_wrapper",
@@ -23,7 +23,7 @@ export class DashboardsComponent implements OnInit {
 	currentDate: Date;
 
 	//Toggle Sidebar
-	@ViewChild("rightSidenav2") rightSidenav2: MdSidenav;
+	@ViewChild("rightSidenav2") rightSidenav2: MatDrawer;
 	navMode = "side";
 
 	//Task List

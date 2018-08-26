@@ -19,22 +19,35 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 	suppressScrollX: true
 };
 
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
+
+
 @NgModule({
-	declarations: [
-		LayoutComponent,
-		LeftSidebarComponent,
-		TopNavbarComponent,
-		SearchComponent,
-		RightSidebarComponent,
-		ScrollbarDirective,
-		NavDropDownDirectives
-	],
-	imports: [
-		LayoutRoutes,
-		CommonModule,
-		FormsModule,
-		SharedModule.forRoot(),
-		PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
-	]
+    declarations: [
+        LayoutComponent,
+        LeftSidebarComponent,
+        TopNavbarComponent,
+        SearchComponent,
+        RightSidebarComponent,
+        ScrollbarDirective,
+        NavDropDownDirectives
+    ],
+    imports: [
+        LayoutRoutes,
+        CommonModule,
+        FormsModule,
+        SharedModule.forRoot(),
+        PerfectScrollbarModule
+    ],
+    providers: [
+        {
+            provide: PERFECT_SCROLLBAR_CONFIG,
+            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        }
+    ]
 })
-export class LayoutModule {}
+export class LayoutModule {
+}

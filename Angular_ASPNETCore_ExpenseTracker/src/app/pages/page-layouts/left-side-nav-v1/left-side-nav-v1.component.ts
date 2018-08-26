@@ -10,7 +10,7 @@ import {
 } from "@angular/core";
 import { GlobalState } from "../../../app.state";
 import { ConfigService } from "../../../shared/services/config/config.service";
-import { MdSidenav } from "@angular/material";
+import { MatDrawer } from "@angular/material";
 import { TabsetComponent } from "ngx-bootstrap";
 @Component({
 	selector: ".content_inner_wrapper",
@@ -20,7 +20,7 @@ import { TabsetComponent } from "ngx-bootstrap";
 })
 export class LeftSideNavV1Component implements OnInit {
 	@ViewChild("staticTabs") staticTabs: TabsetComponent;
-	@ViewChild("leftSidenav1") leftSidenav1: MdSidenav;
+	@ViewChild("leftSidenav1") leftSidenav1: MatDrawer;
 	@ViewChild("menuTabs") private allMElementRef;
 	navMode = "side";
 	isActiveTab = false;

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { FormControl, NgModel } from '@angular/forms';
-import { MdSidenav } from "@angular/material";
+import { MatDrawer } from "@angular/material";
 
 
 import { TrackByService } from "../../../core/trackby.service";
@@ -36,7 +36,7 @@ export class ExpenseRegisterComponent implements OnInit {
 
 	// Search SideBar
 
-	@ViewChild("rightSidenav2") rightSidenav2: MdSidenav;
+	@ViewChild("rightSidenav2") rightSidenav2: MatDrawer;
 	navMode = "over";
 
 	// Search Lookups
