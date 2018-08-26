@@ -18,11 +18,13 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
     {
         private readonly ILogger _logger;
         private readonly IQueryService _queryService;
+        private readonly IExpenseCategoryService _expenseCategoryService;
 
-        public TransactionsController(IQueryService queryService, ILoggerFactory loggerFactory)
+        public TransactionsController(IQueryService queryService, IExpenseCategoryService expenseCategoryService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(TransactionsController));
             _queryService = queryService;
+            _expenseCategoryService = expenseCategoryService;
         }
 
 
@@ -43,10 +45,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                     })
                     ;
 
-
-
-
                 var result = _queryService.Execute(individualTransactionQuery, out int totalCount);
+
+
+                var expenseCategories = _expenseCategoryService.GetExpenseCategories();
 
                 var individualTransactionResponse = new IndividualTransactionResponse
                 {
@@ -56,6 +58,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                         TotalElements = totalCount,
                         Size = ngxDataTableParam.PageSize,
                         PageNumber = ngxDataTableParam.PageIndex,
+                    },
+                    Lookups = new Lookups
+                    {
+                        ExpenseCategories = expenseCategories
                     },
                     Code = InternalApiStatusCode.Success,
                     Message = "list of individual categories",

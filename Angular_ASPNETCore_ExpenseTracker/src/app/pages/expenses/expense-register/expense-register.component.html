@@ -71,7 +71,6 @@
 						               [offset]="page.pageNumber"
 						               [limit]="page.size"
 						               (page)='setPage($event)'
-						               (activate)="onActivate($event)"
 						               (select)='onSelect($event)'>
 							<ngx-datatable-column [width]="60"
 							                      [sortable]="false"
@@ -128,6 +127,8 @@
 			</div>
 		</div>
 
+
+
 		<!-- Sidenav -->
 		<md-sidenav #rightSidenav2
 		            mode="{{navMode}}"
@@ -136,17 +137,27 @@
 			<aside id="rightSidenav2">
 				<app-search-card>
 					<input type="text"
-					       placeholder="Control 1..."
+					       placeholder="Expense Name..."
 					       class="form-control" />
-					<input type="text"
-					       placeholder="Control 2..."
-					       class="form-control" />
-					<input type="text"
-					       placeholder="Control 3..."
-					       class="form-control" />
+					<md-input-container *ngIf="true">
+						<input mdInput
+							   placeholder="Expense Category"
+							   class="form-control"
+						       [mdAutocomplete]="tdAuto"
+						       [(ngModel)]="currentExpenseCategory"
+						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory)">
+					</md-input-container>
 				</app-search-card>
 			</aside>
 		</md-sidenav>
+
+		<!-- Auto Complete Expense Categories -->
+		<md-autocomplete #tdAuto="mdAutocomplete">
+			<md-option *ngFor="let expenseCategory of tdExpenseCategories"
+			            [value]="expenseCategory.name">
+				<span>{{ expenseCategory.name }}</span>
+			</md-option>
+		</md-autocomplete>
 
 		<footer id="footer_wrapper"
 		        class="footer_wrapper"></footer>

@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
-import { ITransaction } from "./transaction";
-import { ExpenseRegisterService } from "./expense-register.service";
-import { TrackByService } from "../../../core/trackby.service";
+import {FormControl, NgModel} from '@angular/forms';
 import { MdSidenav } from "@angular/material";
+
+
+import { TrackByService } from "../../../core/trackby.service";
 import { ConfigService } from "../../../shared/services/config/config.service";
 import { Page } from "../../../shared/model/paging/page";
+
+import { ITransaction } from "./transaction";
+import { ExpenseRegisterService } from "./expense-register.service";
 
 @Component({
 	selector: "expense-register",
@@ -12,9 +16,13 @@ import { Page } from "../../../shared/model/paging/page";
 	styleUrls: ["./expense-register.component.scss"]
 })
 export class ExpenseRegisterComponent implements OnInit {
+
+	// Transactions
+	rows = [];
 	page = new Page();
 	transactions: ITransaction[] = [];
-	rows = [];
+
+
 	selected = [];
 	temp = [];
 	searchValue: string = null;
@@ -22,8 +30,19 @@ export class ExpenseRegisterComponent implements OnInit {
 	isToolbarActive: boolean = false;
 	itemsSelected: string = "";
 	itemCount: number = 0;
+
+
+	// Search SideBar
+
 	@ViewChild("rightSidenav2") rightSidenav2: MdSidenav;
 	navMode = "over";
+
+	// Search Lookups
+	expenseCategories: any[];
+	tdExpenseCategories: any[];
+	expenseCategoryCtrl: FormControl;
+	currentExpenseCategory: string = "";
+
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
 		public config: ConfigService,
@@ -35,11 +54,6 @@ export class ExpenseRegisterComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// this.expenseRegisterService.getTransactions().subscribe(data => {
-		// 	// this.transactions = data.transactions;
-		// 	this.rows = data.individualTransactions;
-		// });
-
 		this.setPage({ offset: 0 });
 	}
 
@@ -52,6 +66,9 @@ export class ExpenseRegisterComponent implements OnInit {
 		this.expenseRegisterService.getTransactions(this.page).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
+
+			this.expenseCategories = pagedData.lookups.expenseCategories;
+			this.tdExpenseCategories = [...this.expenseCategories];
 		});
 	}
 
@@ -65,6 +82,17 @@ export class ExpenseRegisterComponent implements OnInit {
 			this.navMode = "side";
 			this.rightSidenav2.open();
 		}
+	}
+
+	filterExpenseCategories(val: string) {
+		if (val) {
+			const filterValue = val.toLowerCase();
+			return this.expenseCategories.filter(category =>
+				category.name.toLowerCase().startsWith(filterValue)
+			);
+		}
+
+		return this.expenseCategories;
 	}
 
 	onSelect({ selected }) {

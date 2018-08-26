@@ -1,5 +1,6 @@
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 import { Page } from "../../../shared/model/paging/page";
+import { Lookups } from "./lookups.model";
 
 export interface ITransaction {
   id: number;
@@ -19,4 +20,5 @@ export interface ITransaction {
 export interface IndividualTransactionsApiResponse extends BaseApiResponse {
   individualTransactions: ITransaction[];
   page: Page;
+  lookups: Lookups,
 }
