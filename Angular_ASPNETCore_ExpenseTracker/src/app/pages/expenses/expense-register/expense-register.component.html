@@ -139,26 +139,26 @@
 					<input type="text"
 					       placeholder="Expense Name..."
 					       class="form-control" />
-					<mat-input-container *ngIf="true">
+					<!-- <mat-input-container *ngIf="true">
 						<input mdInput
 						       placeholder="Expense Category"
 						       class="form-control"
-							   [mdAutocomplete]="tdAuto"
+							   [matAutocomplete]="tdAuto"
 							   [value]="currentExpenseCategory?.name"
 						       [(ngModel)]="currentExpenseCategory"
 						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory.name)">
-					</mat-input-container>
+					</mat-input-container> -->
 				</app-search-card>
 			</aside>
 		</mat-sidenav>
 
 		<!-- Auto Complete Expense Categories -->
-		<mat-autocomplete #tdAuto="mdAutocomplete">
+		<!-- <mat-autocomplete #tdAuto="matAutocomplete">
 			<mat-option *ngFor="let expenseCategory of tdExpenseCategories"
 			           [value]="expenseCategory">
 				<span>{{ expenseCategory.name }}</span>
 			</mat-option>
-		</mat-autocomplete>
+		</mat-autocomplete> -->
 
 		<footer id="footer_wrapper"
 		        class="footer_wrapper"></footer>
