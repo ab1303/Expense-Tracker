@@ -101,7 +101,7 @@
 								<ngx-datatable-column name="Amount">
 									<ng-template let-value="value"
 									             ngx-datatable-cell-template>
-										{{value | currency:'USD':true:'1.2-4'}}
+										{{value | currency:'USD':'symbol':'1.2-4'}}
 									</ng-template>
 								</ngx-datatable-column>
 								<ngx-datatable-column name="Paid For"
@@ -138,26 +138,23 @@
 					<input type="text"
 					       placeholder="Expense Name..."
 					       class="form-control" />
-					<!-- <mat-input-container *ngIf="true">
-						<input mdInput
-						       placeholder="Expense Category"
-						       class="form-control"
-							   [matAutocomplete]="tdAuto"
-							   [value]="currentExpenseCategory?.name"
-						       [(ngModel)]="currentExpenseCategory"
-						       (ngModelChange)="tdExpenseCategories = filterExpenseCategories(currentExpenseCategory.name)">
-					</mat-input-container> -->
+					<input matInput
+					       placeholder="Expense Category"
+					       class="form-control"
+					       [matAutocomplete]="tdAuto"
+					       [formControl]="expenseCategoryControl">
 				</app-search-card>
 			</aside>
 		</mat-sidenav>
 
 		<!-- Auto Complete Expense Categories -->
-		<!-- <mat-autocomplete #tdAuto="matAutocomplete">
-			<mat-option *ngFor="let expenseCategory of tdExpenseCategories"
-			           [value]="expenseCategory">
+		<mat-autocomplete #tdAuto="matAutocomplete"
+		                  [displayWith]="displayFn">
+			<mat-option *ngFor="let expenseCategory of filteredExpenseCategories | async"
+			            [value]="expenseCategory">
 				<span>{{ expenseCategory.name }}</span>
 			</mat-option>
-		</mat-autocomplete> -->
+		</mat-autocomplete>
 
 		<footer id="footer_wrapper"
 		        class="footer_wrapper"></footer>

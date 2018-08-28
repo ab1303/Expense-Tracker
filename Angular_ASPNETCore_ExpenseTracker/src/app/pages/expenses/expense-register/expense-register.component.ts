@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { FormControl, NgModel } from '@angular/forms';
 import { MatDrawer } from "@angular/material";
-
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { TrackByService } from "../../../core/trackby.service";
 import { ConfigService } from "../../../shared/services/config/config.service";
@@ -40,10 +41,10 @@ export class ExpenseRegisterComponent implements OnInit {
 	navMode = "over";
 
 	// Search Lookups
+	filteredExpenseCategories: Observable<any[]>;
 	expenseCategories: any[];
 	tdExpenseCategories: any[];
-	expenseCategoryCtrl: FormControl;
-	currentExpenseCategory: any;
+	expenseCategoryControl: FormControl = new FormControl();
 	@ViewChild(NgModel) modelDir: NgModel;
 
 	constructor(
@@ -58,6 +59,7 @@ export class ExpenseRegisterComponent implements OnInit {
 
 	ngOnInit() {
 		this.setPage({ offset: 0 });
+
 	}
 
 	/**
@@ -66,16 +68,26 @@ export class ExpenseRegisterComponent implements OnInit {
   */
 	setPage(pageInfo) {
 		this.page.pageNumber = pageInfo.offset;
-		this.searchModel.expenseCategoryId =
-			!!this.currentExpenseCategory
-				? this.currentExpenseCategory.id
-				: null;
+		this.searchModel.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
 		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
 
 			this.expenseCategories = pagedData.lookups.expenseCategories;
 			this.tdExpenseCategories = [...this.expenseCategories];
+
+			this.filteredExpenseCategories = this.expenseCategoryControl.valueChanges
+				.pipe(
+					startWith<string | any>(''),
+					map(value => typeof value === 'string' ? value : value.name),
+					// map(name => name ? this._filter(name) : this.expenseCategories.slice())
+					map(name => {
+						if (!name) return this.expenseCategories.slice();
+
+						const filterValue = name.toLowerCase();
+						return this.expenseCategories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+					})
+				);
 		});
 	}
 
@@ -91,24 +103,13 @@ export class ExpenseRegisterComponent implements OnInit {
 		}
 	}
 
-	filterExpenseCategories(val: string) {
-		if (val) {
-			const filterValue = val.toLowerCase();
-			return this.expenseCategories.filter(category =>
-				category.name.toLowerCase().startsWith(filterValue)
-			);
-		}
-
-		return this.expenseCategories;
+	displayFn(value: any): string {
+		return value && typeof value === "object" ? value.name : value;
 	}
 
 	search() {
-		console.log(this.modelDir);
 		this.page.pageNumber = 0;
-		this.searchModel.expenseCategoryId =
-			!!this.currentExpenseCategory
-				? this.currentExpenseCategory.id
-				: null;
+		this.searchModel.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
 		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
