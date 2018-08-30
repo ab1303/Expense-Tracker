@@ -48,9 +48,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 
                 var result = _queryService.Execute(individualTransactionQuery, out int totalCount);
 
-
-                var expenseCategories = _expenseCategoryService.GetExpenseCategories();
-
                 var individualTransactionResponse = new IndividualTransactionResponse
                 {
                     IndividualTransactions = result,
@@ -60,16 +57,40 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                         Size = ngxDataTableParam.PageSize,
                         PageNumber = ngxDataTableParam.PageIndex,
                     },
-                    Lookups = new Lookups
-                    {
-                        ExpenseCategories = expenseCategories
-                    },
                     Code = InternalApiStatusCode.Success,
                     Message = "list of individual categories",
 
                 };
 
                 return Ok(individualTransactionResponse);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse { Code = InternalApiStatusCode.Error });
+            }
+        }
+
+        [Route("SearchLookups")]
+        [ProducesResponseType(typeof(Lookups), 200)]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        public ActionResult GetSearchLookups()
+        {
+            try
+            {
+
+                var expenseCategories = _expenseCategoryService.GetExpenseCategories();
+
+                var searchLookups = new Lookups
+                {
+                    ExpenseCategories = expenseCategories,
+                    Code = InternalApiStatusCode.Success,
+                    Message = "list of individual categories",
+
+                };
+
+                return Ok(searchLookups);
 
             }
             catch (Exception ex)

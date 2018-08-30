@@ -10,11 +10,13 @@ import { Page } from "../../../shared/model/paging/page";
 
 import { ITransaction } from "./transaction";
 import { ExpenseRegisterService } from "./expense-register.service";
+import { FilterService } from "./filter.service";
 
 @Component({
 	selector: "expense-register",
 	templateUrl: "./expense-register.component.html",
-	styleUrls: ["./expense-register.component.scss"]
+	styleUrls: ["./expense-register.component.scss"],
+	providers:[FilterService]
 })
 export class ExpenseRegisterComponent implements OnInit {
 
@@ -31,9 +33,9 @@ export class ExpenseRegisterComponent implements OnInit {
 	isToolbarActive: boolean = false;
 	itemsSelected: string = "";
 	itemCount: number = 0;
-	searchModel = {
-		expenseCategoryId: null
-	};
+	// searchModel = {
+	// 	expenseCategoryId: null
+	// };
 
 	// Search SideBar
 
@@ -49,6 +51,7 @@ export class ExpenseRegisterComponent implements OnInit {
 
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
+		private filterService: FilterService,
 		public config: ConfigService,
 		public trackby: TrackByService
 	) {
@@ -59,7 +62,15 @@ export class ExpenseRegisterComponent implements OnInit {
 
 	ngOnInit() {
 		this.setPage({ offset: 0 });
+		this.fetchSearchLookups();
+	}
 
+	fetchSearchLookups(){
+		this.expenseRegisterService.getSearchLookups().subscribe(lookups => {
+			this.expenseCategories = lookups.expenseCategories;
+			this.tdExpenseCategories = [...this.expenseCategories];
+
+		})
 	}
 
 	/**
@@ -68,14 +79,11 @@ export class ExpenseRegisterComponent implements OnInit {
   */
 	setPage(pageInfo) {
 		this.page.pageNumber = pageInfo.offset;
-		this.searchModel.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
-		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
+		this.filterService.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
+		this.expenseRegisterService.getTransactions(this.page, this.filterService).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
-
-			this.expenseCategories = pagedData.lookups.expenseCategories;
-			this.tdExpenseCategories = [...this.expenseCategories];
-
+			
 			this.filteredExpenseCategories = this.expenseCategoryControl.valueChanges
 				.pipe(
 					startWith<string | any>(''),
@@ -109,12 +117,11 @@ export class ExpenseRegisterComponent implements OnInit {
 
 	search() {
 		this.page.pageNumber = 0;
-		this.searchModel.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
-		this.expenseRegisterService.getTransactions(this.page, this.searchModel).subscribe(pagedData => {
+		this.filterService.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
+		this.expenseRegisterService.getTransactions(this.page, this.filterService).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
 
-			this.expenseCategories = pagedData.lookups.expenseCategories;
 			this.tdExpenseCategories = [...this.expenseCategories];
 		});
 	}

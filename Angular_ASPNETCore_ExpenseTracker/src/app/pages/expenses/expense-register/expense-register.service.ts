@@ -2,19 +2,20 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { ITransaction, IndividualTransactionsApiResponse } from "./transaction";
+import { IndividualTransactionsApiResponse, SearchLookups } from "./transaction";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import { Page } from "../../../shared/model/paging/page";
+import { FilterService } from "./filter.service";
 
 const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 @Injectable()
 export class ExpenseRegisterService {
   constructor(private http: HttpClient) { }
 
-  getTransactions(page: Page, searchModel: any): Observable<IndividualTransactionsApiResponse> {
+  getTransactions(page: Page, searchModel: FilterService): Observable<IndividualTransactionsApiResponse> {
 
     let parameters =
       new HttpParams()
@@ -34,6 +35,17 @@ export class ExpenseRegisterService {
       .get(API_URL, {
         params: parameters,
       })
+      .map((response: Response) => {
+        // let response = res.json();
+        return response;
+      })
+      .catch(this.handleError);
+  }
+
+  
+  getSearchLookups(): Observable<SearchLookups> {
+    return this.http
+      .get(`${API_URL}/SearchLookups`)
       .map((response: Response) => {
         // let response = res.json();
         return response;
