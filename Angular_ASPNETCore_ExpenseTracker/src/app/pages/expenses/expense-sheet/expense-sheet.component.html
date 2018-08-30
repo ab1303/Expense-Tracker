@@ -13,13 +13,13 @@
 			<div class="card card-datatable">
 				<header class="card-header p-30">
 					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
-						<md-toolbar class="activeHeaderColor">
+						<mat-toolbar class="activeHeaderColor">
 							<span>{{itemCount}} {{itemsSelected}}</span>
 							<span class="demo-fill-remaining"></span>
-							<button md-icon-button>
-								<md-icon class="md-24">delete</md-icon>
+							<button mat-icon-button>
+								<mat-icon class="mat-24">delete</mat-icon>
 							</button>
-						</md-toolbar>
+						</mat-toolbar>
 					</div>
 					<h2 class="card-title">Manage Exepnse Sheets</h2>
 					<ul class="actions icons top-right">
@@ -31,7 +31,7 @@
 					</ul>
 					<ul class="actions fab bottom-right">
 						<li>
-							<button class="btn btn-accent btn-fab" (click)="uploadSheetModal.show()" md-ripple>
+							<button class="btn btn-accent btn-fab" (click)="uploadSheetModal.show()" mat-ripple>
 								<i class="zmdi zmdi-plus"></i>
 							</button>
 						</li>

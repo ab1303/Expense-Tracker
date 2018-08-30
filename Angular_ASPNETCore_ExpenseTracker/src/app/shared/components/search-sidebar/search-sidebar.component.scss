@@ -1,0 +1,79 @@
+
+.search-container {
+    width: 300px;
+    max-height: 700px;
+    position: absolute;
+    display: flex;
+    overflow: hidden;
+    transition: right 0.3s ease-out;
+  }
+  .search-container .search-icon {
+    background: #4d87e5;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 34px;
+    width: 40px;
+    border-radius: 20px 0 0 20px;
+    font-size: x-large;
+  }
+  .search-container .search-icon-open {
+    background: #3474da;
+  }
+  .search-container .search-icon > span {
+    cursor: pointer;
+  }
+  .search-container .search-icon > span:hover {
+    color: #e2e7e7;
+  }
+  .search-container .search-bar {
+    background: white;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  .search-container .search-bar > form {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-container .search-bar-header {
+    display: flex;
+    height: 34px;
+    background: #efefef;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .search-container .search-bar-header .header-label {
+    /*border: 1px solid red;*/
+    flex-grow: 3;
+    margin: auto 0px;
+  }
+  .search-container .search-bar-header .header-actions {
+    /*border: 1px solid blue;*/
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+  }
+  .search-container .search-bar-header .header-actions div > span {
+    margin: 0 5px;
+  }
+  .search-container .search-bar-content {
+    /*border: 1px solid @shade50;*/
+    font-size: 1em;
+    flex-grow: 4;
+    padding: 10px 7px;
+    overflow-x: hidden;
+  }
+  .search-container .search-bar-content input.form-control,
+  .search-container .search-bar-content select.form-control {
+    height: 30px;
+    font-size: .8em;
+  }
+  .search-container .search-bar-footer {
+    border-top: 1px dashed #e7eaec;
+    padding: 5px 0;
+    margin: 10px;
+  }

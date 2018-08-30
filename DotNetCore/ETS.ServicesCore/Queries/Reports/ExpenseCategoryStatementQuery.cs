@@ -1,0 +1,122 @@
+﻿using ETS.Service.DTO;
+using ETS.Service.Services;
+using ETS.Services.Repositories;
+using System.Linq;
+
+namespace ETS.Services.Queries
+{
+    public class ExpenseCategoryStatementQuery : IPagedQuery<ExpenseCategoryStatementQuery.Result>
+    {
+
+        public class Result
+        {
+            public int Year { get; set; }
+            public long? UserId { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public long GroupId { get; set; }
+            public string GroupName { get; set; }
+            public long CategoryId { get; set; }
+            public string CategoryName { get; set; }
+            public decimal Amount { get; set; }
+        }
+
+        private NgxDataTableArgs _pagedListArgs;
+        public bool ReturnAllResults { get; set; }
+
+        public ExpenseCategoryStatementQuery()
+        {
+            ReturnAllResults = false;
+            _pagedListArgs = new NgxDataTableArgs();
+        }
+
+        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
+        {
+            _pagedListArgs = new NgxDataTableArgs
+            {
+                PageNumber = pageInfo.PageNumber,
+                PageSize = pageInfo.PageSize,
+            };
+
+            return this;
+        }
+
+        public Result[] GetResults(IRepositories repositories, out int totalFound)
+        {
+
+            var individualExpenseCategories = (from i in repositories.IndividualExpense.Get()
+                         join c in repositories.ExpenseCategory.Get()
+                         on i.Category equals c
+                         join u in repositories.UserDetail.Get()
+                         on i.PaidFor equals u
+                         join ug in repositories.UserGroup.Get()
+                         on u.UserGroupId equals ug.Id
+                         group new { i, c, u, ug } by new
+                         {
+                             Year = i.TransactionDate.Year,
+                             GroupId = ug.Id,
+                             GroupName = ug.Name,
+                             CategoryId = c.Id,
+                             CategoryName = c.Name,
+                             u.Id,
+                             u.FirstName,
+                             u.LastName,
+                         } into groupedCategory
+                         select new Result
+                         {
+                             Year = groupedCategory.Key.Year,
+                             UserId = groupedCategory.Key.Id,
+                             FirstName = groupedCategory.Key.FirstName,
+                             LastName = groupedCategory.Key.LastName,
+                             CategoryId = groupedCategory.Key.CategoryId,
+                             CategoryName = groupedCategory.Key.CategoryName,
+                             GroupId = groupedCategory.Key.GroupId,
+                             GroupName = groupedCategory.Key.GroupName,
+                             Amount = groupedCategory.Sum(g => g.i.Amount),
+                         }).ToList();
+
+
+            var groupExpenseCategories = (from g in repositories.GroupExpense.Get()
+                                               join c in repositories.ExpenseCategory.Get()
+                                               on g.Category equals c
+                                               join ug in repositories.UserGroup.Get()
+                                               on g.PaidFor equals ug
+                                               group new { g, c, ug } by new
+                                               {
+                                                   Year = g.TransactionDate.Year,
+                                                   GroupId = ug.Id,
+                                                   GroupName = ug.Name,
+                                                   CategoryId = c.Id,
+                                                   CategoryName = c.Name,
+                                               } into groupedCategory
+                                               select new Result
+                                               {
+                                                   Year = groupedCategory.Key.Year,
+                                                   UserId = null,
+                                                   FirstName = null,
+                                                   LastName = null,
+                                                   CategoryId = groupedCategory.Key.CategoryId,
+                                                   CategoryName = groupedCategory.Key.CategoryName,
+                                                   GroupId = groupedCategory.Key.GroupId,
+                                                   GroupName = groupedCategory.Key.GroupName,
+                                                   Amount = groupedCategory.Sum(g => g.g.Amount),
+                                               }).ToList();
+
+
+
+            var expenseCategory = individualExpenseCategories.Union(groupExpenseCategories);
+
+            var expenseCategoryEnumerable = expenseCategory as Result[] ?? expenseCategory.ToArray();
+            totalFound = expenseCategoryEnumerable.Count();
+
+            return expenseCategoryEnumerable;
+        }
+
+
+
+        public static class DefaultSortBy
+        {
+            public const string CategoryName = "CategoryName";
+        }
+    }
+}

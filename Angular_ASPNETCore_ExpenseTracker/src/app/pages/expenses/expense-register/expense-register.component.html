@@ -1,74 +1,163 @@
-<div id="content_wrapper" class="fullWidth1-wrapper">
-	<div class="content">
-		<div class="header-wrapper header-sm">
-			<header>
-				<h1>Expense Register</h1>
-			</header>
-		</div>
-		<div class="content-body">
-			<div class="card card-datatable">
-				<header class="card-header p-30">
-					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
-						<md-toolbar class="activeHeaderColor">
-							<span>{{itemCount}} {{itemsSelected}}</span>
-							<span class="demo-fill-remaining"></span>
-							<button md-icon-button>
-								<md-icon class="md-24">delete</md-icon>
-							</button>
-						</md-toolbar>
-					</div>
-					<h2 class="card-title">Angular Datatables</h2>
-					<ul class="actions icons top-right">
-						<li>
-							<a href="javascript:void(0)" (click)="isSearchActive = !isSearchActive;">
+<div id="content_wrapper"
+     class="fullWidth2-wrapper rightSidenav2-wrapper">
+	<mat-sidenav-container class="sidenav-container">
+		<mat-sidenav-content>
+			<div class="content">
+				<div class="header-wrapper header-sm">
+					<header>
+						<h1>Expense Register</h1>
+
+						<ul class="actions icons top-right">
+							<li>
+								<a href="javascript:void(0)"
+								   (click)="rightSidenav2.toggle()">
+									<i class="zmdi zmdi-search"></i>
+								</a>
+							</li>
+						</ul>
+					</header>
+				</div>
+				<div class="content-body">
+					<div class="card card-datatable">
+						<header class="card-header p-30">
+							<div class="selected-toolbar"
+							     [ngClass]="{'active' : isToolbarActive}">
+								<mat-toolbar class="activeHeaderColor">
+									<span>{{itemCount}} {{itemsSelected}}</span>
+									<span class="demo-fill-remaining"></span>
+									<button mat-icon-button>
+										<mat-icon class="mat-24">delete</mat-icon>
+									</button>
+								</mat-toolbar>
+							</div>
+							<h2 class="card-title">Expense Register</h2>
+							<ul class="actions icons top-right">
+								<!-- <li>
+							<a href="javascript:void(0)"
+							   (click)="isSearchActive = !isSearchActive;">
 								<i class="zmdi zmdi-search"></i>
 							</a>
-						</li>
-					</ul>
-					<ul class="actions fab bottom-right">
-						<li>
-							<button class="btn btn-accent btn-fab" md-ripple>
-								<i class="zmdi zmdi-plus"></i>
+						</li> -->
+								<!-- <li>
+							<button class="btn btn-accent btn-fab"
+							        (click)="isSearchActive = !isSearchActive;"
+							        mat-ripple>
+								<i class="zmdi zmdi-search"></i>
 							</button>
-						</li>
-					</ul>
-				</header>
-				<div class="card-block p-0">
-					<div class="data-filter-wrapper" [ngClass]="{'active' : isSearchActive}">
-						<i class="zmdi zmdi-search search filter-icons"></i>
-						<input type='text' class='data-filter' placeholder='Filter product name...' (keyup)='updateFilter($event)' [(ngModel)]="searchValue"
-						/>
-						<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)">
-							<i class="zmdi zmdi-close"></i>
-						</a>
+						</li> -->
+							</ul>
+							<ul class="actions fab bottom-right">
+								<li>
+									<button class="btn btn-accent btn-fab"
+									        mat-ripple>
+										<i class="zmdi zmdi-plus"></i>
+									</button>
+								</li>
+							</ul>
+						</header>
+						<div class="card-block p-0">
+							<ngx-datatable #table
+							               style="width: 100%"
+							               class="material"
+							               [rows]="rows"
+							               [columnMode]="'force'"
+							               [headerHeight]="50"
+							               [footerHeight]="50"
+							               [rowHeight]="'auto'"
+							               [limit]="10"
+							               [selected]="selected"
+							               [selectionType]="'checkbox'"
+							               [externalPaging]="true"
+							               [count]="page.totalElements"
+							               [offset]="page.pageNumber"
+							               [limit]="page.size"
+							               (page)='setPage($event)'
+							               (select)='onSelect($event)'>
+								<ngx-datatable-column [width]="60"
+								                      [sortable]="false"
+								                      [canAutoResize]="false"
+								                      [draggable]="false"
+								                      [resizeable]="false">
+									<ng-template ngx-datatable-header-template
+									             let-value="value"
+									             let-allRowsSelected="allRowsSelected"
+									             let-selectFn="selectFn">
+										<mat-checkbox class="example-margin"
+										              [checked]="allRowsSelected"
+										              (change)="selectFn(!allRowsSelected)"></mat-checkbox>
+									</ng-template>
+									<ng-template ngx-datatable-cell-template
+									             let-value="value"
+									             let-isSelected="isSelected"
+									             let-onCheckboxChangeFn="onCheckboxChangeFn">
+										<mat-checkbox class="example-margin"
+										              [checked]="isSelected"
+										              (change)="onCheckboxChangeFn($event)"></mat-checkbox>
+									</ng-template>
+								</ngx-datatable-column>
+								<ngx-datatable-column name="Name"></ngx-datatable-column>
+								<ngx-datatable-column name="Category"
+								                      prop="categoryName"></ngx-datatable-column>
+								<ngx-datatable-column name="Amount">
+									<ng-template let-value="value"
+									             ngx-datatable-cell-template>
+										{{value | currency:'USD':'symbol':'1.2-4'}}
+									</ng-template>
+								</ngx-datatable-column>
+								<ngx-datatable-column name="Paid For"
+								                      prop="paidForName"></ngx-datatable-column>
+								<ngx-datatable-column name="Transaction Date">
+									<ng-template let-value="value"
+									             ngx-datatable-cell-template>
+										{{value | date: 'dd-MMM-yyyy'}}
+									</ng-template>
+								</ngx-datatable-column>
+								<ngx-datatable-column name="Edit">
+									<ng-template let-row="row"
+									             ngx-datatable-cell-template>
+										<a href="javascript:void(0)"
+										   attr.data-productId="{{row.productId}}"
+										   class="icon edit-product">
+											<i class="zmdi zmdi-edit"></i>
+										</a>
+									</ng-template>
+								</ngx-datatable-column>
+							</ngx-datatable>
+						</div>
 					</div>
-					<ngx-datatable #table style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-					 [rowHeight]="'auto'" [limit]="10" [selected]="selected" [selectionType]="'checkbox'" (activate)="onActivate($event)"
-					 (select)='onSelect($event)'>
-						<ngx-datatable-column [width]="60" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
-							<ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
-								<md-checkbox class="example-margin" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"></md-checkbox>
-							</ng-template>
-							<ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
-								<md-checkbox class="example-margin" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"></md-checkbox>
-							</ng-template>
-						</ngx-datatable-column>
-						<ngx-datatable-column name="Name"></ngx-datatable-column>
-						<ngx-datatable-column name="Category" prop="categoryName"></ngx-datatable-column>
-						<ngx-datatable-column name="Amount"></ngx-datatable-column>
-						<ngx-datatable-column name="Paid For" prop="paidForName"></ngx-datatable-column>
-						<ngx-datatable-column name="Transaction Date"></ngx-datatable-column>
-						<ngx-datatable-column name="Edit">
-							<ng-template let-row="row" ngx-datatable-cell-template>
-								<a href="javascript:void(0)" attr.data-productId="{{row.productId}}" class="icon edit-product">
-									<i class="zmdi zmdi-edit"></i>
-								</a>
-							</ng-template>
-						</ngx-datatable-column>
-					</ngx-datatable>
 				</div>
 			</div>
-		</div>
-	</div>
+		</mat-sidenav-content>
+		<!-- Sidenav -->
+		<mat-sidenav #rightSidenav2
+		             mode="{{navMode}}"
+		             align="end"
+		             class="sidenav">
+			<aside id="rightSidenav2">
+				<app-search-card (searchHandler)="search($event)">
+					<input type="text"
+					       placeholder="Expense Name..."
+					       class="form-control" />
+					<input matInput
+					       placeholder="Expense Category"
+					       class="form-control"
+					       [matAutocomplete]="tdAuto"
+					       [formControl]="expenseCategoryControl">
+				</app-search-card>
+			</aside>
+		</mat-sidenav>
+
+		<!-- Auto Complete Expense Categories -->
+		<mat-autocomplete #tdAuto="matAutocomplete"
+		                  [displayWith]="displayFn">
+			<mat-option *ngFor="let expenseCategory of filteredExpenseCategories | async"
+			            [value]="expenseCategory">
+				<span>{{ expenseCategory.name }}</span>
+			</mat-option>
+		</mat-autocomplete>
+
+		<footer id="footer_wrapper"
+		        class="footer_wrapper"></footer>
+
+	</mat-sidenav-container>
 </div>
-<footer id="footer_wrapper" class="footer_wrapper"></footer>

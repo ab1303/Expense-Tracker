@@ -110,6 +110,14 @@ const LAYOUT_ROUTES: Routes = [
         loadChildren:
           "../pages/expenses/expenses.module#ExpensesModule"
       },
+       //---------------------------------------------------------->
+      // Reporting
+      //---------------------------------------------------------->
+      {
+        path: "reports",
+        loadChildren:
+          "../pages/reports/reports.module#ReportsModule"
+      },
       //---------------------------------------------------------->
       // Administration
       //---------------------------------------------------------->

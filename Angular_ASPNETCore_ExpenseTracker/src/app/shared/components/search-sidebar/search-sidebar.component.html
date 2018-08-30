@@ -1,0 +1,49 @@
+<div>
+	<div class="search-container" [ngStyle]="searchPosition">
+		<div class="search-icon"
+		     role="presentation"
+		     (click)="toggleSearch()">
+			<span class="zmdi zmdi-search"></span>
+		</div>
+		<div class="search-bar">
+			<form>
+				<div class="search-bar-header">
+					<div class="header-label">
+						Search Options
+					</div>
+				</div>
+				<div class="search-bar-content">
+					<!-- Render children -->
+					<input type="text"
+					       placeholder="Control 1..."
+					       class="form-control"
+					/>
+					<input type="text"
+					       placeholder="Control 2..."
+					       class="form-control"
+					/>
+					<input type="text"
+					       placeholder="Control 3..."
+					       class="form-control"
+					/>
+					
+				</div>
+				<div class="search-bar-footer">
+					<div class="pull-right">
+						<button class="btn btn-fab btn-xs "
+						        id="searchButton"
+						        type="submit"
+						        (click)="search()">
+							<i class="zmdi zmdi-search"></i> Search</button>
+						<button class="btn btn-lightgray btn-xs "
+						        id="resetButton"
+						        type="button"
+						        (click)="reset()">
+							<i class=""></i> Reset</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,20 @@
+
+  .search-card-content > form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search-card-content {
+    /*border: 1px solid @shade50;*/
+    font-size: 1em;
+    flex-grow: 4;
+    padding: 10px 7px;
+    overflow-x: hidden;
+  }
+ 
+  :host ::ng-deep .search-card-content input.form-control,
+  :host ::ng-deep .search-card-content select.form-control {
+    height: 30px;
+    font-size: .8em;
+    margin-bottom: 5px;
+  }

@@ -8,7 +8,7 @@ namespace ETS.Domain
         public string Location { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Gender { get; set; }
+        public string Gender { get; set; } // Change it to Enumeration
         public string IdentityId { get; set; }
         public virtual ApplicationUser Identity { get; set; }
 

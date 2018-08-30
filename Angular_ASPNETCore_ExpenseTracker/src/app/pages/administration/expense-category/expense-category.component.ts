@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { IExpenseCategory } from "./expense-category";
 import { ExpenseCategoryService } from "./expense-category.service";
 import { TrackByService } from "../../../core/trackby.service";
+import { ExpenseCategory } from "../../../shared/model/domain/expense-category.model";
 
 @Component({
   selector: "expense-category",
@@ -9,7 +9,7 @@ import { TrackByService } from "../../../core/trackby.service";
   styleUrls: ["./expense-category.component.scss"]
 })
 export class ExpenseCategoryComponent implements OnInit {
-  expenseCategories: IExpenseCategory[] = [];
+  expenseCategories: ExpenseCategory[] = [];
   constructor(
     private expenseCategoryService: ExpenseCategoryService,
     public trackby: TrackByService

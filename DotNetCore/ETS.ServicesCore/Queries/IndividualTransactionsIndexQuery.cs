@@ -11,12 +11,27 @@ namespace ETS.Services.Queries
 {
     public class IndividualTransactionsIndexQuery : IPagedQuery<IndividualTransactionsIndexQuery.Result>
     {
-        public PagedListArgs PagedListArgs { get; }
-        public bool ReturnAllResults { get; }
+        private readonly long? _expenseCategoryId;
 
-        public IndividualTransactionsIndexQuery(bool returnAllResults = true)
+        private NgxDataTableArgs _pagedListArgs;
+        public bool ReturnAllResults { get; set; }
+
+        public IndividualTransactionsIndexQuery(long? expenseCategoryId)
         {
-            ReturnAllResults = returnAllResults;
+            _expenseCategoryId = expenseCategoryId;
+            ReturnAllResults = false;
+            _pagedListArgs = new NgxDataTableArgs();
+        }
+
+        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
+        {
+            _pagedListArgs = new NgxDataTableArgs
+            {
+                PageNumber = pageInfo.PageNumber,
+                PageSize = pageInfo.PageSize,
+            };
+
+            return this;
         }
 
         public Result[] GetResults(IRepositories repositories, out int totalFound)
@@ -30,11 +45,12 @@ namespace ETS.Services.Queries
                         on t.PaidBy equals paidBy
                         join paidFor in repositories.UserDetail.Get()
                         on t.PaidFor equals paidFor
-                        select new Result
+                        select new
                         {
                             Id = t.Id,
                             Name = t.Name,
                             Amount = t.Amount,
+                            CategoryId = c.Id,
                             CategoryName = c.Name,
                             Details = t.Details,
                             PaidByName = paidBy.FirstName + " " + paidBy.LastName,
@@ -43,12 +59,29 @@ namespace ETS.Services.Queries
                             Frequency = t.Frequency
                         };
 
-            totalFound = query.Count();
+            if (_expenseCategoryId.HasValue)
+                query = query.Where(t => t.CategoryId == _expenseCategoryId);
 
-            var orderBy = $"{DefaultSortBy.TransactionDate} {"DESC"}";
 
-            var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
-                query.OrderBy(orderBy).Skip(PagedListArgs.PageSize * PagedListArgs.PageNumber).Take(PagedListArgs.PageSize).ToArray();
+            var materialisedQuery = query.Select(t => new Result
+            {
+                Id = t.Id,
+                Name = t.Name,
+                Amount = t.Amount,
+                CategoryName = t.CategoryName,
+                Details = t.Details,
+                PaidByName = t.PaidByName,
+                PaidForName = t.PaidForName,
+                TransactionDate = t.TransactionDate,
+                Frequency = t.Frequency
+            });
+
+            totalFound = materialisedQuery.Count();
+
+            var orderBy = $"{DefaultSortBy.TransactionDate} DESC";
+
+            var results = ReturnAllResults ? materialisedQuery.OrderBy(orderBy).ToArray() :
+                materialisedQuery.OrderBy(orderBy).Skip(_pagedListArgs.PageSize * _pagedListArgs.PageNumber).Take(_pagedListArgs.PageSize).ToArray();
 
             return results;
 

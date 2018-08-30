@@ -1,12 +1,12 @@
 <nav role="navigation" class="navbar">
 	<ul class="navbar-nav nav-left">
 		<li class="nav-item hidden-sm">
-			<a md-ripple href="javascript:void(0)" (click)="toggleAppMobileLeftMenuSidebar()" class="nav-link mobile-menu-trigger">
+			<a mat-ripple href="javascript:void(0)" (click)="toggleAppMobileLeftMenuSidebar()" class="nav-link mobile-menu-trigger">
 				<i class="mdi mdi-backburger"></i>
 			</a>
 		</li>
 		<li class="nav-item hidden-sm-down">
-			<a md-ripple href="/dashboards" class="nav-link">
+			<a mat-ripple href="/dashboards" class="nav-link">
 				<span>Home</span>
 			</a>
 		</li>
@@ -14,7 +14,7 @@
 	</ul>
 	<ul class="navbar-nav nav-right">
 		<li class="nav-item dropdown avatar-menu hidden-sm-down" dropdown>
-			<a md-ripple href="javascript:void(0)" class="nav-link" dropdownToggle>
+			<a mat-ripple href="javascript:void(0)" class="nav-link" dropdownToggle>
 				<span class="meta">
 					<span class="avatar">
 						<img src="assets/img/profiles/02.jpg" alt="" class="img-circle max-w-35">
@@ -40,12 +40,12 @@
 			</ul>
 		</li>
 		<li class="nav-item">
-			<a md-ripple href="javascript:void(0)" (click)="search.searchStatus = true" class="nav-link">
+			<a mat-ripple href="javascript:void(0)" (click)="search.searchStatus = true" class="nav-link">
 				<i class="zmdi zmdi-search"></i>
 			</a>
 		</li>
 		<li class="nav-item">
-			<a md-ripple href="javascript:void(0)" (click)="toggleAppRightSidebar()" class="nav-link">
+			<a mat-ripple href="javascript:void(0)" (click)="toggleAppRightSidebar()" class="nav-link">
 				<i [ngClass]="{'mdi-playlist-minus': false, 'mdi-playlist-plus': true}" class="mdi"></i>
 			</a>
 		</li>
