@@ -134,7 +134,7 @@
 		             align="end"
 		             class="sidenav">
 			<aside id="rightSidenav2">
-				<app-search-card (searchHandler)="search($event)">
+				<app-search-card (searchHandler)="search($event)" (resetHandler)="clearFilter($event)">
 					<input type="text"
 					       placeholder="Expense Name..."
 					       class="form-control" />

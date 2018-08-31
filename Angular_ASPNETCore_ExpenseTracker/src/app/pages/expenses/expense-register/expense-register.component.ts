@@ -87,7 +87,7 @@ export class ExpenseRegisterComponent implements OnInit {
 			this.filteredExpenseCategories = this.expenseCategoryControl.valueChanges
 				.pipe(
 					startWith<string | any>(''),
-					map(value => typeof value === 'string' ? value : value.name),
+					map(value => !!value &&  (typeof value === 'string' ? value : value.name)),
 					// map(name => name ? this._filter(name) : this.expenseCategories.slice())
 					map(name => {
 						if (!name) return this.expenseCategories.slice();
@@ -124,6 +124,11 @@ export class ExpenseRegisterComponent implements OnInit {
 
 			this.tdExpenseCategories = [...this.expenseCategories];
 		});
+	}
+
+	clearFilter(){
+		this.expenseCategoryControl.reset();
+		// this.search();
 	}
 
 	onSelect({ selected }) {

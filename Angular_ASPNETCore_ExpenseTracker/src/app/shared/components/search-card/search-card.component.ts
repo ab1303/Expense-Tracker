@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, Output, EventEmitter, Input, OnInit } from "@angular/core";
-
+import { FormGroup } from '@angular/forms';
 
 @Component({
 	selector: "app-search-card",
@@ -7,8 +7,9 @@ import { Component, ViewEncapsulation, Output, EventEmitter, Input, OnInit } fro
 	styleUrls: ["./search-card.component.scss"],
 	encapsulation: ViewEncapsulation.Emulated
 })
-export class SearchCardComponent {
+export class SearchCardComponent implements OnInit {
 
+	myform: FormGroup;
 	@Input()
 	toggle: boolean;
 
@@ -18,9 +19,11 @@ export class SearchCardComponent {
 	@Output()
 	resetHandler: EventEmitter<any> = new EventEmitter();
 
-	constructor(){
+	constructor() {
 	}
 
+	ngOnInit(): void {
+	}
 
 	submit(e) {
 		e.preventDefault();
@@ -30,7 +33,7 @@ export class SearchCardComponent {
 		this.searchHandler.emit();
 	}
 
-	reset() {
+	reset(searchformHandle) {
 		this.resetHandler.emit();
 	}
 
