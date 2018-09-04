@@ -36,12 +36,15 @@ export class ExpenseCategoryReportService {
           yearGroup.subCategories.map(expenseGroup => {
             let mappedResult: any = {};
             // find if expenseCategory is already been added
+            const groupingTotal = !!expenseGroup.category.groupingTotal ? expenseGroup.category.groupingTotal : 0;
             if (transformedResponse.find(r => r.expenseCategory === expenseGroup.category.groupingName)) {
               mappedResult = transformedResponse.find(r => r.expenseCategory === expenseGroup.category.groupingName);
-              mappedResult[`year${year}`] = expenseGroup.category.groupingTotal;
+              mappedResult[`${year}`] = groupingTotal;
+              mappedResult[`total`] += groupingTotal;
             } else {
               mappedResult[`expenseCategory`] = expenseGroup.category.groupingName;
-              mappedResult[`year${year}`] = expenseGroup.category.groupingTotal;
+              mappedResult[`${year}`] = groupingTotal;
+              mappedResult[`total`] = groupingTotal;
               transformedResponse.push(mappedResult);
             }
           });

@@ -88,7 +88,6 @@ export class ExpenseRegisterComponent implements OnInit {
 				.pipe(
 					startWith<string | any>(''),
 					map(value => !!value &&  (typeof value === 'string' ? value : value.name)),
-					// map(name => name ? this._filter(name) : this.expenseCategories.slice())
 					map(name => {
 						if (!name) return this.expenseCategories.slice();
 

@@ -73,7 +73,15 @@
                             <i class="zmdi zmdi-close"></i>
                         </a>
                     </div>
-                    <ngx-datatable #table
+                    <ngx-datatable class="material"
+                                   [rows]="rows"
+                                   [columns]="columns"
+                                   [columnMode]="'force'"
+                                   [headerHeight]="50"
+                                   [footerHeight]="50"
+                                   [rowHeight]="50">
+                    </ngx-datatable>
+                    <!-- <ngx-datatable #table
                                    style="width: 100%"
                                    class="material"
                                    [rows]="rows"
@@ -137,7 +145,7 @@
                                 </a>
                             </ng-template>
                         </ngx-datatable-column>
-                    </ngx-datatable>
+                    </ngx-datatable> -->
                 </div>
             </div>
         </div>

@@ -19,6 +19,7 @@ import { ConfigService } from "../../../shared/services/config/config.service";
 	styleUrls: ["./data-tables.component.scss"]
 })
 export class DataTablesComponent {
+	columns = [{ name: "Name" }, { name: "Gender" }, { name: "Company" }];
 	rows = [];
 	selected = [];
 	temp = [];
@@ -37,7 +38,10 @@ export class DataTablesComponent {
 
 	fetch(cb) {
 		const req = new XMLHttpRequest();
-		req.open("GET", `assets/data/ecom/productTable.json`);
+
+		// Basic Table
+		req.open("GET", `/assets/data/demos/company.json`);
+		// req.open("GET", `assets/data/ecom/productTable.json`);
 
 		req.onload = () => {
 			cb(JSON.parse(req.response));
