@@ -1,11 +1,10 @@
-﻿using ETS.Service.DTO;
+﻿using System.Linq;
 using ETS.Service.Services;
 using ETS.Services.Repositories;
-using System.Linq;
 
-namespace ETS.Services.Queries
+namespace ETS.Services.Queries.Reports
 {
-    public class ExpenseCategoryStatementQuery : IPagedQuery<ExpenseCategoryStatementQuery.Result>
+    public class ExpenseCategoryStatementQuery : IQuery<ExpenseCategoryStatementQuery.Result>
     {
 
         public class Result
@@ -19,26 +18,6 @@ namespace ETS.Services.Queries
             public long CategoryId { get; set; }
             public string CategoryName { get; set; }
             public decimal Amount { get; set; }
-        }
-
-        private NgxDataTableArgs _pagedListArgs;
-        public bool ReturnAllResults { get; set; }
-
-        public ExpenseCategoryStatementQuery()
-        {
-            ReturnAllResults = false;
-            _pagedListArgs = new NgxDataTableArgs();
-        }
-
-        public IPagedQuery<Result> SetPage(NgxDataTableArgs pageInfo)
-        {
-            _pagedListArgs = new NgxDataTableArgs
-            {
-                PageNumber = pageInfo.PageNumber,
-                PageSize = pageInfo.PageSize,
-            };
-
-            return this;
         }
 
         public Result[] GetResults(IRepositories repositories, out int totalFound)
@@ -110,13 +89,6 @@ namespace ETS.Services.Queries
             totalFound = expenseCategoryEnumerable.Count();
 
             return expenseCategoryEnumerable;
-        }
-
-
-
-        public static class DefaultSortBy
-        {
-            public const string CategoryName = "CategoryName";
         }
     }
 }

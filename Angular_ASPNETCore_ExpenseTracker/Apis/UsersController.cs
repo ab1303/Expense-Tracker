@@ -1,8 +1,8 @@
 ﻿using System;
 using Angular_ASPNETCore_ExpenseTracker.Models;
-using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Users;
+using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Administration;
 using ETS.Service.Services;
-using ETS.Services.Queries;
+using ETS.Services.Queries.Reports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

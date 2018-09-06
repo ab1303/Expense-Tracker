@@ -1,14 +1,13 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { NgDateRangePickerOptions } from 'ng-daterangepicker';
-
-import { ExpenseCategoryReportService } from './expense-category-report.service';
+import { MonthlyExpensesReportService } from './monthly-expenses.service';
 
 @Component({
-  selector: 'app-expense-category',
-  templateUrl: './expense-category.component.html',
-  styleUrls: ['./expense-category.component.scss']
+  selector: 'app-monthly-expenses',
+  templateUrl: './monthly-expenses.component.html',
+  styleUrls: ['./monthly-expenses.component.scss']
 })
-export class ExpenseCategoryComponent implements OnInit {
+export class MonthlyExpensesComponent implements OnInit {
   rows = [];
   columns = [];
   options: NgDateRangePickerOptions;
@@ -16,7 +15,7 @@ export class ExpenseCategoryComponent implements OnInit {
   @ViewChild('expenseAmtTpl') ExpenseAmtTmpl: TemplateRef<any>;
   @ViewChild('summaryTpl') SummaryTpl: TemplateRef<any>;
   constructor(
-    private expenseCategoryReportService: ExpenseCategoryReportService
+    private expenseCategoryReportService: MonthlyExpensesReportService
   ) { }
 
   ngOnInit() {

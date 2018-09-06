@@ -1,5 +1,6 @@
 ﻿using System;
 using Angular_ASPNETCore_ExpenseTracker.Models;
+using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Administration;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Users;
 using ETS.Service.Services;
 using ETS.Services.Interfaces;
@@ -25,9 +26,38 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet]
+        [Route("ExpenseCategory")]
         [ProducesResponseType(typeof(UserDetailsResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
-        public ActionResult Get()
+        public ActionResult GetExpenseCategoryReport()
+        {
+            try
+            {
+                var result = _reportingService.ExpenseCategoryReport();
+
+                var expenseCategoryStatementResponse = new ExpenseCategoryStatementResponse
+                {
+                    ExpenseReportGroups = result,
+                    Code = InternalApiStatusCode.Success,
+                    Message = "Expense Category Report by date",
+
+                };
+
+                return Ok(expenseCategoryStatementResponse);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse { Code = InternalApiStatusCode.Error });
+            }
+        }
+
+        [HttpGet]
+        [Route("MonthlyExpenses")]
+        [ProducesResponseType(typeof(UserDetailsResponse), 200)]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        public ActionResult GetMonthlyExpensesReport()
         {
             try
             {

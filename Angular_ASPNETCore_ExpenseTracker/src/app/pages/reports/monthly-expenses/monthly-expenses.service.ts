@@ -2,18 +2,18 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { ExpenseCategoryReportApiResponse } from "./expense-category-report.model";
+import { MonthlyExpensesReportApiResponse } from "./monthly-expenses.model";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-const API_URL = `${API_BASE_ADDRESS}/Reports/ExpenseCategory`;
+const API_URL = `${API_BASE_ADDRESS}/Reports/MonthlyExpenses`;
 @Injectable()
-export class ExpenseCategoryReportService {
+export class MonthlyExpensesReportService {
   constructor(private http: HttpClient) { }
 
-  getExpenseCategories(): Observable<ExpenseCategoryReportApiResponse> {
+  getExpenseCategories(): Observable<MonthlyExpensesReportApiResponse> {
     return this.http
       .get(API_URL)
       .map((response: Response) => {
@@ -35,14 +35,14 @@ export class ExpenseCategoryReportService {
 
           yearGroup.subCategories.map(expenseGroup => {
             let mappedResult: any = {};
-            // find if expenseCategory is already been added
+            // find if monthlyExpenses is already been added
             const groupingTotal = !!expenseGroup.category.groupingTotal ? expenseGroup.category.groupingTotal : 0;
-            if (transformedResponse.find(r => r.expenseCategory === expenseGroup.category.groupingName)) {
-              mappedResult = transformedResponse.find(r => r.expenseCategory === expenseGroup.category.groupingName);
+            if (transformedResponse.find(r => r.monthlyExpenses === expenseGroup.category.groupingName)) {
+              mappedResult = transformedResponse.find(r => r.monthlyExpenses === expenseGroup.category.groupingName);
               mappedResult[`${year}`] = groupingTotal;
               mappedResult[`total`] += groupingTotal;
             } else {
-              mappedResult[`expenseCategory`] = expenseGroup.category.groupingName;
+              mappedResult[`monthlyExpenses`] = expenseGroup.category.groupingName;
               mappedResult[`${year}`] = groupingTotal;
               mappedResult[`total`] = groupingTotal;
               transformedResponse.push(mappedResult);

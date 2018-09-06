@@ -1,7 +1,7 @@
-﻿using ETS.Services.Queries;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ETS.Services.Queries.Reports;
 
-namespace Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Users
+namespace Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Administration
 {
     public class UserDetailsResponse : BaseApiResponse
     {
