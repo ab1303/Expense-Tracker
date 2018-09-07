@@ -10,6 +10,7 @@ namespace ETS.Services.Queries.Reports
         public class Result
         {
             public int Year { get; set; }
+            public int Month { get; set; }
             public long? UserId { get; set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
@@ -33,6 +34,7 @@ namespace ETS.Services.Queries.Reports
                          group new { i, c, u, ug } by new
                          {
                              Year = i.TransactionDate.Year,
+                             Month = i.TransactionDate.Month,
                              GroupId = ug.Id,
                              GroupName = ug.Name,
                              CategoryId = c.Id,
@@ -44,6 +46,7 @@ namespace ETS.Services.Queries.Reports
                          select new Result
                          {
                              Year = groupedCategory.Key.Year,
+                             Month = groupedCategory.Key.Month,
                              UserId = groupedCategory.Key.Id,
                              FirstName = groupedCategory.Key.FirstName,
                              LastName = groupedCategory.Key.LastName,
@@ -63,6 +66,7 @@ namespace ETS.Services.Queries.Reports
                                                group new { g, c, ug } by new
                                                {
                                                    Year = g.TransactionDate.Year,
+                                                   Month = g.TransactionDate.Month,
                                                    GroupId = ug.Id,
                                                    GroupName = ug.Name,
                                                    CategoryId = c.Id,
@@ -71,6 +75,7 @@ namespace ETS.Services.Queries.Reports
                                                select new Result
                                                {
                                                    Year = groupedCategory.Key.Year,
+                                                   Month = groupedCategory.Key.Month,
                                                    UserId = null,
                                                    FirstName = null,
                                                    LastName = null,

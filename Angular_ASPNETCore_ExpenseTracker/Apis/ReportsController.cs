@@ -61,13 +61,13 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         {
             try
             {
-                var result = _reportingService.ExpenseCategoryReport();
+                var result = _reportingService.MonthlyExpensesReport();
 
                 var expenseCategoryStatementResponse = new ExpenseCategoryStatementResponse
                 {
                     ExpenseReportGroups = result,
                     Code = InternalApiStatusCode.Success,
-                    Message = "Expense Category Report by date",
+                    Message = "Monthly expense Report",
 
                 };
 

@@ -37,12 +37,12 @@ export class MonthlyExpensesReportService {
             let mappedResult: any = {};
             // find if monthlyExpenses is already been added
             const groupingTotal = !!expenseGroup.category.groupingTotal ? expenseGroup.category.groupingTotal : 0;
-            if (transformedResponse.find(r => r.monthlyExpenses === expenseGroup.category.groupingName)) {
-              mappedResult = transformedResponse.find(r => r.monthlyExpenses === expenseGroup.category.groupingName);
+            if (transformedResponse.find(r => r.month === expenseGroup.category.groupingName)) {
+              mappedResult = transformedResponse.find(r => r.month === expenseGroup.category.groupingName);
               mappedResult[`${year}`] = groupingTotal;
               mappedResult[`total`] += groupingTotal;
             } else {
-              mappedResult[`monthlyExpenses`] = expenseGroup.category.groupingName;
+              mappedResult[`month`] = expenseGroup.category.groupingName;
               mappedResult[`${year}`] = groupingTotal;
               mappedResult[`total`] = groupingTotal;
               transformedResponse.push(mappedResult);

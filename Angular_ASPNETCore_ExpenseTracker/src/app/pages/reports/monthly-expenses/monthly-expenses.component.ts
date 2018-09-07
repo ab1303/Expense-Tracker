@@ -19,20 +19,10 @@ export class MonthlyExpensesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.options = {
-      theme: 'default',
-      range: 'tm',
-      dayNames: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      presetNames: ['This Month', 'Last Month', 'This Week', 'Last Week', 'This Year', 'Last Year', 'Start', 'End'],
-      dateFormat: 'yMd',
-      outputFormat: 'DD/MM/YYYY',
-      startOfWeek: 1
-    };
-
-    var result = this.expenseCategoryReportService.getFiscalExpenseCategories().subscribe(data => {
+     var result = this.expenseCategoryReportService.getFiscalExpenseCategories().subscribe(data => {
       this.columns = [
         {
-          name: 'Expense Category',
+          name: 'Month',
           headerTemplate: this.HeaderTemplate,
           summaryFunc: () => null
         },
@@ -55,6 +45,7 @@ export class MonthlyExpensesComponent implements OnInit {
       ];
 
       this.rows = data.results;
+      console.log(this.rows);
     });
 
   }

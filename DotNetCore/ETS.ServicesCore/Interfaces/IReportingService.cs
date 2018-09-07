@@ -8,5 +8,6 @@ namespace ETS.Services.Interfaces
     public interface IReportingService
     {
         IEnumerable<ReportGroupDTO> ExpenseCategoryReport();
+        IEnumerable<ReportGroupDTO> MonthlyExpensesReport();
     }
 }
