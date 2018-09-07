@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
 import { FormControl, NgModel } from '@angular/forms';
-import { MatDrawer } from "@angular/material";
+import { MatDrawer, MatDialog } from "@angular/material";
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -11,12 +11,13 @@ import { Page } from "../../../shared/model/paging/page";
 import { ITransaction } from "./transaction";
 import { ExpenseRegisterService } from "./expense-register.service";
 import { FilterService } from "./filter.service";
+import { BulkEditModalComponent } from "./components/bulk-edit-modal/bulk-edit-modal.component";
 
 @Component({
 	selector: "expense-register",
 	templateUrl: "./expense-register.component.html",
 	styleUrls: ["./expense-register.component.scss"],
-	providers:[FilterService]
+	providers: [FilterService]
 })
 export class ExpenseRegisterComponent implements OnInit {
 
@@ -49,9 +50,16 @@ export class ExpenseRegisterComponent implements OnInit {
 	expenseCategoryControl: FormControl = new FormControl();
 	@ViewChild(NgModel) modelDir: NgModel;
 
+	// Edit Category
+	filteredModalExpenseCategories: Observable<any[]>;
+	modalExpenseCategories: any[];
+	tdModalExpenseCategories: any[];
+	modalExpenseCategoryControl: FormControl = new FormControl();
+
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
 		private filterService: FilterService,
+		public dialog: MatDialog,
 		public config: ConfigService,
 		public trackby: TrackByService
 	) {
@@ -63,14 +71,42 @@ export class ExpenseRegisterComponent implements OnInit {
 	ngOnInit() {
 		this.setPage({ offset: 0 });
 		this.fetchSearchLookups();
+
 	}
 
-	fetchSearchLookups(){
+	openDialog() {
+		const dialogRef = this.dialog.open(BulkEditModalComponent);
+
+		dialogRef.afterClosed().subscribe(result => {
+			console.log(`Dialog result: ${result}`);
+		});
+	}
+
+	fetchSearchLookups() {
 		this.expenseRegisterService.getSearchLookups().subscribe(lookups => {
 			this.expenseCategories = lookups.expenseCategories;
 			this.tdExpenseCategories = [...this.expenseCategories];
 
+
+			this.modalExpenseCategories = lookups.expenseCategories;
+			this.tdModalExpenseCategories = [...this.modalExpenseCategories];
+			this.setupModalExpenseCategory();
 		})
+	}
+
+
+	setupModalExpenseCategory() {
+		this.filteredModalExpenseCategories = this.modalExpenseCategoryControl.valueChanges
+			.pipe(
+				startWith<string | any>(''),
+				map(value => !!value && (typeof value === 'string' ? value : value.name)),
+				map(name => {
+					if (!name) return this.modalExpenseCategories.slice();
+
+					const filterValue = name.toLowerCase();
+					return this.modalExpenseCategories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+				})
+			);
 	}
 
 	/**
@@ -83,11 +119,11 @@ export class ExpenseRegisterComponent implements OnInit {
 		this.expenseRegisterService.getTransactions(this.page, this.filterService).subscribe(pagedData => {
 			this.page.totalElements = pagedData.page.totalElements;
 			this.rows = pagedData.individualTransactions;
-			
+
 			this.filteredExpenseCategories = this.expenseCategoryControl.valueChanges
 				.pipe(
 					startWith<string | any>(''),
-					map(value => !!value &&  (typeof value === 'string' ? value : value.name)),
+					map(value => !!value && (typeof value === 'string' ? value : value.name)),
 					map(name => {
 						if (!name) return this.expenseCategories.slice();
 
@@ -125,9 +161,8 @@ export class ExpenseRegisterComponent implements OnInit {
 		});
 	}
 
-	clearFilter(){
+	clearFilter() {
 		this.expenseCategoryControl.reset();
-		// this.search();
 	}
 
 	onSelect({ selected }) {

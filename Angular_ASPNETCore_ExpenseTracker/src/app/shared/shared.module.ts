@@ -21,6 +21,7 @@ import {
 	MatInputModule,
 	MatToolbarModule,
 	MatSlideToggleModule,
+	MatDialogModule,
 } from "@angular/material";
 
 import { NguUtilityModule } from 'ngu-utility/ngu-utility.module';
@@ -57,6 +58,7 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
         MatRippleModule,
         MatSidenavModule,
         MatTabsModule,
+        MatDialogModule,
         BsDropdownModule.forRoot(),
         AlertModule.forRoot(),
         TabsModule.forRoot(),
@@ -94,6 +96,7 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
 		MatAutocompleteModule,
         MatToolbarModule,
         MatSlideToggleModule,
+        MatDialogModule,
 		SearchSidebarComponent,
 		SearchCardComponent,
 	]
