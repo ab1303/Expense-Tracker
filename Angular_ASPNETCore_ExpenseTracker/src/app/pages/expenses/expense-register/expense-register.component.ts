@@ -26,7 +26,6 @@ export class ExpenseRegisterComponent implements OnInit {
 	page = new Page();
 	transactions: ITransaction[] = [];
 
-
 	selected = [];
 	temp = [];
 	searchValue: string = null;
@@ -50,12 +49,7 @@ export class ExpenseRegisterComponent implements OnInit {
 	expenseCategoryControl: FormControl = new FormControl();
 	@ViewChild(NgModel) modelDir: NgModel;
 
-	// Edit Category
-	filteredModalExpenseCategories: Observable<any[]>;
-	modalExpenseCategories: any[];
-	tdModalExpenseCategories: any[];
-	modalExpenseCategoryControl: FormControl = new FormControl();
-
+	
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
 		private filterService: FilterService,
@@ -75,7 +69,13 @@ export class ExpenseRegisterComponent implements OnInit {
 	}
 
 	openDialog() {
-		const dialogRef = this.dialog.open(BulkEditModalComponent);
+		const dialogRef = this.dialog.open(BulkEditModalComponent, {
+			data: {
+				lookups: {
+					expenseCategoriesLookukp: this.expenseCategories
+				}, 
+			}
+		});
 
 		dialogRef.afterClosed().subscribe(result => {
 			console.log(`Dialog result: ${result}`);
@@ -86,28 +86,11 @@ export class ExpenseRegisterComponent implements OnInit {
 		this.expenseRegisterService.getSearchLookups().subscribe(lookups => {
 			this.expenseCategories = lookups.expenseCategories;
 			this.tdExpenseCategories = [...this.expenseCategories];
-
-
-			this.modalExpenseCategories = lookups.expenseCategories;
-			this.tdModalExpenseCategories = [...this.modalExpenseCategories];
-			this.setupModalExpenseCategory();
+			
 		})
 	}
 
 
-	setupModalExpenseCategory() {
-		this.filteredModalExpenseCategories = this.modalExpenseCategoryControl.valueChanges
-			.pipe(
-				startWith<string | any>(''),
-				map(value => !!value && (typeof value === 'string' ? value : value.name)),
-				map(name => {
-					if (!name) return this.modalExpenseCategories.slice();
-
-					const filterValue = name.toLowerCase();
-					return this.modalExpenseCategories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-				})
-			);
-	}
 
 	/**
   * Populate the table with new data based on the page number

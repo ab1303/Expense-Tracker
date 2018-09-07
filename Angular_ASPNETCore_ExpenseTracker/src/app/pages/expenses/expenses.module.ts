@@ -15,7 +15,7 @@ import { ExpenseSheetService } from './expense-sheet/expense-sheet.service';
 import { ExpenseRegisterService } from './expense-register/expense-register.service';
 import { ExpenseRegisterComponent } from './expense-register/expense-register.component';
 import { DataTablesComponent } from "./data-tables/data-tables.component";
-import { BulkEditComponent, BulkEditModalComponent } from './expense-register/components/bulk-edit-modal/bulk-edit-modal.component';
+import { BulkEditModalComponent } from './expense-register/components/bulk-edit-modal/bulk-edit-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import { BulkEditComponent, BulkEditModalComponent } from './expense-register/co
     ExpenseSheetComponent,
     ExpenseRegisterComponent,
     DataTablesComponent,
-    BulkEditComponent,
     BulkEditModalComponent
   ],
   imports: [
@@ -31,7 +30,7 @@ import { BulkEditComponent, BulkEditModalComponent } from './expense-register/co
     FileUploadModule,
     NgxDatatableModule,
     SharedModule.forRoot(), RouterModule.forChild(EXPENSES_ROUTES)],
-  entryComponents: [BulkEditComponent, BulkEditModalComponent],
+  entryComponents: [BulkEditModalComponent],
   providers: [TrackByService, ExpenseSheetService, ExpenseRegisterService]
 })
 export class ExpensesModule { }
