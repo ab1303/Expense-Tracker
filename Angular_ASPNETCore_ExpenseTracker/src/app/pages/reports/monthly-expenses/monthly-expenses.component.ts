@@ -45,7 +45,6 @@ export class MonthlyExpensesComponent implements OnInit {
       ];
 
       this.rows = data.results;
-      console.log(this.rows);
     });
 
   }

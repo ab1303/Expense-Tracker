@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,7 @@ using ETS.DataCore.Seeders;
 using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -64,6 +67,27 @@ namespace Angular_ASPNETCore_Seed
                 options.User.RequireUniqueEmail = true;
             });
 
+            //services.Configure<CookieAuthenticationOptions>(options =>
+            //{
+            //    options.Events = new CookieAuthenticationEvents
+            //    {
+            //        OnRedirectToLogin = ctx =>
+            //        {
+            //            if (ctx.Request.Path.StartsWithSegments("/api") &&
+            //                ctx.Response.StatusCode == (int)HttpStatusCode.OK)
+            //            {
+            //                ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            //            }
+            //            else
+            //            {
+            //                ctx.Response.Redirect(ctx.RedirectUri);
+            //            }
+            //            return Task.FromResult(0);
+            //        }
+            //    };
+            //});
+
+
             //services.ConfigureApplicationCookie(options =>
             //{
             //    // Cookie settings
@@ -95,39 +119,42 @@ namespace Angular_ASPNETCore_Seed
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
             });
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
-                ValidateAudience = true,
-                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKey,
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuer = true,
+            //    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
 
-                RequireExpirationTime = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
+            //    ValidateAudience = true,
+            //    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = _signingKey,
 
-            }).AddJwtBearer(configureOptions =>
-            {
-                configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                configureOptions.TokenValidationParameters = tokenValidationParameters;
-                configureOptions.SaveToken = true;
-            });
+            //    RequireExpirationTime = false,
+            //    ValidateLifetime = true,
+            //    ClockSkew = TimeSpan.Zero
+            //};
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    
+
+            //}).AddJwtBearer(configureOptions =>
+            //{
+            //    configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //    configureOptions.TokenValidationParameters = tokenValidationParameters;
+            //    configureOptions.SaveToken = true;
+            //});
 
             // api user claim policy
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            //});
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
         }
@@ -147,7 +174,7 @@ namespace Angular_ASPNETCore_Seed
             ConfigureJwtAuth(services);
 
             // Identity and Authorization
-            ConfigureIdentity(services);
+             ConfigureIdentity(services);
 
             // Add Auto Mapper
             services.AddAutoMapper();

@@ -9,6 +9,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import { Page } from "../../../shared/model/paging/page";
 import { FilterService } from "./filter.service";
+import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
 const API_URL = `${API_BASE_ADDRESS}/Transactions`;
 @Injectable()
@@ -22,7 +23,7 @@ export class ExpenseRegisterService {
         .append('PageIndex', `${page.pageNumber}`)
         .append('PageSize', `${page.size}`)
         .append('expenseCategoryId', `${searchModel.expenseCategoryId}`)
-        ;
+      ;
 
     // let parameters = new HttpParams({
     //   fromObject : {
@@ -42,7 +43,7 @@ export class ExpenseRegisterService {
       .catch(this.handleError);
   }
 
-  
+
   getSearchLookups(): Observable<SearchLookups> {
     return this.http
       .get(`${API_URL}/SearchLookups`)
@@ -51,6 +52,16 @@ export class ExpenseRegisterService {
         return response;
       })
       .catch(this.handleError);
+  }
+
+  updateTransactions(transactionIds: number[], expenseCategoryId: number): Observable<BaseApiResponse> {
+    return this.http
+      .post<BaseApiResponse>(`${API_URL}/BulkUpdate`, {
+        transactionIds,
+        expenseCategoryId,
+      })
+      .catch(this.handleError);
+
   }
 
   private handleError(error: any) {

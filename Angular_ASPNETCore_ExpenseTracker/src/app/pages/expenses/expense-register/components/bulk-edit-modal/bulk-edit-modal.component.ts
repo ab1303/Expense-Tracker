@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
   templateUrl: './bulk-edit-modal.component.html',
   styleUrls: ['./bulk-edit-modal.component.scss']
 })
-export class BulkEditModalComponent implements OnInit{
+export class BulkEditModalComponent implements OnInit {
 
   // Edit Category
   filteredExpenseCategories: Observable<any[]>;
@@ -28,13 +28,12 @@ export class BulkEditModalComponent implements OnInit{
         expenseCategoriesLookukp: any,
       }
     }) {
-      this.expenseCategories = data.lookups.expenseCategoriesLookukp;
-      console.log(data);
+    this.expenseCategories = data.lookups.expenseCategoriesLookukp;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.setupModalExpenseCategory();
-    this.dialogRef.updateSize("500px", "300px");
+    this.dialogRef.updateSize("500px", "230px");
   }
 
   setupModalExpenseCategory() {
@@ -43,11 +42,22 @@ export class BulkEditModalComponent implements OnInit{
         startWith<string | any>(''),
         map(value => !!value && (typeof value === 'string' ? value : value.name)),
         map(name => {
-          if (!name) return this.expenseCategories.slice();
+          if (!name) return [...this.expenseCategories];
 
           const filterValue = name.toLowerCase();
           return this.expenseCategories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
         })
       );
   }
+
+  displayFn(value: any): string {
+		return value && typeof value === "object" ? value.name : value;
+	}
+
+  closeDialog() {
+    this.dialogRef.close({
+      selectedValue: this.expenseCategoryControl.value,
+    })
+  }
+
 }

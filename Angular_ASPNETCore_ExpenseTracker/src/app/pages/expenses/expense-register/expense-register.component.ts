@@ -33,9 +33,6 @@ export class ExpenseRegisterComponent implements OnInit {
 	isToolbarActive: boolean = false;
 	itemsSelected: string = "";
 	itemCount: number = 0;
-	// searchModel = {
-	// 	expenseCategoryId: null
-	// };
 
 	// Search SideBar
 
@@ -49,7 +46,7 @@ export class ExpenseRegisterComponent implements OnInit {
 	expenseCategoryControl: FormControl = new FormControl();
 	@ViewChild(NgModel) modelDir: NgModel;
 
-	
+
 	constructor(
 		private expenseRegisterService: ExpenseRegisterService,
 		private filterService: FilterService,
@@ -73,20 +70,30 @@ export class ExpenseRegisterComponent implements OnInit {
 			data: {
 				lookups: {
 					expenseCategoriesLookukp: this.expenseCategories
-				}, 
+				},
 			}
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: ${result}`);
+			console.log(`Dialog result: `);
+			console.log(result);
+			console.log(this.selected);
+			this.updateTransactions(
+				this.selected.map(s => s.id),
+				result.selectedValue.id)
 		});
+	}
+
+	updateTransactions(selectedTransactions: number[], expenseCategoryId: number) {
+		this.expenseRegisterService.updateTransactions(selectedTransactions, expenseCategoryId)
+			.subscribe(result => console.log(result));
 	}
 
 	fetchSearchLookups() {
 		this.expenseRegisterService.getSearchLookups().subscribe(lookups => {
 			this.expenseCategories = lookups.expenseCategories;
 			this.tdExpenseCategories = [...this.expenseCategories];
-			
+
 		})
 	}
 
@@ -149,8 +156,6 @@ export class ExpenseRegisterComponent implements OnInit {
 	}
 
 	onSelect({ selected }) {
-		//console.log("Select Event", selected, this.selected);
-		//console.log(this.selected.length);
 		this.selected.splice(0, this.selected.length);
 		this.selected.push(...selected);
 		if (selected.length == 1) {

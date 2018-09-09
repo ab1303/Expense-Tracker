@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
 using ETS.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(ExpenseCategoryResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         public ActionResult Get()

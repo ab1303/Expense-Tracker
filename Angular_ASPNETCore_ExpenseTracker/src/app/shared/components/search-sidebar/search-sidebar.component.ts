@@ -43,8 +43,6 @@ export class SearchSidebarComponent implements OnInit {
 	}
 
 	toggleSearch() {
-		console.log('toggle clicked;')
-		console.log(this.open);
 		this.open = !this.open;
 		if(this.open){
 			this.searchPosition = this.openSearchStyle;
@@ -53,16 +51,6 @@ export class SearchSidebarComponent implements OnInit {
 		}
 		this.onToggleHandler.emit(this.open);
 	}
-
-	// overlayClicked() {
-	// 	if (this.state.open) {
-	// 		//   this.props.onSetOpen(false);
-	// 		this.setState({
-	// 			open: false,
-	// 		});
-	// 	}
-	// 	this.props.onOverlayClickedHandler();
-	// }
 
 	submit(e) {
 		e.preventDefault();

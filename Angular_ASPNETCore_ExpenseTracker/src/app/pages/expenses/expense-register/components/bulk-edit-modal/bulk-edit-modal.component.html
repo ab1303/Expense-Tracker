@@ -13,8 +13,8 @@
   <button mat-button
           mat-dialog-close>Cancel</button>
   <button mat-button
-          [mat-dialog-close]="true"
-          cdkFocusInitial>Install</button>
+          (click)="closeDialog()"
+          cdkFocusInitial>Update</button>
 </mat-dialog-actions>
 
 

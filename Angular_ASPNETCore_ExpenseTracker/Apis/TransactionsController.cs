@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.AngularDataTable;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
@@ -19,12 +20,14 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
     {
         private readonly ILogger _logger;
         private readonly IQueryService _queryService;
+        private readonly ITransactionService _transactionService;
         private readonly IExpenseCategoryService _expenseCategoryService;
 
-        public TransactionsController(IQueryService queryService, IExpenseCategoryService expenseCategoryService, ILoggerFactory loggerFactory)
+        public TransactionsController(IQueryService queryService, ITransactionService transactionService, IExpenseCategoryService expenseCategoryService, ILoggerFactory loggerFactory)
         {
             _logger = loggerFactory.CreateLogger(nameof(TransactionsController));
             _queryService = queryService;
+            _transactionService = transactionService;
             _expenseCategoryService = expenseCategoryService;
         }
 
@@ -36,7 +39,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         {
             try
             {
-                var individualTransactionQuery = new IndividualTransactionsIndexQuery(expenseCategoryId:searchModel.ExpenseCategoryId)
+                var individualTransactionQuery = new IndividualTransactionsIndexQuery(expenseCategoryId: searchModel.ExpenseCategoryId)
                     .SetPage(new NgxDataTableArgs
                     {
                         PageNumber = ngxDataTableParam.PageIndex,
@@ -73,6 +76,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [Route("SearchLookups")]
+        [HttpGet]
         [ProducesResponseType(typeof(Lookups), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         public ActionResult GetSearchLookups()
@@ -99,6 +103,40 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 return BadRequest(new BaseApiResponse { Code = InternalApiStatusCode.Error });
             }
         }
+
+        [Route("BulkUpdate")]
+        [HttpPost]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        public ActionResult UpudateTransactions([FromBody]BulkUpdateModel bulkUpdateModel)
+        {
+            try
+            {
+                var result = _transactionService.UpdateTransactions(bulkUpdateModel.TransactionIds.ToArray(), bulkUpdateModel.ExpenseCategoryId);
+                if (!result.IsSuccess)
+                    return BadRequest(new BaseApiResponse
+                    {
+                        Message = result.Message,
+                        Code = InternalApiStatusCode.Error
+                    });
+
+                return Ok(new BaseApiResponse
+                {
+                    Message = result.Message,
+                    Code = InternalApiStatusCode.Error
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse
+                {
+                    Message = ex.Message,
+                    Code = InternalApiStatusCode.Error
+                });
+            }
+        }
+
 
     }
 }
