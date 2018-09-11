@@ -10,7 +10,7 @@ namespace ETS.DataCore.Implementations
     public class BackgroundServiceDataContext : DataContext, IBackgroundServiceDataContext
     {
 
-        public BackgroundServiceDataContext(DbContextOptions<DataContext> options) : base(options)
+        public BackgroundServiceDataContext(DbContextOptions<DataContext> options) : base(options, null)
         {
 
         }

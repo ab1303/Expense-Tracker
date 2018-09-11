@@ -107,7 +107,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         [Route("BulkUpdate")]
         [HttpPost]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
-        public ActionResult UpudateTransactions([FromBody]BulkUpdateModel bulkUpdateModel)
+        public ActionResult UpdateTransactions([FromBody]BulkUpdateModel bulkUpdateModel)
         {
             try
             {

@@ -26,6 +26,7 @@ using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -44,64 +45,17 @@ namespace Angular_ASPNETCore_Seed
         private void ConfigureIdentity(IServiceCollection services)
         {
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                     .AddEntityFrameworkStores<DataContext>()
-                     .AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(options =>
+            var builder = services.AddIdentityCore<ApplicationUser>(o =>
             {
-                // Password settings
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = false;
-                options.Password.RequiredUniqueChars = 6;
-
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings
-                options.User.RequireUniqueEmail = true;
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
             });
-
-            //services.Configure<CookieAuthenticationOptions>(options =>
-            //{
-            //    options.Events = new CookieAuthenticationEvents
-            //    {
-            //        OnRedirectToLogin = ctx =>
-            //        {
-            //            if (ctx.Request.Path.StartsWithSegments("/api") &&
-            //                ctx.Response.StatusCode == (int)HttpStatusCode.OK)
-            //            {
-            //                ctx.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            //            }
-            //            else
-            //            {
-            //                ctx.Response.Redirect(ctx.RedirectUri);
-            //            }
-            //            return Task.FromResult(0);
-            //        }
-            //    };
-            //});
-
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    // Cookie settings
-            //    options.Cookie.HttpOnly = true;
-            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-            //    // If the LoginPath isn't set, ASP.NET Core defaults 
-            //    // the path to /Account/Login.
-            //    options.LoginPath = "/Account/Login";
-            //    // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
-            //    // the path to /Account/AccessDenied.
-            //    options.AccessDeniedPath = "/Account/AccessDenied";
-            //    options.SlidingExpiration = true;
-            //});
-
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
         }
 
@@ -151,10 +105,10 @@ namespace Angular_ASPNETCore_Seed
             });
 
             // api user claim policy
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            //});
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
         }
@@ -174,7 +128,7 @@ namespace Angular_ASPNETCore_Seed
             ConfigureJwtAuth(services);
 
             // Identity and Authorization
-             ConfigureIdentity(services);
+            ConfigureIdentity(services);
 
             // Add Auto Mapper
             services.AddAutoMapper();
@@ -198,7 +152,7 @@ namespace Angular_ASPNETCore_Seed
             // Add MVC Framework Services.
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
-          
+
 
             //Handle XSRF Name for Header
             services.AddAntiforgery(options =>

@@ -16,10 +16,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication
             _settings = settings;
         }
 
-        //public AppUserAuth ValidateUser(AppUser user)
+        //public AppUserAuth ValidateUser(AppUserInput user)
         //{
         //  AppUserAuth ret = new AppUserAuth();
-        //  AppUser authUser = null;
+        //  AppUserInput authUser = null;
 
         //  using (var db = new PtcDbContext())
         //  {
@@ -39,7 +39,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication
         //}
 
         // TODO: Move to service
-        //protected List<AppUserClaim> GetUserClaims(AppUser authUser)
+        //protected List<AppUserClaim> GetUserClaims(AppUserInput authUser)
         //{
         //  List<AppUserClaim> list = new List<AppUserClaim>();
 
@@ -60,7 +60,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication
         //  return list;
         //}
 
-        //protected AppUserAuth BuildUserAuthObject(AppUser authUser)
+        //protected AppUserAuth BuildUserAuthObject(AppUserInput authUser)
         //{
         //  AppUserAuth ret = new AppUserAuth();
         //  List<AppUserClaim> claims = new List<AppUserClaim>();

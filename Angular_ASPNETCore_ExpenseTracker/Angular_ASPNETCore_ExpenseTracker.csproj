@@ -33,7 +33,6 @@
     <Folder Include="src\app\security\" />
     <Folder Include="src\app\shared\model\" />
     <Folder Include="Views\Database\" />
-    <Folder Include="Views\Account\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,8 @@ namespace ETS.DataCore
             var migrationAssembly = typeof(DataContext).GetTypeInfo().Assembly.GetName().Name;
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 configuration.GetConnectionString("DataConnection"),
-                sql => sql.MigrationsAssembly(migrationAssembly)));
+                sql => sql.MigrationsAssembly(migrationAssembly))
+            );
 
             services.AddTransient<DatabaseSeeder>();
             services.AddScoped<IDatabaseInitializer, DatabaseInitializer>();

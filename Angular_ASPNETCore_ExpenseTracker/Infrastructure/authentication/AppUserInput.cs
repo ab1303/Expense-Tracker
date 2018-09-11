@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication
 {
-    public partial class AppUser
+    public class AppUserInput
   {
     [Required()]
     [Key()]
