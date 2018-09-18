@@ -2,6 +2,7 @@
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses.Administration;
 using ETS.Service.Services;
+using ETS.Services.Queries;
 using ETS.Services.Queries.Reports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -28,7 +29,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         {
             try
             {
-                var usersIndexQuery = new ExpenseCategoryStatementQuery();
+                var usersIndexQuery = new UsersIndexQuery();
 
                 var result = _queryService.Execute(usersIndexQuery, out int totalCount);
 

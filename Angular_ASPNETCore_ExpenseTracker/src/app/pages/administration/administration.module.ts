@@ -13,15 +13,17 @@ import { ExpenseCategoryComponent } from "./expense-category/expense-category.co
 import { ExpenseCategoryService } from "./expense-category/expense-category.service";
 import { UsersService } from "./users/users.service";
 import { TrackByService } from "../../core/trackby.service";
+import { AddModalComponent } from "./expense-category/components/add-modal/add-modal.component";
 
 @NgModule({
-  declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent],
+  declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent, AddModalComponent],
   imports: [
-    CommonModule, 
-    NgxDatatableModule, 
-    SharedModule, 
+    CommonModule,
+    NgxDatatableModule,
+    SharedModule,
     RouterModule.forChild(ADMIN_ROUTES)
   ],
-  providers: [ExpenseCategoryService, UsersService, TrackByService]
+  providers: [ExpenseCategoryService, UsersService, TrackByService],
+  entryComponents: [AddModalComponent],
 })
-export class AdminModule {}
+export class AdminModule { }

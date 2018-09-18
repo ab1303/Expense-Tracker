@@ -12,6 +12,7 @@
             SortOrder = SortOrder.Asc;
             PageNumber = 0;
             SortBy = null;
+            PageSize = 20;
         }
         
     }
