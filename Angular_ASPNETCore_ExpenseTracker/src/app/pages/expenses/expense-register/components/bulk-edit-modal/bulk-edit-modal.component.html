@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Update Transaction(s)</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="form-group">
+    <label for="expenseCategory">Expense Category</label>
+    <input matInput
+           placeholder="Expense Category"
+           class="form-control"
+           [matAutocomplete]="tdAutoCategory"
+           [formControl]="expenseCategoryControl">
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button
+          mat-dialog-close>Cancel</button>
+  <button mat-button
+          (click)="closeDialog()"
+          cdkFocusInitial>Update</button>
+</mat-dialog-actions>
+
+
+<!-- Auto Complete Expense Categories -->
+<mat-autocomplete #tdAutoCategory="matAutocomplete"
+                  [displayWith]="displayFn">
+  <mat-option *ngFor="let expenseCategory of filteredExpenseCategories | async"
+              [value]="expenseCategory">
+    <span>{{ expenseCategory.name }}</span>
+  </mat-option>
+</mat-autocomplete>
+
+
+<!-- Copyright 2018 Google Inc. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

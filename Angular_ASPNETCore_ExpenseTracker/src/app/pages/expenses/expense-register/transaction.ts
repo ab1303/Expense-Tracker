@@ -1,4 +1,6 @@
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
+import { Page } from "../../../shared/model/paging/page";
+import { ILookup } from "../../../shared/model/lookup.model";
 
 export interface ITransaction {
   id: number;
@@ -17,4 +19,10 @@ export interface ITransaction {
 
 export interface IndividualTransactionsApiResponse extends BaseApiResponse {
   individualTransactions: ITransaction[];
+  page: Page;
 }
+
+export interface SearchLookups extends BaseApiResponse {
+  expenseCategories: ILookup<number>[];
+}
+

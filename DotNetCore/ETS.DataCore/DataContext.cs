@@ -11,13 +11,18 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace ETS.DataCore.Implementations
 {
     public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
@@ -29,9 +34,9 @@ namespace ETS.DataCore.Implementations
             new ConsoleLoggerProvider((category,level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information, true)
         });
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        public DataContext(DbContextOptions<DataContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
-
+            _httpContextAccessor = httpContextAccessor;
         }
 
         readonly HashSet<long> _changeSet = new HashSet<long>(); // To handle unique Monitor Invoke
@@ -39,14 +44,8 @@ namespace ETS.DataCore.Implementations
 
         protected virtual string LoggedInUser()
         {
-            var principal = Thread.CurrentPrincipal;
+            return _httpContextAccessor?.HttpContext.User?.FindFirstValue(ClaimTypes.NameIdentifier); ;
 
-            if (!principal.Identity.IsAuthenticated)
-            {
-                throw new UnauthorizedAccessException();
-            }
-
-            return principal.LoggedInUser();
         }
 
         public override int SaveChanges()

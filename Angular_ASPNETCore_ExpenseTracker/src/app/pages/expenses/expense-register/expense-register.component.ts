@@ -1,16 +1,31 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, HostListener } from "@angular/core";
+import { FormControl, NgModel } from '@angular/forms';
+import { MatDrawer, MatDialog } from "@angular/material";
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
+import { TrackByService } from "../../../core/trackby.service";
+import { ConfigService } from "../../../shared/services/config/config.service";
+import { Page } from "../../../shared/model/paging/page";
+
 import { ITransaction } from "./transaction";
 import { ExpenseRegisterService } from "./expense-register.service";
-import { TrackByService } from "../../../core/trackby.service";
+import { FilterService } from "./filter.service";
+import { BulkEditModalComponent } from "./components/bulk-edit-modal/bulk-edit-modal.component";
 
 @Component({
-  selector: "expense-register",
-  templateUrl: "./expense-register.component.html",
-  styleUrls: ["./expense-register.component.scss"]
+	selector: "expense-register",
+	templateUrl: "./expense-register.component.html",
+	styleUrls: ["./expense-register.component.scss"],
+	providers: [FilterService]
 })
 export class ExpenseRegisterComponent implements OnInit {
-  transactions: ITransaction[] = [];
-  rows = [];
+
+	// Transactions
+	rows = [];
+	page = new Page();
+	transactions: ITransaction[] = [];
+
 	selected = [];
 	temp = [];
 	searchValue: string = null;
@@ -18,21 +33,129 @@ export class ExpenseRegisterComponent implements OnInit {
 	isToolbarActive: boolean = false;
 	itemsSelected: string = "";
 	itemCount: number = 0;
-  constructor(
-    private expenseRegisterService: ExpenseRegisterService,
-    public trackby: TrackByService
-  ) {}
 
-  ngOnInit() {
-    this.expenseRegisterService.getTransactions().subscribe(data => {
-      // this.transactions = data.transactions;
-      this.rows = data.individualTransactions;
-    });
-  }
+	// Search SideBar
 
-  onSelect({ selected }) {
-		//console.log("Select Event", selected, this.selected);
-		//console.log(this.selected.length);
+	@ViewChild("rightSidenav2") rightSidenav2: MatDrawer;
+	navMode = "over";
+
+	// Search Lookups
+	filteredExpenseCategories: Observable<any[]>;
+	expenseCategories: any[];
+	tdExpenseCategories: any[];
+	expenseCategoryControl: FormControl = new FormControl();
+	@ViewChild(NgModel) modelDir: NgModel;
+
+
+	constructor(
+		private expenseRegisterService: ExpenseRegisterService,
+		private filterService: FilterService,
+		public dialog: MatDialog,
+		public config: ConfigService,
+		public trackby: TrackByService
+	) {
+
+		this.page.pageNumber = 0;
+		this.page.size = 20;
+	}
+
+	ngOnInit() {
+		this.setPage({ offset: 0 });
+		this.fetchSearchLookups();
+
+	}
+
+	openDialog() {
+		const dialogRef = this.dialog.open(BulkEditModalComponent, {
+			data: {
+				lookups: {
+					expenseCategoriesLookukp: this.expenseCategories
+				},
+			}
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			console.log(`Dialog result: `);
+			console.log(result);
+			console.log(this.selected);
+			this.updateTransactions(
+				this.selected.map(s => s.id),
+				result.selectedValue.id)
+		});
+	}
+
+	updateTransactions(selectedTransactions: number[], expenseCategoryId: number) {
+		this.expenseRegisterService.updateTransactions(selectedTransactions, expenseCategoryId)
+			.subscribe(result => console.log(result));
+	}
+
+	fetchSearchLookups() {
+		this.expenseRegisterService.getSearchLookups().subscribe(lookups => {
+			this.expenseCategories = lookups.expenseCategories;
+			this.tdExpenseCategories = [...this.expenseCategories];
+
+		})
+	}
+
+
+
+	/**
+  * Populate the table with new data based on the page number
+  * @param page The page to select
+  */
+	setPage(pageInfo) {
+		this.page.pageNumber = pageInfo.offset;
+		this.filterService.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
+		this.expenseRegisterService.getTransactions(this.page, this.filterService).subscribe(pagedData => {
+			this.page.totalElements = pagedData.page.totalElements;
+			this.rows = pagedData.individualTransactions;
+
+			this.filteredExpenseCategories = this.expenseCategoryControl.valueChanges
+				.pipe(
+					startWith<string | any>(''),
+					map(value => !!value && (typeof value === 'string' ? value : value.name)),
+					map(name => {
+						if (!name) return this.expenseCategories.slice();
+
+						const filterValue = name.toLowerCase();
+						return this.expenseCategories.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+					})
+				);
+		});
+	}
+
+	@HostListener("window:resize", ["$event"])
+	onResize(event) {
+		if (event.target.innerWidth < this.config.breakpoint.desktopLG) {
+			this.navMode = "over";
+			this.rightSidenav2.close();
+		}
+		if (event.target.innerWidth > this.config.breakpoint.desktopLG) {
+			this.navMode = "side";
+			this.rightSidenav2.open();
+		}
+	}
+
+	displayFn(value: any): string {
+		return value && typeof value === "object" ? value.name : value;
+	}
+
+	search() {
+		this.page.pageNumber = 0;
+		this.filterService.expenseCategoryId = !!this.expenseCategoryControl.value && this.expenseCategoryControl.value.id;
+		this.expenseRegisterService.getTransactions(this.page, this.filterService).subscribe(pagedData => {
+			this.page.totalElements = pagedData.page.totalElements;
+			this.rows = pagedData.individualTransactions;
+
+			this.tdExpenseCategories = [...this.expenseCategories];
+		});
+	}
+
+	clearFilter() {
+		this.expenseCategoryControl.reset();
+	}
+
+	onSelect({ selected }) {
 		this.selected.splice(0, this.selected.length);
 		this.selected.push(...selected);
 		if (selected.length == 1) {
@@ -46,26 +169,6 @@ export class ExpenseRegisterComponent implements OnInit {
 		} else {
 			this.isToolbarActive = false;
 		}
-  }
-  
-  triggerClose(event) {
-		this.rows = this.temp;
-		this.searchValue = "";
-		this.isSearchActive = !this.isSearchActive;
-	}
-	onActivate(event) {
-		//console.log("Activate Event", event);
 	}
 
-	add() {
-		this.selected.push(this.rows[1], this.rows[3]);
-	}
-
-	update() {
-		this.selected = [this.rows[1], this.rows[3]];
-	}
-
-	remove() {
-		this.selected = [];
-	}
 }

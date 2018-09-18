@@ -18,6 +18,7 @@ import { SecurityService } from "./security/security.service";
 import { AuthGuard } from "./security/auth.guard";
 import { HttpInterceptorModule } from "./security/http-interceptor.module";
 import { HasClaimDirective } from "./security/has-claim.directive";
+import { ExpensesModule } from "./pages/expenses/expenses.module";
 // Application wide providers
 const APP_PROVIDERS = [AppState, GlobalState, Title];
 
@@ -43,7 +44,8 @@ export interface StoreType {
     SharedModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    HttpInterceptorModule
+    HttpInterceptorModule,
+    ExpensesModule,
   ],
   providers: [
     APP_PROVIDERS,

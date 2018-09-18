@@ -1,0 +1,53 @@
+<div id="content_wrapper"
+     class="fullWidth1-wrapper">
+	<div class="content">
+		<div class="header-wrapper header-sm">
+			<header>
+				<h1>Monthly Expense Report</h1>
+			</header>
+		</div>
+		<div class="content-body">
+			<div class="card card-datatable">
+				<!-- <header class="card-header p-30">
+					<ng-daterangepicker [(ngModel)]="value"
+					                    [options]="options"></ng-daterangepicker>
+				</header> -->
+				<div class="card-block m-10">
+					<ngx-datatable #table
+					               class="material"
+					               [summaryRow]="true"
+					               [summaryHeight]="'auto'"
+					               [summaryPosition]="'bottom'"
+					               [rows]="rows"
+					               [columns]="columns"
+					               [columnMode]="'force'"
+					               [headerHeight]="50"
+					               [footerHeight]="50"
+					               [rowHeight]="'auto'">
+
+					</ngx-datatable>
+
+					<ng-template #expenseAmtTpl
+					             let-column="column"
+					             let-row="row"
+					             let-value="value">
+						{{value | currency:'USD':'symbol':'1.2-4'}}
+					</ng-template>
+					<ng-template #hdrTpl
+					             let-column="column">
+						<strong>{{column.name}}</strong>
+					</ng-template>
+
+					<ng-template #summaryTpl
+					             let-column="column"
+					             let-row="row"
+					             let-value="value">
+						<strong>{{yearlyTotal(column.prop) | currency:'USD':'symbol':'1.2-4'}}</strong>
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<footer id="footer_wrapper"
+        class="footer_wrapper"></footer>

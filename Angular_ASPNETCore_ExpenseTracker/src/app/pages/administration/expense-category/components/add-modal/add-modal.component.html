@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Add Expense Category</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="form-horizontal">
+    <div class="form-group row">
+      <label class="col-2 col-form-label text-right">Name:</label>
+      <div class="col-10">
+        <mat-input-container class="float-never">
+          <input matInput
+                 class="form-control"
+                 type="text">
+        </mat-input-container>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-2 col-form-label text-right">Description:</label>
+      <div class="col-10">
+        <mat-input-container class="float-never">
+          <textarea matInput
+                    class="form-control"></textarea>
+        </mat-input-container>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button
+          mat-dialog-close>Cancel</button>
+  <button mat-button
+          (click)="closeDialog()"
+          cdkFocusInitial>Add</button>
+</mat-dialog-actions>

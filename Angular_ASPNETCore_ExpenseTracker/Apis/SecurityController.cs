@@ -14,16 +14,16 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody]AppUser user)
+        public IActionResult Login([FromBody]AppUserInput userInput)
         {
             IActionResult ret = null;
-            AppUserAuth auth = new AppUserAuth();
-            SecurityManager mgr = new SecurityManager(_settings);
+            var auth = new AppUserAuth();
+            var mgr = new SecurityManager(_settings);
 
             ret = StatusCode(StatusCodes.Status200OK, auth);
 
-            //TODO: 
-            //auth = mgr.ValidateUser(user);
+            //TODO: Abdul
+            //auth = mgr.ValidateUser(userInput);
             //if (auth.IsAuthenticated)
             //{
             //    ret = StatusCode(StatusCodes.Status200OK, auth);

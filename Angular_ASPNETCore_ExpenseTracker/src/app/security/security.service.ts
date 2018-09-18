@@ -110,7 +110,6 @@ export class SecurityService {
           return this.securityObject;
         },
         error => {
-          console.log("error fetching details of identity");
           return this.securityObject;
         }
       );

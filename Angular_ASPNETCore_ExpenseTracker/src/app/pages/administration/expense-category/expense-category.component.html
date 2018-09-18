@@ -1,4 +1,5 @@
-<div id="content_wrapper" class="boxedlayout3-wrapper">
+<div id="content_wrapper"
+     class="boxedlayout3-wrapper">
 	<div class="content">
 		<div class="header-wrapper header-sm shadow-none">
 			<div class="container-fluid">
@@ -6,22 +7,32 @@
 					<div class="col">
 						<header>
 							<h1>Expense Categories</h1>
+
 						</header>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="content-body container">
-
-
-
-			<div class="card" *ngFor="let expenseCategory of expenseCategories;trackBy:trackby.expenseCateogry">
+			<ul class="actions fab center-right">
+				<li>
+					<button class="btn btn-accent btn-fab"
+							mat-ripple
+							(click)="openDialog()">
+						<i class="zmdi zmdi-plus"></i>
+					</button>
+				</li>
+			</ul>
+			<div class="card"
+			     *ngFor="let expenseCategory of expenseCategories;trackBy:trackby.expenseCateogry">
 				<header class="card-header">
 					<h2 class="card-title">{{expenseCategory.name}}</h2>
 					<small class="card-subtitle">created by on </small>
 					<ul class="actions icons top-right">
-						<li class="dropdown" dropdown>
-							<a href="javascript:void(0)" dropdownToggle>
+						<li class="dropdown"
+						    dropdown>
+							<a href="javascript:void(0)"
+							   dropdownToggle>
 								<i class="zmdi zmdi-more-vert"></i>
 							</a>
 							<ul class="dropdown-menu btn-primary dropdown-menu-right">
@@ -31,6 +42,7 @@
 							</ul>
 						</li>
 					</ul>
+
 				</header>
 				<div class="card-block">
 					<p>
@@ -41,4 +53,5 @@
 		</div>
 
 	</div>
-	<footer id="footer_wrapper" class="footer_wrapper"></footer>
+	<footer id="footer_wrapper"
+	        class="footer_wrapper"></footer>

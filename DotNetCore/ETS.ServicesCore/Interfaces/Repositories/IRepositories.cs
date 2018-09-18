@@ -6,6 +6,7 @@ namespace ETS.Services.Repositories
     {
         IExpenseCategoryRepository ExpenseCategory { get; set; }
         IFieldCategoryMappingRepository FieldCategoryMapping { get; set; }
+        ITransactionRepository Transaction { get; set; }
         IGroupExpenseRepository GroupExpense { get; set; }
         IIndividualExpenseRepository IndividualExpense { get; set; }
         IUserDetailRepository UserDetail { get; set; }
