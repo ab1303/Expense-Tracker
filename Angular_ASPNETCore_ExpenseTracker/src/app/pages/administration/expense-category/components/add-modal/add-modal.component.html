@@ -1,13 +1,24 @@
-<h2 mat-dialog-title>Add Expense Category</h2>
-<mat-dialog-content class="mat-typography">
-  <form class="form-horizontal">
+<form class="form-horizontal"
+      (ngSubmit)="onSubmit(f)"
+      #f="ngForm"
+      novalidate>
+  <h2 mat-dialog-title>Add Expense Category</h2>
+  <mat-dialog-content class="mat-typography">
+
     <div class="form-group row">
       <label class="col-2 col-form-label text-right">Name:</label>
       <div class="col-10">
         <mat-input-container class="float-never">
           <input matInput
                  class="form-control"
-                 type="text">
+                 type="text"
+                 required
+                 [(ngModel)]="model.categoryName"
+                 #categoryName="ngModel"
+                 name="categoryName">
+          <mat-error *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched) && categoryName.hasError('required')">
+            Category Name is <strong>required</strong>
+          </mat-error>
         </mat-input-container>
       </div>
     </div>
@@ -16,16 +27,22 @@
       <div class="col-10">
         <mat-input-container class="float-never">
           <textarea matInput
-                    class="form-control"></textarea>
+                    class="form-control"
+                    [(ngModel)]="model.categoryDescription"
+                    #categoryDescription="ngModel"
+                    name="categoryDescription"></textarea>
         </mat-input-container>
       </div>
     </div>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button
-          mat-dialog-close>Cancel</button>
-  <button mat-button
-          (click)="closeDialog()"
-          cdkFocusInitial>Add</button>
-</mat-dialog-actions>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button
+            class="btn btn-default"
+            mat-dialog-close>Cancel</button>
+    <button mat-button
+            type="submit"
+            class="btn btn-success"
+            cdkFocusInitial>Add</button>
+  </mat-dialog-actions>
+</form>
