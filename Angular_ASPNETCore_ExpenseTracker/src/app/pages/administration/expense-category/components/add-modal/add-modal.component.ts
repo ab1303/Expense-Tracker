@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { NgForm } from '@angular/forms';
 
@@ -8,7 +8,13 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./add-modal.component.scss']
 })
 export class AddModalComponent implements OnInit {
-  model: any = {};
+  model: { categoryName: string, categoryDescription: string } = {
+    categoryName: '',
+    categoryDescription: ''
+  };
+
+  @ViewChild('categoryForm')
+  categoryForm: NgForm;
   constructor(
     private dialogRef: MatDialogRef<AddModalComponent>,
   ) { }
@@ -17,11 +23,12 @@ export class AddModalComponent implements OnInit {
     this.dialogRef.updateSize("600px", "300px");
   }
 
-  onSubmit(form: NgForm){
-    console.log(form);
-    console.log("submitted");
+  onSubmit() {
+    this.dialogRef.close({
+      model: this.model
+    });
   }
-  
+
   closeDialog() {
     this.dialogRef.close({
     })

@@ -24,6 +24,10 @@ namespace Angular_ASPNETCore_ExpenseTracker.Models
 
     }
 
+    public class BaseApiResponse<T> : BaseApiResponse
+    {
+        public T Model { get; set; }
+    }
 
     /// <summary>
     /// List of internal status codes to be sent back in response

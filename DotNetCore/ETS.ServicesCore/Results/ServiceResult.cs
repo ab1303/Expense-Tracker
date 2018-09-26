@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ETS.Services.Results
 {
@@ -24,6 +22,12 @@ namespace ETS.Services.Results
             get => _message ?? Exception?.Message;
             set => _message = value;
         }
+    }
+
+
+    public class ServiceResult<T> : ServiceResult
+    {
+        public T Model { get; set; }
     }
 
     public enum ServiceStatus

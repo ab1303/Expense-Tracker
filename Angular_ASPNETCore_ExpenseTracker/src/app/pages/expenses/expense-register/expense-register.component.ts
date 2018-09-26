@@ -75,9 +75,6 @@ export class ExpenseRegisterComponent implements OnInit {
 		});
 
 		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: `);
-			console.log(result);
-			console.log(this.selected);
 			this.updateTransactions(
 				this.selected.map(s => s.id),
 				result.selectedValue.id)

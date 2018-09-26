@@ -16,7 +16,7 @@ export class ExpenseCategoryComponent implements OnInit {
     private expenseCategoryService: ExpenseCategoryService,
     public dialog: MatDialog,
     public trackby: TrackByService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.expenseCategoryService.getExpenseCategories().subscribe(data => {
@@ -24,16 +24,32 @@ export class ExpenseCategoryComponent implements OnInit {
     });
   }
 
-  
-	openDialog() {
-		const dialogRef = this.dialog.open(AddModalComponent, {
-			data: {
-			}
-		});
 
-		dialogRef.afterClosed().subscribe(result => {
-			console.log(`Dialog result: `);
-			console.log(result);
-		});
-	}
+  openDialog() {
+    const dialogRef = this.dialog.open(AddModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: `);
+      console.log(result);
+
+      const { categoryName, categoryDescription } = result.model;
+      this.expenseCategoryService.addExpenseCategory(categoryName, categoryDescription)
+        .subscribe(
+          response => {
+            console.log(response);
+            this.expenseCategories = [
+              ...this.expenseCategories,
+              {
+                id: response.model,
+                name: categoryName,
+                description: categoryDescription,
+                dateCreated: null,
+                dateChanged: null,
+              }
+            ];
+          }
+        )
+
+    });
+  }
 }

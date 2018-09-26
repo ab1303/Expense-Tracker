@@ -7,6 +7,7 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
+import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
 const API_URL = `${API_BASE_ADDRESS}/ExpenseCategory`;
 @Injectable()
@@ -21,6 +22,17 @@ export class ExpenseCategoryService {
         return response;
       })
       .catch(this.handleError);
+  }
+
+  
+  addExpenseCategory(categoryName: string, categoryDescription: string): Observable<BaseApiResponse> {
+    return this.http
+      .post<BaseApiResponse>(`${API_URL}/Add`, {
+        categoryName,
+        categoryDescription,
+      })
+      .catch(this.handleError);
+
   }
 
   private handleError(error: any) {
