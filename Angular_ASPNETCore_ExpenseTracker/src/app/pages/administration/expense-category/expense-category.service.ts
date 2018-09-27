@@ -8,11 +8,16 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
+import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
+
+
+
+
 
 const API_URL = `${API_BASE_ADDRESS}/ExpenseCategory`;
 @Injectable()
 export class ExpenseCategoryService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getExpenseCategories(): Observable<ExpenseCategoryApiResponse> {
     return this.http
@@ -24,10 +29,10 @@ export class ExpenseCategoryService {
       .catch(this.handleError);
   }
 
-  
-  addExpenseCategory(categoryName: string, categoryDescription: string): Observable<BaseApiResponse> {
+
+  addExpenseCategory(categoryName: string, categoryDescription: string): Observable<GenericBaseApiResponse<number>> {
     return this.http
-      .post<BaseApiResponse>(`${API_URL}/Add`, {
+      .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {
         categoryName,
         categoryDescription,
       })
@@ -40,7 +45,7 @@ export class ExpenseCategoryService {
     if (error instanceof Response) {
       let errMessage = "";
       try {
-          // TODO: 
+        // TODO: 
         // errMessage = error.json().error;
         errMessage = "what the fuck"
       } catch (err) {
