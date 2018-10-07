@@ -19,6 +19,7 @@ import { AuthGuard } from "./security/auth.guard";
 import { HttpInterceptorModule } from "./security/http-interceptor.module";
 import { HasClaimDirective } from "./security/has-claim.directive";
 import { ExpensesModule } from "./pages/expenses/expenses.module";
+import { IncomeModule } from "./pages/income/income.module";
 // Application wide providers
 const APP_PROVIDERS = [AppState, GlobalState, Title];
 
@@ -46,6 +47,7 @@ export interface StoreType {
     HttpClientModule,
     HttpInterceptorModule,
     ExpensesModule,
+    IncomeModule,
   ],
   providers: [
     APP_PROVIDERS,

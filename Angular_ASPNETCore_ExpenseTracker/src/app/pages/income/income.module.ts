@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from "@angular/router";
+
+import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+
+import { SharedModule } from '../../shared/shared.module';
+
+import { INCOME_ROUTES } from './income.routes';
+import { IncomeComponent } from './income.component';
+import { PaySlipComponent } from './pay-slip/pay-slip.component';
+
+
+@NgModule({
+  imports: [
+    CommonModule,
+    SharedModule.forRoot(), RouterModule.forChild(INCOME_ROUTES)
+  ],
+  declarations: [IncomeComponent, PaySlipComponent ]
+})
+export class IncomeModule { }

@@ -1,0 +1,52 @@
+<div id="content_wrapper"
+     class="fullWidth2-wrapper rightSidenav2-wrapper">
+     <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav-content>
+        <div class="content">
+          <div class="header-wrapper header-sm">
+            <header>
+              <h1>Salary Slips</h1>
+  
+              <ul class="actions icons top-right">
+                <li>
+                  <a href="javascript:void(0)"
+                     (click)="rightSidenav2.toggle()">
+                    <i class="zmdi zmdi-search"></i>
+                  </a>
+                </li>
+              </ul>
+            </header>
+          </div>
+          <div class="content-body">
+            <div class="card card-datatable">
+              <header class="card-header p-30">
+                <ul class="actions icons top-right">
+                  <li class="dropdown"
+                      dropdown>
+                    <a href="javascript:void(0)"
+                       dropdownToggle>
+                      <i class="zmdi zmdi-more-vert"></i>
+                    </a>
+                    <ul class="dropdown-menu btn-primary dropdown-menu-right">
+                      <li>
+                        <!-- <button class="btn btn-info btn-block"
+                                (click)="updateTransactionModal.show()">Edit Category</button> -->
+                        <button class="btn btn-info btn-block"
+                                (click)="openDialog()">Add Salary Slip</button>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </header>
+              <div class="card-block p-0">
+                Data Table
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-sidenav-content>
+
+      <footer id="footer_wrapper"
+		        class="footer_wrapper"></footer>
+     </mat-sidenav-container>
+</div>

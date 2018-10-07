@@ -38,14 +38,14 @@ namespace ETS.Services.Queries
         {
 
 
-            var query = from t in repositories.IndividualExpense.Get()
+            var individualExpenses = from t in repositories.IndividualExpense.Get()
                         join c in repositories.ExpenseCategory.Get()
                         on t.Category equals c
                         join paidBy in repositories.UserDetail.Get()
                         on t.PaidBy equals paidBy
                         join paidFor in repositories.UserDetail.Get()
                         on t.PaidFor equals paidFor
-                        select new
+                        select new Result
                         {
                             Id = t.Id,
                             Name = t.Name,
@@ -59,11 +59,34 @@ namespace ETS.Services.Queries
                             Frequency = t.Frequency
                         };
 
+            var groupExpenses = from t in repositories.GroupExpense.Get()
+                join c in repositories.ExpenseCategory.Get()
+                    on t.Category equals c
+                join paidBy in repositories.UserDetail.Get()
+                    on t.PaidBy equals paidBy
+                join paidFor in repositories.UserGroup.Get()
+                    on t.PaidFor equals paidFor
+                select new Result
+                {
+                    Id = t.Id,
+                    Name = t.Name,
+                    Amount = t.Amount,
+                    CategoryId = c.Id,
+                    CategoryName = c.Name,
+                    Details = t.Details,
+                    PaidByName = paidBy.FirstName + " " + paidBy.LastName,
+                    PaidForName = paidFor.Name,
+                    TransactionDate = t.TransactionDate,
+                    Frequency = t.Frequency
+                };
+
+
+            var combinedExpenses = individualExpenses.Union(groupExpenses);
+
             if (_expenseCategoryId.HasValue)
-                query = query.Where(t => t.CategoryId == _expenseCategoryId);
+                combinedExpenses = combinedExpenses.Where(t => t.CategoryId == _expenseCategoryId);
 
-
-            var materialisedQuery = query.Select(t => new Result
+            var materialisedQuery = combinedExpenses.Select(t => new Result
             {
                 Id = t.Id,
                 Name = t.Name,
@@ -92,6 +115,7 @@ namespace ETS.Services.Queries
             public long Id { get; set; }
             public string Name { get; set; }
             public decimal Amount { get; set; }
+            public long CategoryId { get; set; }
             public string CategoryName { get; set; }
             public string Details { get; set; }
             public string PaidByName { get; set; }
