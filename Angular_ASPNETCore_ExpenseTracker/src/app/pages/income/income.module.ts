@@ -9,6 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { INCOME_ROUTES } from './income.routes';
 import { IncomeComponent } from './income.component';
 import { PaySlipComponent } from './pay-slip/pay-slip.component';
+import { AddPaySlipComponent } from './add-pay-slip/add-pay-slip.component';
 
 
 @NgModule({
@@ -16,6 +17,6 @@ import { PaySlipComponent } from './pay-slip/pay-slip.component';
     CommonModule,
     SharedModule.forRoot(), RouterModule.forChild(INCOME_ROUTES)
   ],
-  declarations: [IncomeComponent, PaySlipComponent ]
+  declarations: [IncomeComponent, PaySlipComponent, AddPaySlipComponent ]
 })
 export class IncomeModule { }
