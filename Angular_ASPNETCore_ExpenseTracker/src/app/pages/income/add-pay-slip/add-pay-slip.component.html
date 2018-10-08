@@ -18,14 +18,24 @@
           <div class="card">
             <div class="card-block">
               <form class="form-horizontal"
-                    novalidate>
+                    novalidate
+                    autocomplete="off"
+                    (ngSubmit)="save()"
+                    [formGroup]="addPaySlipForm">
                 <div class="form-group row">
                   <div class="col-6">
-                    <label for="frequence"
-                           class="col-3 col-form-label">Frequency:</label>
-                    <div class="col-9">
-
-                    </div>
+                    <mat-radio-group formControlName="frequency">
+                      <label for="frequency"
+                             class="col-3 col-form-label">Frequency:</label>
+                      <mat-radio-button class="example-margin"
+                                        value="monthly">
+                        Monthly
+                      </mat-radio-button>
+                      <mat-radio-button class="example-margin"
+                                        value="fortnightly">
+                        Fortnightly
+                      </mat-radio-button>
+                    </mat-radio-group>
                   </div>
                 </div>
 
@@ -38,14 +48,14 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 formControlName="periodStart"
                                  [matDatepicker]="periodStartPicker"
                                  placeholder="Choose a date">
                           <mat-datepicker-toggle matSuffix
                                                  [for]="periodStartPicker"></mat-datepicker-toggle>
                           <mat-datepicker #periodStartPicker></mat-datepicker>
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
+
                       </div>
                     </div>
                   </div>
@@ -57,14 +67,14 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 formControlName="periodEnd"
                                  [matDatepicker]="periodEndPicker"
                                  placeholder="Choose a date">
                           <mat-datepicker-toggle matSuffix
                                                  [for]="periodEndPicker"></mat-datepicker-toggle>
                           <mat-datepicker #periodEndPicker></mat-datepicker>
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
+
                       </div>
                     </div>
                   </div>
@@ -80,16 +90,12 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 (change)="calculateTaxPct()"
                                  class="form-control"
-                                 placeholder="Required"
                                  type="text"
-                                 ngModel
-                                 name="requried"
-                                 #requried="ngModel"
-                                 required/>
+                                 formControlName="totalEarnings"
+                                 />
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
                       </div>
                     </div>
                   </div>
@@ -101,16 +107,12 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 (change)="calculateTaxPct()"
                                  class="form-control"
-                                 placeholder="Required"
                                  type="text"
-                                 ngModel
-                                 name="requried"
-                                 #requried="ngModel"
-                                 required/>
+                                 formControlName="netPay"
+                                 />
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
                       </div>
                     </div>
                   </div>
@@ -126,15 +128,10 @@
                         <mat-form-field>
                           <input matInput
                                  class="form-control"
-                                 placeholder="Required"
                                  type="text"
-                                 ngModel
-                                 name="requried"
-                                 #requried="ngModel"
-                                 required/>
+                                 formControlName="tax"
+                                 />
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
                       </div>
                     </div>
                   </div>
@@ -148,7 +145,8 @@
                           <input matInput
                                  class="form-control"
                                  type="text"
-                                 disabled/>
+                                 formControlName="taxPct"
+                                 />
                         </mat-form-field>
 
                       </div>
@@ -166,15 +164,10 @@
                         <mat-form-field>
                           <input matInput
                                  class="form-control"
-                                 placeholder="Required"
+                                 formControlName="superAnnuation"
                                  type="text"
-                                 ngModel
-                                 name="requried"
-                                 #requried="ngModel"
-                                 required/>
+                                 />
                         </mat-form-field>
-                        <p class="error"
-                           *ngIf="requried?.errors?.required">required error</p>
                       </div>
                     </div>
                   </div>
@@ -188,7 +181,8 @@
                           <input matInput
                                  class="form-control"
                                  type="text"
-                                 disabled/>
+                                 formControlName="superAnnuationPct"
+                                 />
                         </mat-form-field>
                       </div>
                     </div>
@@ -201,6 +195,7 @@
                 <div class="col text-right">
                   <button type="submit"
                           class="btn btn-accent"
+                          [disabled]="!addPaySlipForm.valid"
                           mat-ripple>Submit</button>
                 </div>
               </form>
@@ -214,3 +209,8 @@
   <footer id="footer_wrapper"
           class="footer_wrapper"></footer>
 </div>
+
+<br>Dirty: {{ addPaySlipForm.dirty }}
+<br>Touched: {{ addPaySlipForm.touched }}
+<br>Valid: {{ addPaySlipForm.valid }}
+<br>Value: {{ addPaySlipForm.value | json }}
