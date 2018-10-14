@@ -36,6 +36,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
+import { NgxCurrencyModule } from "ngx-currency";
 
 
 // UI Shared Components
@@ -45,6 +46,17 @@ import { SearchSidebarComponent } from './components/search-sidebar/search-sideb
 import { SearchCardComponent } from './components/search-card/search-card.component';
 
 
+export const customCurrencyMaskConfig = {
+    align: "right",
+    allowNegative: true,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "$ ",
+    suffix: "",
+    thousands: ",",
+    nullable: true
+  };
 
 @NgModule({
 	imports: [
@@ -68,7 +80,8 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
         TabsModule.forRoot(),
         MalihuScrollbarModule.forRoot(),
         ModalModule.forRoot(),
-        PopoverModule.forRoot()
+        PopoverModule.forRoot(),
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
 	],
 	declarations: [
 		AppBackdropComponent,
@@ -99,10 +112,11 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
         ModalModule,
 		PopoverModule,
 		MatInputModule,
-		MatAutocompleteModule,
+		MatAutocompleteModule,  
         MatToolbarModule,
         MatSlideToggleModule,
         MatDialogModule,
+        NgxCurrencyModule,
 		SearchSidebarComponent,
 		SearchCardComponent,
 	]

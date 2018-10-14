@@ -65,6 +65,7 @@
     "ngbox": "0.0.15",
     "ngu-utility": "1.0.3",
     "ngx-bootstrap": "2.0.2",
+    "ngx-currency": "^1.5.0",
     "ngx-malihu-scrollbar": "1.2.2",
     "ngx-perfect-scrollbar": "5.3.5",
     "ngx-uploader": "4.0.0",

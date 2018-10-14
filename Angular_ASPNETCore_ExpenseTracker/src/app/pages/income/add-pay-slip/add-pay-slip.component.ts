@@ -10,6 +10,16 @@ export class AddPaySlipComponent implements OnInit {
 
   addPaySlipForm: FormGroup;
 
+  addPaySlipModel: {
+    frequency: number,
+    periodStart: Date,
+    periodEnd: Date,
+    totalEarnings: number,
+    netPay: number,
+    superAnnuation: number,
+  };
+
+
   constructor() { }
 
   ngOnInit() {
@@ -27,11 +37,18 @@ export class AddPaySlipComponent implements OnInit {
   }
 
   calculateTaxPct() {
-    const netPayCtrl: AbstractControl = this.addPaySlipForm.get('netPay').value;
-    const totalEarningsCtrl: AbstractControl = this.addPaySlipForm.get('totalEarnings').value;
+    const netPay: any = this.addPaySlipForm.get('netPay').value;
+    const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
 
-    console.log(netPayCtrl);
-    console.log(totalEarningsCtrl);
+    const tax = totalEarnings - netPay;
+    const taxPct = (tax / totalEarnings);
+
+    this.addPaySlipForm.get('tax').setValue(tax);
+    this.addPaySlipForm.get('taxPct').setValue(taxPct);
+
+
+    console.log(tax);
+    console.log(taxPct);
 
   }
 

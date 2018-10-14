@@ -4658,6 +4658,10 @@ ngx-bootstrap@2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-2.0.2.tgz#6862b2ee4764bb6cfd34c66528873d0d050c2faa"
 
+ngx-currency@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-1.5.0.tgz#39e781e51f50ea9ee366dffb4c98654d77c8daf7"
+
 ngx-malihu-scrollbar@1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/ngx-malihu-scrollbar/-/ngx-malihu-scrollbar-1.2.2.tgz#4a2fb0e508383c74775eeb268eb8e9bbcc8b8546"

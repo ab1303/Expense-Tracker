@@ -7,6 +7,7 @@ import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
 import { ResponsiveModule } from "ng2-responsive";
 
+
 import { AppComponent } from "./app.component";
 import { AppState, InternalStateType } from "./app.service";
 import { GlobalState } from "./app.state";
@@ -22,6 +23,7 @@ import { ExpensesModule } from "./pages/expenses/expenses.module";
 import { IncomeModule } from "./pages/income/income.module";
 // Application wide providers
 const APP_PROVIDERS = [AppState, GlobalState, Title];
+
 
 export interface StoreType {
   state: InternalStateType;
