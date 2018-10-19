@@ -107,11 +107,11 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
-                                 currencyMask
+                                 etsAutoNumeric
                                  (change)="calculateTaxPct()"
                                  class="form-control"
                                  type="text"
-                                 formControlName="netPay" />
+                                 [formControl]="netPay" />
                         </mat-form-field>
                       </div>
                     </div>

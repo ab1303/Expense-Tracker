@@ -46,9 +46,10 @@ export class AddPaySlipComponent implements OnInit {
     this.addPaySlipForm.get('tax').setValue(tax);
     this.addPaySlipForm.get('taxPct').setValue(taxPct);
 
+    // this.addPaySlipForm.get('netPay').setValue(1303);
 
-    console.log(tax);
-    console.log(taxPct);
+    console.log(netPay);
+    // console.log(taxPct);
 
   }
 

@@ -46,6 +46,10 @@ import { SearchSidebarComponent } from './components/search-sidebar/search-sideb
 import { SearchCardComponent } from './components/search-card/search-card.component';
 
 
+// Custom Directive
+import { AutoNumericDirective } from './directives/autoNumeric/ngAutoNumeric';
+
+
 export const customCurrencyMaskConfig = {
     align: "right",
     allowNegative: true,
@@ -88,6 +92,7 @@ export const customCurrencyMaskConfig = {
 		FooterComponent,
 		SearchSidebarComponent,
 		SearchCardComponent,
+		AutoNumericDirective,
 	],
 	exports: [
 		CommonModule,
@@ -119,6 +124,7 @@ export const customCurrencyMaskConfig = {
         NgxCurrencyModule,
 		SearchSidebarComponent,
 		SearchCardComponent,
+		AutoNumericDirective,
 	]
 })
 export class SharedModule {
