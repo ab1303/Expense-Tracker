@@ -14,26 +14,28 @@ export const CURRENCYMASKDIRECTIVE_VALUE_ACCESSOR: any = {
   selector: '[etsAutoNumeric]',
   providers: [CURRENCYMASKDIRECTIVE_VALUE_ACCESSOR]
 })
-export class AutoNumericDirective implements OnInit, AfterViewInit, ControlValueAccessor {
+export class AutoNumericDirective implements OnInit, ControlValueAccessor {
 
+  onChange;
   anElement: any;
   constructor(private elementRef: ElementRef, private renderer: Renderer2) {
-    this.anElement = new AutoNumeric(this.elementRef.nativeElement, 'dollar');
+     // this.anElement = new AutoNumeric(this.elementRef.nativeElement, {
+    //   currencySymbol : '$',
+    //   decimalCharacter : '.',
+    //   digitGroupSeparator : ',',
+    //   currencySymbolPlacement    : AutoNumeric.options.currencySymbolPlacement.prefix,
+    // });
+    this.anElement = new AutoNumeric(this.elementRef.nativeElement, 'dollar'); 
   }
 
   ngOnInit(): void {
     this.renderer.setStyle(this.elementRef.nativeElement, 'textAlign', 'right');
   }
 
-  ngAfterViewInit(): void {
-    // this.anElement = new AutoNumeric(this.elementRef.nativeElement, {
-    //   currencySymbol : '$',
-    //   decimalCharacter : '.',
-    //   digitGroupSeparator : ',',
-    //   currencySymbolPlacement    : AutoNumeric.options.currencySymbolPlacement.prefix,
-    // });
 
-    
+  @HostListener("blur", ["$event"])
+  handleBlur(event: any) {
+   this.onChange(this.anElement.rawValue);
   }
 
   writeValue(value: number): void {
@@ -41,8 +43,7 @@ export class AutoNumericDirective implements OnInit, AfterViewInit, ControlValue
   }
 
   registerOnChange(callbackFunction: Function): void {
-    console.log(this.anElement);
-    callbackFunction(this.anElement.rawValue);
+    this.onChange = callbackFunction;
   }
 
   registerOnTouched(callbackFunction: Function): void {
