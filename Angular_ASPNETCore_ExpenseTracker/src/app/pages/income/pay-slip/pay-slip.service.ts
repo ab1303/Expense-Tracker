@@ -2,23 +2,21 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { ExpenseCategoryApiResponse } from "./expense-category";
+import { PaySlipApiResponse } from "./pay-slip.model";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
+
 import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
 
 
-
-
-
-const API_URL = `${API_BASE_ADDRESS}/ExpenseCategory`;
+const API_URL = `${API_BASE_ADDRESS}/PaySlip`;
 @Injectable()
-export class ExpenseCategoryService {
+export class PaySlipService {
   constructor(private http: HttpClient) { }
 
-  getExpenseCategories(): Observable<ExpenseCategoryApiResponse> {
+  getExpenseCategories(): Observable<PaySlipApiResponse> {
     return this.http
       .get(API_URL)
       .map((response: Response) => {
@@ -29,11 +27,15 @@ export class ExpenseCategoryService {
   }
 
 
-  addExpenseCategory(categoryName: string, categoryDescription: string): Observable<GenericBaseApiResponse<number>> {
+  addPaySlip(frequency: number, startDate: Date, endDate: Date, totalEarnings: number, netEarnings: number, superAnnuation: number): Observable<GenericBaseApiResponse<number>> {
     return this.http
       .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {
-        categoryName,
-        categoryDescription,
+        frequency,
+        startDate,
+        endDate,
+        totalEarnings,
+        netEarnings,
+        superAnnuation,
       })
       .catch(this.handleError);
 
