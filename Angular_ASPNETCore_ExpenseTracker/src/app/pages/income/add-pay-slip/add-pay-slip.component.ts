@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { merge } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-pay-slip',
@@ -32,24 +33,40 @@ export class AddPaySlipComponent implements OnInit {
       tax: new FormControl({ value: '', disabled: true, }),
       taxPct: new FormControl({ value: '', disabled: true, }),
       superAnnuation: new FormControl('', Validators.required),
-      superAnnuationPct: new FormControl({ value: '', disabled: true, },),
+      superAnnuationPct: new FormControl({ value: '', disabled: true, }),
     });
+
+    const netPayObs = this.addPaySlipForm.get('netPay').valueChanges;
+    const totalEarningsObs = this.addPaySlipForm.get('totalEarnings').valueChanges;
+    const superAnnuationObs = this.addPaySlipForm.get('superAnnuation').valueChanges;
+
+    
+    totalEarningsObs.pipe(merge(netPayObs)).subscribe(() => this.calculateTaxPct());
+    totalEarningsObs.pipe(merge(superAnnuationObs)).subscribe(() => this.calculateSuperPct());
+
   }
 
-  calculateTaxPct() {
+  calculateTaxPct(){
     const netPay: any = this.addPaySlipForm.get('netPay').value;
     const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
 
-    const tax = totalEarnings - netPay;
-    const taxPct = (tax / totalEarnings);
+    if (netPay && totalEarnings) {
+      const tax = totalEarnings - netPay;
+      const taxPct = (tax / totalEarnings);
 
-    this.addPaySlipForm.get('tax').setValue(tax);
-    this.addPaySlipForm.get('taxPct').setValue(taxPct);
+      this.addPaySlipForm.get('tax').setValue(tax);
+      this.addPaySlipForm.get('taxPct').setValue(taxPct);
+    }
+  }
 
-    // this.addPaySlipForm.get('netPay').setValue(1303);
+  calculateSuperPct() {
+    const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
+    const superAnnuation: any = this.addPaySlipForm.get('superAnnuation').value;
 
-    console.log(netPay);
-    // console.log(taxPct);
+    if (superAnnuation && totalEarnings) {
+      const superPct = (superAnnuation / totalEarnings);
+      this.addPaySlipForm.get('superAnnuationPct').setValue(superPct);
+    }
 
   }
 

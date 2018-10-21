@@ -90,8 +90,7 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
-                                 currencyMask
-                                 (change)="calculateTaxPct()"
+                                 etsAutoNumeric
                                  class="form-control"
                                  type="text"
                                  formControlName="totalEarnings" />
@@ -108,7 +107,6 @@
                         <mat-form-field>
                           <input matInput
                                  etsAutoNumeric
-                                 (change)="calculateTaxPct()"
                                  class="form-control"
                                  type="text"
                                  formControlName="netPay" />
@@ -127,6 +125,7 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 etsAutoNumeric
                                  class="form-control"
                                  type="text"
                                  formControlName="tax" />
@@ -142,6 +141,7 @@
                       <div class="col-8">
                         <mat-form-field>
                           <input matInput
+                                 [value]="addPaySlipForm.get('taxPct').value | percent: '1.2-2'"
                                  class="form-control"
                                  type="text"
                                  formControlName="taxPct" />
@@ -161,6 +161,7 @@
                       <div class="col-9">
                         <mat-form-field>
                           <input matInput
+                                 etsAutoNumeric
                                  class="form-control"
                                  formControlName="superAnnuation"
                                  type="text" />
@@ -176,6 +177,7 @@
                       <div class="col-8">
                         <mat-form-field>
                           <input matInput
+                                 [value]="addPaySlipForm.get('superAnnuationPct').value | percent: '1.2-2'"
                                  class="form-control"
                                  type="text"
                                  formControlName="superAnnuationPct" />
