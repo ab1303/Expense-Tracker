@@ -4,6 +4,7 @@ using ETS.DomainCore.Enums;
 using ETS.Services.Repositories;
 using System;
 using System.Linq;
+using ETS.Services.Interfaces.Repositories;
 
 namespace ETS.Jobs.ServiceCore
 {

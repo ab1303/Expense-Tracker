@@ -4,6 +4,7 @@ using ETS.DataCore.Implementations;
 using ETS.Domain;
 using ETS.Jobs.Request;
 using ETS.Jobs.Service.JobRequestHandlers;
+using ETS.Services.Interfaces.Repositories;
 using ETS.Services.Repositories;
 using Microsoft.Extensions.Logging;
 

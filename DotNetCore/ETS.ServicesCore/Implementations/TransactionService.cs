@@ -7,6 +7,7 @@ using ETS.Services.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using ETS.Services.Interfaces.Repositories;
 using ETS.Services.Results;
 
 namespace ETS.Services.Implementations

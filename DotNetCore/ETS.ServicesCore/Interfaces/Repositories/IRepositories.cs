@@ -1,10 +1,9 @@
-﻿using ETS.Services.Interfaces.Repositories;
-
-namespace ETS.Services.Repositories
+﻿namespace ETS.Services.Interfaces.Repositories
 {
     public interface IRepositories
     {
         IExpenseCategoryRepository ExpenseCategory { get; set; }
+        IPaySlipRepository PaySlip { get; set; }
         IFieldCategoryMappingRepository FieldCategoryMapping { get; set; }
         ITransactionRepository Transaction { get; set; }
         IGroupExpenseRepository GroupExpense { get; set; }

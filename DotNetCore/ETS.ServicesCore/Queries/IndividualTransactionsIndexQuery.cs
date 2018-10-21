@@ -1,11 +1,10 @@
 ﻿using ETS.Domain.Enums;
 using ETS.Service.DTO;
 using ETS.Service.Services;
-using ETS.Services.Repositories;
 using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Collections.Generic;
+using ETS.Services.Interfaces.Repositories;
 
 namespace ETS.Services.Queries
 {

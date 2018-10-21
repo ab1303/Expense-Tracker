@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
 using Angular_ASPNETCore_ExpenseTracker.Models.ExpenseCategory;
-using Angular_ASPNETCore_ExpenseTracker.Models.ExpenseRegister;
 using ETS.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

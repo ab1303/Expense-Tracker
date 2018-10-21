@@ -5,6 +5,7 @@ namespace ETS.Services.Repositories
     public class Repositories : IRepositories
     {
         public IExpenseCategoryRepository ExpenseCategory { get; set; }
+        public IPaySlipRepository PaySlip { get; set; }
         public IFieldCategoryMappingRepository FieldCategoryMapping { get; set; }
         public ITransactionRepository Transaction { get; set; }
         public IGroupExpenseRepository GroupExpense { get; set; }
@@ -14,6 +15,7 @@ namespace ETS.Services.Repositories
         
         public Repositories(
             IExpenseCategoryRepository expenseCategoryRepository,
+            IPaySlipRepository paySlipRepository,
             IFieldCategoryMappingRepository fieldCategoryMappingRepository,
             ITransactionRepository transaction,
             IGroupExpenseRepository groupExpenseRepository,
@@ -22,6 +24,7 @@ namespace ETS.Services.Repositories
             IUserGroupRepository userGroupRepository
             )
         {
+            PaySlip = paySlipRepository;
             ExpenseCategory = expenseCategoryRepository;
             FieldCategoryMapping = fieldCategoryMappingRepository;
             Transaction = transaction;

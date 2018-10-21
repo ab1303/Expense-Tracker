@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using ETS.Service.Services;
+using ETS.Services.Interfaces.Repositories;
 using ETS.Services.Repositories;
 
 namespace ETS.Services.Queries.Reports
