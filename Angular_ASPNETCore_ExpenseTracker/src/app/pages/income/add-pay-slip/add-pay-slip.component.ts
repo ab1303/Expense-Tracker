@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
+import { ActivatedRoute, Router  } from '@angular/router';
 import { merge } from 'rxjs/operators';
 
 import { IPaySlip } from '../pay-slip/pay-slip.model';
+import { PaySlipService } from '../pay-slip/pay-slip.service';
 
 @Component({
   selector: 'app-add-pay-slip',
@@ -15,7 +17,9 @@ export class AddPaySlipComponent implements OnInit {
   addPaySlipModel: IPaySlip;
 
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private paySlipService: PaySlipService) { }
 
   ngOnInit() {
     this.addPaySlipForm = new FormGroup({
@@ -65,7 +69,21 @@ export class AddPaySlipComponent implements OnInit {
   }
 
   save() {
+    if (this.addPaySlipForm.dirty && this.addPaySlipForm.valid) {
+      let paySlip = Object.assign({}, this.addPaySlipModel, this.addPaySlipForm.value);
 
+      this.paySlipService.addPaySlip(p)
+      .subscribe(
+          () => this.onSaveComplete(),
+          (error: any) => this.errorMessage = <any>error
+      );
+    }
   }
+
+  onSaveComplete(): void {
+    // Reset the form to clear the flags
+    this.addPaySlipForm.reset();
+    this.router.navigate(['/products']);
+}
 
 }

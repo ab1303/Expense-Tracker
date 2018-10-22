@@ -1,6 +1,6 @@
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
-export interface PaySlip {
+export interface IPaySlip {
     id: number;
     frequency: Number;
     periodStart: Date,
@@ -12,5 +12,5 @@ export interface PaySlip {
   
 
 export interface PaySlipApiResponse extends BaseApiResponse {
-  paySlips: PaySlip[];
+  paySlips: IPaySlip[];
 }
