@@ -28,8 +28,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         {
             try
             {
-                var result = _paySlipService.AddPaySlip(paySlip.StartDate, paySlip.EndDate, paySlip.Frequency,
-                    paySlip.TotalEarnings, paySlip.NetEarnings, paySlip.SuperAnnuation);
+                var result = _paySlipService.AddPaySlip(paySlip.PeriodStart, paySlip.PeriodEnd, paySlip.Frequency,
+                    paySlip.TotalEarnings, paySlip.NetPay, paySlip.SuperAnnuation);
 
                 if (!result.IsSuccess)
                     return BadRequest(new BaseApiResponse

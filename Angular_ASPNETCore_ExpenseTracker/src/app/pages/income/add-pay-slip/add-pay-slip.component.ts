@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { merge } from 'rxjs/operators';
 
+import { IPaySlip } from '../pay-slip/pay-slip.model';
+
 @Component({
   selector: 'app-add-pay-slip',
   templateUrl: './add-pay-slip.component.html',
@@ -10,15 +12,7 @@ import { merge } from 'rxjs/operators';
 export class AddPaySlipComponent implements OnInit {
 
   addPaySlipForm: FormGroup;
-
-  addPaySlipModel: {
-    frequency: number,
-    periodStart: Date,
-    periodEnd: Date,
-    totalEarnings: number,
-    netPay: number,
-    superAnnuation: number,
-  };
+  addPaySlipModel: IPaySlip;
 
 
   constructor() { }
@@ -40,13 +34,13 @@ export class AddPaySlipComponent implements OnInit {
     const totalEarningsObs = this.addPaySlipForm.get('totalEarnings').valueChanges;
     const superAnnuationObs = this.addPaySlipForm.get('superAnnuation').valueChanges;
 
-    
+
     totalEarningsObs.pipe(merge(netPayObs)).subscribe(() => this.calculateTaxPct());
     totalEarningsObs.pipe(merge(superAnnuationObs)).subscribe(() => this.calculateSuperPct());
 
   }
 
-  calculateTaxPct(){
+  calculateTaxPct() {
     const netPay: any = this.addPaySlipForm.get('netPay').value;
     const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
 
@@ -67,6 +61,10 @@ export class AddPaySlipComponent implements OnInit {
       const superPct = (superAnnuation / totalEarnings);
       this.addPaySlipForm.get('superAnnuationPct').setValue(superPct);
     }
+
+  }
+
+  save() {
 
   }
 

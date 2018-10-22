@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Authentication;
-using Angular_ASPNETCore_ExpenseTracker.Helper;
 using FluentValidation.AspNetCore;
 using AutoMapper;
 using ETS.Azure;
@@ -25,8 +22,6 @@ using ETS.DataCore.Seeders;
 using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
 
 namespace Angular_ASPNETCore_Seed
 {

@@ -28,6 +28,7 @@ namespace ETS.DataCore.Implementations
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<FieldCategoryMapping> FieldCategoryMappings { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<PaySlip> PaySlips { get; set; }
 
         public static readonly LoggerFactory MyConsoleLoggerFactor = new LoggerFactory(new[]
         {

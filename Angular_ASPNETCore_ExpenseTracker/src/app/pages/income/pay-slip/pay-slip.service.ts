@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { PaySlipApiResponse } from "./pay-slip.model";
+import { PaySlipApiResponse, IPaySlip } from "./pay-slip.model";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
@@ -27,14 +27,17 @@ export class PaySlipService {
   }
 
 
-  addPaySlip(frequency: number, startDate: Date, endDate: Date, totalEarnings: number, netEarnings: number, superAnnuation: number): Observable<GenericBaseApiResponse<number>> {
+  addPaySlip(payslip: IPaySlip): Observable<GenericBaseApiResponse<number>> {
+
+    const { frequency, periodStart, periodEnd, totalEarnings, netPay, superAnnuation } = payslip;
+
     return this.http
       .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {
         frequency,
-        startDate,
-        endDate,
+        periodStart,
+        periodEnd,
         totalEarnings,
-        netEarnings,
+        netPay,
         superAnnuation,
       })
       .catch(this.handleError);

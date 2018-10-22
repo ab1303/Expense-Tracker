@@ -2,11 +2,11 @@ import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-re
 
 export interface PaySlip {
     id: number;
-    startDate: Date;
-    endDate: Date;
     frequency: Number;
+    periodStart: Date,
+    periodEnd: Date,
     totalEarnings: Number;
-    netEarnings: Number;
+    netPay: Number;
     superAnnuation: Number;
   }
   
