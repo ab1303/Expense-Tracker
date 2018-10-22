@@ -1,0 +1,1 @@
+Add-Migration Sprint2_Add_Table_Payslip -Context:DataContext
