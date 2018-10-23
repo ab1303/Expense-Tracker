@@ -22,6 +22,7 @@ using ETS.DataCore.Seeders;
 using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Angular_ASPNETCore_Seed
 {
@@ -110,6 +111,7 @@ namespace Angular_ASPNETCore_Seed
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.RegisterDatabaseService(Configuration);
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();
@@ -265,7 +267,7 @@ namespace Angular_ASPNETCore_Seed
 
 
             // Run seed on start up
-            databaseSeeder.SeedAsync(app.ApplicationServices);
+            // databaseSeeder.SeedAsync(app.ApplicationServices);
 
         }
     }

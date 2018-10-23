@@ -10,13 +10,11 @@ using Microsoft.Extensions.Logging.Console;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 
 namespace ETS.DataCore.Implementations
 {
@@ -127,9 +125,13 @@ namespace ETS.DataCore.Implementations
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // Debugger.Launch();
+
             // TPH Classes
             builder.Entity<IndividualExpense>();
             builder.Entity<GroupExpense>();
+            builder.Entity<MonthlyPaySlip>();
+            builder.Entity<FortnightlyPaySlip>();
 
             // Mapping Classes
             builder.ApplyConfiguration(new IndividualExpenseMap());
