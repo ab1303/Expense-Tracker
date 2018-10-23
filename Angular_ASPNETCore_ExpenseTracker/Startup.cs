@@ -111,7 +111,6 @@ namespace Angular_ASPNETCore_Seed
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.RegisterDatabaseService(Configuration);
             services.RegisterInternalServices();
             services.RegisterAzureStorageService();

@@ -13,10 +13,9 @@ namespace ETS.DataCore
     {
         public static IServiceCollection RegisterDatabaseService(this IServiceCollection services, IConfiguration configuration)
         {
-
-
             //Add SQL Server support
             var migrationAssembly = typeof(DataContext).GetTypeInfo().Assembly.GetName().Name;
+
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 configuration.GetConnectionString("DataConnection"),
                 sql => sql.MigrationsAssembly(migrationAssembly))

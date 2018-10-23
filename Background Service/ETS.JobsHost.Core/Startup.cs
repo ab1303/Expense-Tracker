@@ -1,5 +1,4 @@
-﻿using Angular_ASPNETCore_Jobs.Controllers;
-using ETS.Azure;
+﻿using ETS.Azure;
 using ETS.DataCore;
 using ETS.Jobs.ServiceCore;
 using ETS.JobsHost.Core;
@@ -31,7 +30,6 @@ namespace ETS.JobsHost
 
             // Regiser Internal Services
             services.AddScoped<ITransactionMapping, TransactionMapping>();
-
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

@@ -9,11 +9,17 @@ namespace ETS.DataCore
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<DataContext>
     {
+        
         public IHttpContextAccessor HttpContextAccessor { get; }
 
         public DesignTimeDbContextFactory(IHttpContextAccessor httpContextAccessor)
         {
             HttpContextAccessor = httpContextAccessor;
+        }
+
+        public DesignTimeDbContextFactory()
+        {
+            HttpContextAccessor = null;
         }
 
         public DataContext CreateDbContext(string[] args)
