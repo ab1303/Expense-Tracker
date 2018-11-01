@@ -16,6 +16,7 @@ import { PaySlipService } from './pay-slip/pay-slip.service';
 @NgModule({
   imports: [
     CommonModule,
+    NgxDatatableModule,
     SharedModule.forRoot(), RouterModule.forChild(INCOME_ROUTES)
   ],
   declarations: [IncomeComponent, PaySlipComponent, AddPaySlipComponent],

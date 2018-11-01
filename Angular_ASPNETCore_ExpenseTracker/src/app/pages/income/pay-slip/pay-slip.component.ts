@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Page } from '../../../shared/model/paging/page';
+import { IPaySlip } from './pay-slip.model';
+import { PaySlipService } from './pay-slip.service';
 
 @Component({
   selector: 'app-pay-slip',
@@ -7,12 +10,32 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./pay-slip.component.scss']
 })
 export class PaySlipComponent implements OnInit {
-  form: FormGroup;
-  constructor() { }
+
+  // Salary Slips
+	rows = [];
+	page = new Page();
+  paySlips: IPaySlip[] = [];
+  
+  constructor(private paySlipService:PaySlipService) { 
+    this.page.pageNumber = 0;
+		this.page.size = 20;
+  }
 
   ngOnInit() {
-    this.form = new FormGroup({
-		});
+    this.setPage({ offset: 0 });
   }
+
+
+	/**
+  * Populate the table with new data based on the page number
+  * @param page The page to select
+  */
+ setPage(pageInfo) {
+  this.page.pageNumber = pageInfo.offset;
+  this.paySlipService.getPaySlips(this.page).subscribe(pagedData => {
+    this.page.totalElements = pagedData.page.totalElements;
+    this.rows = pagedData.paySlips;
+  });
+}
 
 }

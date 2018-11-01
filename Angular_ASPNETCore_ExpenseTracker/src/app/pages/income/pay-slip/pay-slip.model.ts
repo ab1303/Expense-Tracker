@@ -1,4 +1,5 @@
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
+import { Page } from "../../../shared/model/paging/page";
 
 export interface IPaySlip {
     id: Number;
@@ -13,4 +14,5 @@ export interface IPaySlip {
 
 export interface PaySlipApiResponse extends BaseApiResponse {
   paySlips: IPaySlip[];
+  page: Page,
 }

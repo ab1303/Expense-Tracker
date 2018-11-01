@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { PaySlipApiResponse, IPaySlip } from "./pay-slip.model";
@@ -9,6 +9,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
 import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
+import { Page } from "../../../shared/model/paging/page";
 
 
 const API_URL = `${API_BASE_ADDRESS}/PaySlip`;
@@ -16,11 +17,20 @@ const API_URL = `${API_BASE_ADDRESS}/PaySlip`;
 export class PaySlipService {
   constructor(private http: HttpClient) { }
 
-  getExpenseCategories(): Observable<PaySlipApiResponse> {
+  getPaySlips(page: Page): Observable<PaySlipApiResponse> {
+
+    let parameters = new HttpParams({
+      fromObject : {
+        'PageIndex' : `${page.pageNumber}`,
+        'PageSize' : `${page.size}`
+      },
+    });
+
     return this.http
-      .get(API_URL)
+      .get(API_URL, {
+        params: parameters,
+      })
       .map((response: Response) => {
-        // let response = res.json();
         return response;
       })
       .catch(this.handleError);
