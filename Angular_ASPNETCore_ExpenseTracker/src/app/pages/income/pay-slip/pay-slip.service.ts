@@ -27,9 +27,7 @@ export class PaySlipService {
   }
 
 
-  addPaySlip(payslip: IPaySlip): Observable<GenericBaseApiResponse<number>> {
-
-    const { frequency, periodStart, periodEnd, totalEarnings, netPay, superAnnuation } = payslip;
+  addPaySlip(frequency: Number, periodStart: Date, periodEnd: Date, totalEarnings: Number, netPay: Number, superAnnuation: Number): Observable<GenericBaseApiResponse<number>> {
 
     return this.http
       .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {

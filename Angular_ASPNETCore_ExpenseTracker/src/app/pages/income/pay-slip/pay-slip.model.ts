@@ -1,7 +1,7 @@
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
 export interface IPaySlip {
-    id: number;
+    id: Number;
     frequency: Number;
     periodStart: Date,
     periodEnd: Date,

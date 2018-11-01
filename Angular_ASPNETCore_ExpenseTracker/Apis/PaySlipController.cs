@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Angular_ASPNETCore_ExpenseTracker.Apis
 {
     [Produces("application/json")]
-    [Route("api/ExpenseCategory")]
+    [Route("api/PaySlip")]
     public class PaySlipController : Controller
     {
         private readonly IPaySlipService _paySlipService;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router  } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs/operators';
 
 import { IPaySlip } from '../pay-slip/pay-slip.model';
@@ -16,6 +16,7 @@ export class AddPaySlipComponent implements OnInit {
   addPaySlipForm: FormGroup;
   addPaySlipModel: IPaySlip;
 
+  errorMessage: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -70,13 +71,13 @@ export class AddPaySlipComponent implements OnInit {
 
   save() {
     if (this.addPaySlipForm.dirty && this.addPaySlipForm.valid) {
-      let paySlip = Object.assign({}, this.addPaySlipModel, this.addPaySlipForm.value);
+      let paySlip: IPaySlip = Object.assign({}, this.addPaySlipModel, this.addPaySlipForm.value);
 
-      this.paySlipService.addPaySlip(p)
-      .subscribe(
+      this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay,paySlip.superAnnuation)
+        .subscribe(
           () => this.onSaveComplete(),
           (error: any) => this.errorMessage = <any>error
-      );
+        );
     }
   }
 
@@ -84,6 +85,6 @@ export class AddPaySlipComponent implements OnInit {
     // Reset the form to clear the flags
     this.addPaySlipForm.reset();
     this.router.navigate(['/products']);
-}
+  }
 
 }
