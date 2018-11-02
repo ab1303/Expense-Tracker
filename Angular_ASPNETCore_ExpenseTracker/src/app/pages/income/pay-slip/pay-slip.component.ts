@@ -7,11 +7,11 @@ import { IPaySlip } from '../pay-slips/pay-slip.model';
 import { PaySlipService } from '../pay-slips/pay-slip.service';
 
 @Component({
-  selector: 'app-add-pay-slip',
-  templateUrl: './add-pay-slip.component.html',
-  styleUrls: ['./add-pay-slip.component.scss']
+  selector: 'app-pay-slip',
+  templateUrl: './pay-slip.component.html',
+  styleUrls: ['./pay-slip.component.scss']
 })
-export class AddPaySlipComponent implements OnInit {
+export class PaySlipComponent implements OnInit {
 
   paySlipForm: FormGroup;
   addPaySlipModel: IPaySlip;

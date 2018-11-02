@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthGuard } from "../../security/auth.guard";
 
 import { PaySlipsComponent } from "./pay-slips/pay-slips.component";
-import { AddPaySlipComponent } from "./add-pay-slip/add-pay-slip.component";
+import { PaySlipComponent } from "./pay-slip/pay-slip.component";
 
 export const INCOME_ROUTES = [
   {
@@ -12,6 +12,6 @@ export const INCOME_ROUTES = [
   },
   {
     path: "payslips/add",
-    component: AddPaySlipComponent
+    component: PaySlipComponent
   },
 ];
