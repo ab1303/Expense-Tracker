@@ -5,11 +5,11 @@ import { IPaySlip } from './pay-slip.model';
 import { PaySlipService } from './pay-slip.service';
 
 @Component({
-  selector: 'app-pay-slip',
-  templateUrl: './pay-slip.component.html',
-  styleUrls: ['./pay-slip.component.scss']
+  selector: 'app-pay-slips',
+  templateUrl: './pay-slips.component.html',
+  styleUrls: ['./pay-slips.component.scss']
 })
-export class PaySlipComponent implements OnInit {
+export class PaySlipsComponent implements OnInit {
 
   // Salary Slips
   page = new Page();

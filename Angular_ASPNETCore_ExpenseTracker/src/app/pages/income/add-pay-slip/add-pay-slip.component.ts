@@ -3,8 +3,8 @@ import { FormGroup, FormControl, AbstractControl, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'rxjs/operators';
 
-import { IPaySlip } from '../pay-slip/pay-slip.model';
-import { PaySlipService } from '../pay-slip/pay-slip.service';
+import { IPaySlip } from '../pay-slips/pay-slip.model';
+import { PaySlipService } from '../pay-slips/pay-slip.service';
 
 @Component({
   selector: 'app-add-pay-slip',
@@ -13,7 +13,7 @@ import { PaySlipService } from '../pay-slip/pay-slip.service';
 })
 export class AddPaySlipComponent implements OnInit {
 
-  addPaySlipForm: FormGroup;
+  paySlipForm: FormGroup;
   addPaySlipModel: IPaySlip;
 
   errorMessage: any;
@@ -23,7 +23,7 @@ export class AddPaySlipComponent implements OnInit {
     private paySlipService: PaySlipService) { }
 
   ngOnInit() {
-    this.addPaySlipForm = new FormGroup({
+    this.paySlipForm = new FormGroup({
       frequency: new FormControl('', Validators.required),
       periodStart: new FormControl('', Validators.required),
       periodEnd: new FormControl('', Validators.required),
@@ -35,9 +35,9 @@ export class AddPaySlipComponent implements OnInit {
       superAnnuationPct: new FormControl({ value: '', disabled: true, }),
     });
 
-    const netPayObs = this.addPaySlipForm.get('netPay').valueChanges;
-    const totalEarningsObs = this.addPaySlipForm.get('totalEarnings').valueChanges;
-    const superAnnuationObs = this.addPaySlipForm.get('superAnnuation').valueChanges;
+    const netPayObs = this.paySlipForm.get('netPay').valueChanges;
+    const totalEarningsObs = this.paySlipForm.get('totalEarnings').valueChanges;
+    const superAnnuationObs = this.paySlipForm.get('superAnnuation').valueChanges;
 
 
     totalEarningsObs.pipe(merge(netPayObs)).subscribe(() => this.calculateTaxPct());
@@ -46,32 +46,32 @@ export class AddPaySlipComponent implements OnInit {
   }
 
   calculateTaxPct() {
-    const netPay: any = this.addPaySlipForm.get('netPay').value;
-    const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
+    const netPay: any = this.paySlipForm.get('netPay').value;
+    const totalEarnings: any = this.paySlipForm.get('totalEarnings').value;
 
     if (netPay && totalEarnings) {
       const tax = totalEarnings - netPay;
       const taxPct = (tax / totalEarnings);
 
-      this.addPaySlipForm.get('tax').setValue(tax);
-      this.addPaySlipForm.get('taxPct').setValue(taxPct);
+      this.paySlipForm.get('tax').setValue(tax);
+      this.paySlipForm.get('taxPct').setValue(taxPct);
     }
   }
 
   calculateSuperPct() {
-    const totalEarnings: any = this.addPaySlipForm.get('totalEarnings').value;
-    const superAnnuation: any = this.addPaySlipForm.get('superAnnuation').value;
+    const totalEarnings: any = this.paySlipForm.get('totalEarnings').value;
+    const superAnnuation: any = this.paySlipForm.get('superAnnuation').value;
 
     if (superAnnuation && totalEarnings) {
       const superPct = (superAnnuation / totalEarnings);
-      this.addPaySlipForm.get('superAnnuationPct').setValue(superPct);
+      this.paySlipForm.get('superAnnuationPct').setValue(superPct);
     }
 
   }
 
   save() {
-    if (this.addPaySlipForm.dirty && this.addPaySlipForm.valid) {
-      let paySlip: IPaySlip = Object.assign({}, this.addPaySlipModel, this.addPaySlipForm.value);
+    if (this.paySlipForm.dirty && this.paySlipForm.valid) {
+      let paySlip: IPaySlip = (<any>Object).assign({}, this.addPaySlipModel, this.paySlipForm.value);
 
       this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay,paySlip.superAnnuation)
         .subscribe(
@@ -83,8 +83,8 @@ export class AddPaySlipComponent implements OnInit {
 
   onSaveComplete(): void {
     // Reset the form to clear the flags
-    this.addPaySlipForm.reset();
-    this.router.navigate(['/products']);
+    this.paySlipForm.reset();
+    this.router.navigate(['/income/payslips']);
   }
 
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaySlipComponent } from './pay-slip.component';
+import { PaySlipsComponent } from './pay-slips.component';
 
 describe('PaySlipComponent', () => {
-  let component: PaySlipComponent;
-  let fixture: ComponentFixture<PaySlipComponent>;
+  let component: PaySlipsComponent;
+  let fixture: ComponentFixture<PaySlipsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PaySlipComponent ]
+      declarations: [ PaySlipsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaySlipComponent);
+    fixture = TestBed.createComponent(PaySlipsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

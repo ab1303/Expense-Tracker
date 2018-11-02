@@ -21,7 +21,7 @@
                     novalidate
                     autocomplete="off"
                     (ngSubmit)="save()"
-                    [formGroup]="addPaySlipForm">
+                    [formGroup]="paySlipForm">
                 <div class="form-group row">
                   <div class="col-6">
                     <mat-radio-group formControlName="frequency">
@@ -141,7 +141,7 @@
                       <div class="col-8">
                         <mat-form-field>
                           <input matInput
-                                 [value]="addPaySlipForm.get('taxPct').value | percent: '1.2-2'"
+                                 [value]="paySlipForm.get('taxPct').value | percent: '1.2-2'"
                                  class="form-control"
                                  type="text"
                                  formControlName="taxPct" />
@@ -177,7 +177,7 @@
                       <div class="col-8">
                         <mat-form-field>
                           <input matInput
-                                 [value]="addPaySlipForm.get('superAnnuationPct').value | percent: '1.2-2'"
+                                 [value]="paySlipForm.get('superAnnuationPct').value | percent: '1.2-2'"
                                  class="form-control"
                                  type="text"
                                  formControlName="superAnnuationPct" />
@@ -193,7 +193,7 @@
                 <div class="col text-right">
                   <button type="submit"
                           class="btn btn-accent"
-                          [disabled]="!addPaySlipForm.valid"
+                          [disabled]="!paySlipForm.valid"
                           mat-ripple>Submit</button>
                 </div>
               </form>
@@ -207,8 +207,8 @@
   <footer id="footer_wrapper"
           class="footer_wrapper"></footer>
 </div>
-
-<br>Dirty: {{ addPaySlipForm.dirty }}
-<br>Touched: {{ addPaySlipForm.touched }}
-<br>Valid: {{ addPaySlipForm.valid }}
-<br>Value: {{ addPaySlipForm.value | json }}
+<!-- 
+<br>Dirty: {{ paySlipForm.dirty }}
+<br>Touched: {{ paySlipForm.touched }}
+<br>Valid: {{ paySlipForm.valid }}
+<br>Value: {{ paySlipForm.value | json }} -->

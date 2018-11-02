@@ -8,9 +8,9 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { INCOME_ROUTES } from './income.routes';
 import { IncomeComponent } from './income.component';
-import { PaySlipComponent } from './pay-slip/pay-slip.component';
+import { PaySlipsComponent } from './pay-slips/pay-slips.component';
 import { AddPaySlipComponent } from './add-pay-slip/add-pay-slip.component';
-import { PaySlipService } from './pay-slip/pay-slip.service';
+import { PaySlipService } from './pay-slips/pay-slip.service';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { PaySlipService } from './pay-slip/pay-slip.service';
     NgxDatatableModule,
     SharedModule.forRoot(), RouterModule.forChild(INCOME_ROUTES)
   ],
-  declarations: [IncomeComponent, PaySlipComponent, AddPaySlipComponent],
+  declarations: [IncomeComponent, PaySlipsComponent, AddPaySlipComponent],
   providers: [PaySlipService]
 })
 export class IncomeModule { }
