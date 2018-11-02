@@ -10,6 +10,7 @@ import "rxjs/add/operator/catch";
 
 import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
 import { Page } from "../../../shared/model/paging/page";
+import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
 
 const API_URL = `${API_BASE_ADDRESS}/PaySlip`;
@@ -51,6 +52,16 @@ export class PaySlipService {
       .catch(this.handleError);
 
   }
+
+  
+  deletePaySlip(paySlipId: Number): Observable<BaseApiResponse> {
+    // let headers = new Headers({ 'Content-Type': 'application/json' });
+    // let options = new RequestOptions({ headers: headers });
+    // return this.http.delete(url,options)
+     return this.http
+      .delete<BaseApiResponse>(`${API_URL}/Delete/${paySlipId}`).catch(this.handleError);
+  }
+
 
   private handleError(error: any) {
     console.error("server error:", error);

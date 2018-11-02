@@ -43,7 +43,7 @@
               <ngx-datatable #table
                              style="width: 100%"
                              class="material"
-                             [rows]="rows"
+                             [rows]="paySlips"
                              [columnMode]="'force'"
                              [headerHeight]="50"
                              [footerHeight]="50"
@@ -87,13 +87,18 @@
                     {{value | date: 'dd-MMM-yyyy'}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Edit">
+                <ngx-datatable-column>
                   <ng-template let-row="row"
                                ngx-datatable-cell-template>
                     <a href="javascript:void(0)"
                        attr.data-paySlipId="{{row.id}}"
                        class="icon edit-paySlip">
                       <i class="zmdi zmdi-edit"></i>
+                    </a>
+                    <a href="javascript:void(0)"
+                       (click)="deletePaySlip(row.id)"
+                       class="icon delete-paySlip">
+                      <i class="zmdi zmdi-delete"></i>
                     </a>
                   </ng-template>
                 </ngx-datatable-column>

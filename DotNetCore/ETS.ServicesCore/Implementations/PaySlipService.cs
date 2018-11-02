@@ -74,5 +74,37 @@ namespace ETS.Services.Implementations
             }
 
         }
+
+
+        public ServiceResult DeletePaySlip(long paySlipId)
+        {
+            try
+            {
+                var paySlip = _repositories.PaySlip.FindById(paySlipId);
+
+                if (paySlip == null)
+                    return new ServiceResult
+                    {
+                        Exception = new ArgumentException($"Invalid Argument {nameof(paySlipId)}"),
+                    };
+
+                _repositories.PaySlip.Delete(paySlip);
+                _dataContext.SaveChanges();
+
+                return new ServiceResult
+                {
+                    Status = ServiceStatus.Success,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Exception = ex
+                };
+            }
+
+        }
     }
 }
