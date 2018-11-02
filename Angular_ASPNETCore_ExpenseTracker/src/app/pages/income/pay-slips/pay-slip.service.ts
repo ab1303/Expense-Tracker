@@ -8,6 +8,8 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
+import { tap } from "rxjs/operators";
+
 import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
 import { Page } from "../../../shared/model/paging/page";
 import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
@@ -16,6 +18,7 @@ import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-re
 const API_URL = `${API_BASE_ADDRESS}/PaySlip`;
 @Injectable()
 export class PaySlipService {
+  paySlips: IPaySlip[];
   constructor(private http: HttpClient) { }
 
   getPaySlips(page: Page): Observable<PaySlipApiResponse> {
@@ -31,9 +34,9 @@ export class PaySlipService {
       .get(API_URL, {
         params: parameters,
       })
-      .map((response: Response) => {
-        return response;
-      })
+      .pipe( 
+        tap(response => this.paySlips = (response as PaySlipApiResponse).paySlips)
+      )
       .catch(this.handleError);
   }
 

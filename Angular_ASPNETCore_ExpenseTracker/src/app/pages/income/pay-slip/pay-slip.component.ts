@@ -6,6 +6,9 @@ import { merge } from 'rxjs/operators';
 import { IPaySlip } from '../pay-slips/pay-slip.model';
 import { PaySlipService } from '../pay-slips/pay-slip.service';
 
+const ADD_MODE = 'add';
+const EDIT_MODE = 'edit';
+
 @Component({
   selector: 'app-pay-slip',
   templateUrl: './pay-slip.component.html',
@@ -14,24 +17,48 @@ import { PaySlipService } from '../pay-slips/pay-slip.service';
 export class PaySlipComponent implements OnInit {
 
   paySlipForm: FormGroup;
-  addPaySlipModel: IPaySlip;
+  paySlipModel: IPaySlip;
 
+  mode: string;
   errorMessage: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private paySlipService: PaySlipService) { }
+    private paySlipService: PaySlipService) { 
+      this.route.paramMap.subscribe(params => {
+        this.mode = params.get('mode')
+        if(this.mode === EDIT_MODE)
+        {
+          const paySlipId = +params.get('id') ;
+          this.paySlipModel = paySlipService.paySlips.find(ps => ps.id === paySlipId);
+          console.log(this.paySlipModel);
+        }
+      })
+    }
 
   ngOnInit() {
+
+    // this.paySlipForm = new FormGroup({
+    //   frequency: new FormControl('', Validators.required),
+    //   periodStart: new FormControl('', Validators.required),
+    //   periodEnd: new FormControl('', Validators.required),
+    //   totalEarnings: new FormControl('', Validators.required),
+    //   netPay: new FormControl('', Validators.required),
+    //   tax: new FormControl({ value: '', disabled: true, }),
+    //   taxPct: new FormControl({ value: '', disabled: true, }),
+    //   superAnnuation: new FormControl('', Validators.required),
+    //   superAnnuationPct: new FormControl({ value: '', disabled: true, }),
+    // });
+
     this.paySlipForm = new FormGroup({
-      frequency: new FormControl('', Validators.required),
-      periodStart: new FormControl('', Validators.required),
-      periodEnd: new FormControl('', Validators.required),
-      totalEarnings: new FormControl('', Validators.required),
-      netPay: new FormControl('', Validators.required),
+      frequency: new FormControl(this.paySlipModel.frequency, Validators.required),
+      periodStart: new FormControl(this.paySlipModel.periodStart, Validators.required),
+      periodEnd: new FormControl(this.paySlipModel.periodEnd, Validators.required),
+      totalEarnings: new FormControl(this.paySlipModel.totalEarnings, Validators.required),
+      netPay: new FormControl(this.paySlipModel.netPay, Validators.required),
       tax: new FormControl({ value: '', disabled: true, }),
       taxPct: new FormControl({ value: '', disabled: true, }),
-      superAnnuation: new FormControl('', Validators.required),
+      superAnnuation: new FormControl(this.paySlipModel.superAnnuation, Validators.required),
       superAnnuationPct: new FormControl({ value: '', disabled: true, }),
     });
 
@@ -71,7 +98,7 @@ export class PaySlipComponent implements OnInit {
 
   save() {
     if (this.paySlipForm.dirty && this.paySlipForm.valid) {
-      let paySlip: IPaySlip = (<any>Object).assign({}, this.addPaySlipModel, this.paySlipForm.value);
+      let paySlip: IPaySlip = (<any>Object).assign({}, this.paySlipModel, this.paySlipForm.value);
 
       this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay,paySlip.superAnnuation)
         .subscribe(

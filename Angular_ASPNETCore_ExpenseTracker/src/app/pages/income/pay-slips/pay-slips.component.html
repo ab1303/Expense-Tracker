@@ -20,7 +20,7 @@
         <div class="content-body">
           <div class="card card-datatable">
             <header class="card-header p-30">
-                <h2 class="card-title">Pay Slips</h2>
+              <h2 class="card-title">Pay Slips</h2>
               <ul class="actions icons top-right">
                 <li class="dropdown"
                     dropdown>
@@ -30,10 +30,8 @@
                   </a>
                   <ul class="dropdown-menu btn-primary dropdown-menu-right">
                     <li>
-                      <!-- <button class="btn btn-info btn-block"
-                                (click)="updateTransactionModal.show()">Edit Category</button> -->
                       <button class="btn btn-info btn-block"
-                              [routerLink]="['/income/payslips/add']">Add Salary Slip</button>
+                              [routerLink]="['/income/payslips/add', {mode:'add'}]">Add Salary Slip</button>
                     </li>
                   </ul>
                 </li>
@@ -75,13 +73,15 @@
                     {{value | currency:'USD':'symbol':'1.2-4'}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="Start Date" prop="periodStart">
+                <ngx-datatable-column name="Start Date"
+                                      prop="periodStart">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
                     {{value | date: 'dd-MMM-yyyy'}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="End Date" prop="periodEnd">
+                <ngx-datatable-column name="End Date"
+                                      prop="periodEnd">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
                     {{value | date: 'dd-MMM-yyyy'}}
@@ -92,6 +92,7 @@
                                ngx-datatable-cell-template>
                     <a href="javascript:void(0)"
                        attr.data-paySlipId="{{row.id}}"
+                       [routerLink]="['/income/payslips/edit', {mode:'edit', id: row.id }]"
                        class="icon edit-paySlip">
                       <i class="zmdi zmdi-edit"></i>
                     </a>

@@ -14,4 +14,8 @@ export const INCOME_ROUTES = [
     path: "payslips/add",
     component: PaySlipComponent
   },
+  {
+    path: "payslips/edit",
+    component: PaySlipComponent
+  },
 ];
