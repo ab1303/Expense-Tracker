@@ -44,7 +44,7 @@
                              [rows]="paySlips"
                              [columnMode]="'force'"
                              [headerHeight]="50"
-                             [footerHeight]="50"
+                             [footerHeight]="100"
                              [rowHeight]="'auto'"
                              [limit]="page.size"
                              [selectionType]="'checkbox'"
@@ -55,19 +55,19 @@
                              (page)='setPage($event)'
                              (select)='onSelect($event)'>
 
-                <ngx-datatable-column name="TotalEarnings">
+                <ngx-datatable-column name="Total Earnings">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
                     {{value | currency:'USD':'symbol':'1.2-4'}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="SuperAnnuation">
+                <ngx-datatable-column name="Net Pay">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
                     {{value | currency:'USD':'symbol':'1.2-4'}}
                   </ng-template>
                 </ngx-datatable-column>
-                <ngx-datatable-column name="NetPay">
+                <ngx-datatable-column name="Super Annuation">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
                     {{value | currency:'USD':'symbol':'1.2-4'}}
@@ -104,7 +104,59 @@
                     </a>
                   </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-footer>
+                  <ng-template ngx-datatable-footer-template
+                               let-rowCount="rowCount"
+                               let-pageSize="pageSize"
+                               let-selectedCount="selectedCount"
+                               let-curPage="curPage"
+                               let-offset="offset">
+                    <div style="padding: 5px 10px">
+                      <div>
+                        <strong>Total</strong>:
+                      </div>
+                      <hr style="width:100%" />
+                      <div>
+                        Earnings:
+                        <strong>
+                          {{summaryTotal('totalEarnings') | currency:'USD':'symbol':'1.2-4' }}
+                        </strong> |
+                        Net Pay:
+                        <strong>
+                          {{summaryTotal('netPay') | currency:'USD':'symbol':'1.2-4' }}
+                        </strong> |
+                        Super Annuation :
+                        <strong>
+                          {{summaryTotal('superAnnuation') |
+                          currency:'USD':'symbol':'1.2-4' }}
+                        </strong> |
+                        Tax :
+                        <strong>
+                          {{summaryTotal('totalEarnings') - summaryTotal('netPay') |
+                          currency:'USD':'symbol':'1.2-4' }}
+                        </strong>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-footer>
               </ngx-datatable>
+
+              <ng-template #amountTpl
+                           let-column="column"
+                           let-row="row"
+                           let-value="value">
+                {{value | currency:'USD':'symbol':'1.2-4'}}
+              </ng-template>
+              <ng-template #dateTpl
+                           let-column="column">
+                {{value | date: 'dd-MMM-yyyy'}}
+              </ng-template>
+              <ng-template #summaryTpl
+                           let-column="column"
+                           let-row="row"
+                           let-value="value">
+                <strong>{{summaryTotal(column.prop) | currency:'USD':'symbol':'1.2-4'}}</strong>
+              </ng-template>
             </div>
           </div>
         </div>
