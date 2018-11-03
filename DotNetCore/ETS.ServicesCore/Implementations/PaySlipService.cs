@@ -75,6 +75,43 @@ namespace ETS.Services.Implementations
 
         }
 
+        public ServiceResult UpdatePaySlip(long paySlipId, DateTime startDate, DateTime endDate, PaySlipFrequency frequency,
+            decimal totalEarnings, decimal netEarnings, decimal superAnnuation)
+        {
+            try
+            {
+                var paySlip = _repositories.PaySlip.FindById(paySlipId);
+
+                if (paySlip == null)
+                    return new ServiceResult
+                    {
+                        Exception = new ArgumentException($"Invalid Argument {nameof(paySlipId)}"),
+                    };
+
+                paySlip.StartDate= startDate;
+                paySlip.EndDate = endDate;
+                paySlip.Frequency = frequency;
+                paySlip.TotalEarnings = totalEarnings;
+                paySlip.NetEarnings = netEarnings;
+                paySlip.SuperAnnuation = superAnnuation;
+
+                _dataContext.SaveChanges();
+
+                return new ServiceResult
+                {
+                    Status = ServiceStatus.Success,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Exception = ex
+                };
+            }
+
+        }
 
         public ServiceResult DeletePaySlip(long paySlipId)
         {

@@ -24,17 +24,15 @@ export class PaySlipComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private paySlipService: PaySlipService) { 
-      this.route.paramMap.subscribe(params => {
-        this.mode = params.get('mode')
-        if(this.mode === EDIT_MODE)
-        {
-          const paySlipId = +params.get('id') ;
-          this.paySlipModel = paySlipService.paySlips.find(ps => ps.id === paySlipId);
-          console.log(this.paySlipModel);
-        }
-      })
-    }
+    private paySlipService: PaySlipService) {
+    this.route.paramMap.subscribe(params => {
+      this.mode = params.get('mode')
+      if (this.mode === EDIT_MODE) {
+        const paySlipId = +params.get('id');
+        this.paySlipModel = paySlipService.paySlips.find(ps => ps.id === paySlipId);
+      }
+    })
+  }
 
   ngOnInit() {
 
@@ -51,7 +49,7 @@ export class PaySlipComponent implements OnInit {
     // });
 
     this.paySlipForm = new FormGroup({
-      frequency: new FormControl(this.paySlipModel.frequency, Validators.required),
+      frequency: new FormControl(`${this.paySlipModel.frequency}`, Validators.required),
       periodStart: new FormControl(this.paySlipModel.periodStart, Validators.required),
       periodEnd: new FormControl(this.paySlipModel.periodEnd, Validators.required),
       totalEarnings: new FormControl(this.paySlipModel.totalEarnings, Validators.required),
@@ -62,13 +60,18 @@ export class PaySlipComponent implements OnInit {
       superAnnuationPct: new FormControl({ value: '', disabled: true, }),
     });
 
-    const netPayObs = this.paySlipForm.get('netPay').valueChanges;
-    const totalEarningsObs = this.paySlipForm.get('totalEarnings').valueChanges;
-    const superAnnuationObs = this.paySlipForm.get('superAnnuation').valueChanges;
 
+    if (this.mode === EDIT_MODE) {
+      this.calculateTaxPct();
+      this.calculateSuperPct();
+    }
 
-    totalEarningsObs.pipe(merge(netPayObs)).subscribe(() => this.calculateTaxPct());
-    totalEarningsObs.pipe(merge(superAnnuationObs)).subscribe(() => this.calculateSuperPct());
+    const netPay$ = this.paySlipForm.get('netPay').valueChanges;
+    const totalEarnings$ = this.paySlipForm.get('totalEarnings').valueChanges;
+    const superAnnuation$ = this.paySlipForm.get('superAnnuation').valueChanges;
+
+    totalEarnings$.pipe(merge(netPay$)).subscribe(() => this.calculateTaxPct());
+    totalEarnings$.pipe(merge(superAnnuation$)).subscribe(() => this.calculateSuperPct());
 
   }
 
@@ -98,14 +101,26 @@ export class PaySlipComponent implements OnInit {
 
   save() {
     if (this.paySlipForm.dirty && this.paySlipForm.valid) {
-      let paySlip: IPaySlip = (<any>Object).assign({}, this.paySlipModel, this.paySlipForm.value);
+      let paySlip: IPaySlip = (<any>Object).assign({}, this.paySlipModel, this.paySlipForm.value) as IPaySlip;
 
-      this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay,paySlip.superAnnuation)
-        .subscribe(
-          () => this.onSaveComplete(),
-          (error: any) => this.errorMessage = <any>error
-        );
+      if (this.mode === ADD_MODE) {
+        this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay, paySlip.superAnnuation)
+          .subscribe(
+            () => this.onSaveComplete(),
+            (error: any) => this.errorMessage = <any>error
+          );
+      } else {
+        this.paySlipService.updatePaySlip(paySlip)
+          .subscribe(
+            () => this.onSaveComplete(),
+            (error: any) => this.errorMessage = <any>error
+          );
+      }
     }
+  }
+
+  getSubmitLabelText(): string {
+    return (this.mode === ADD_MODE) ? 'Submit' : 'Update'
   }
 
   onSaveComplete(): void {

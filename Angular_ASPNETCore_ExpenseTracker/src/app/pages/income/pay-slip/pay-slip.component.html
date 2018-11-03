@@ -194,7 +194,7 @@
                   <button type="submit"
                           class="btn btn-accent"
                           [disabled]="!paySlipForm.valid"
-                          mat-ripple>Submit</button>
+                          mat-ripple>{{this.getSubmitLabelText()}}</button>
                 </div>
               </form>
             </div>

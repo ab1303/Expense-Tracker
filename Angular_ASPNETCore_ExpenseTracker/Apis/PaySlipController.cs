@@ -77,12 +77,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         [HttpPost]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         [ProducesResponseType(typeof(BaseApiResponse<long>), 200)]
-        public ActionResult AddPaySlip([FromBody]PaySlipInput paySlip)
+        public ActionResult AddPaySlip([FromBody]PaySlipUpdateInput paySlipUpdate)
         {
             try
             {
-                var result = _paySlipService.AddPaySlip(paySlip.PeriodStart, paySlip.PeriodEnd, paySlip.Frequency,
-                    paySlip.TotalEarnings, paySlip.NetPay, paySlip.SuperAnnuation);
+                var result = _paySlipService.AddPaySlip(paySlipUpdate.PeriodStart, paySlipUpdate.PeriodEnd, paySlipUpdate.Frequency,
+                    paySlipUpdate.TotalEarnings, paySlipUpdate.NetPay, paySlipUpdate.SuperAnnuation);
 
                 if (!result.IsSuccess)
                     return BadRequest(new BaseApiResponse
@@ -96,6 +96,43 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                     Message = result.Message,
                     Code = InternalApiStatusCode.Success,
                     Model = result.Model
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse
+                {
+                    Message = ex.Message,
+                    Code = InternalApiStatusCode.Error
+                });
+            }
+        }
+
+
+        [Route("Update")]
+        [HttpPut]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        [ProducesResponseType(typeof(BaseApiResponse), 200)]
+        public ActionResult UpdatePaySlip([FromBody]PaySlipUpdateInput paySlipUpdate)
+        {
+            try
+            {
+                var result = _paySlipService.UpdatePaySlip(paySlipUpdate.Id, paySlipUpdate.PeriodStart, paySlipUpdate.PeriodEnd,
+                    paySlipUpdate.Frequency, paySlipUpdate.TotalEarnings, paySlipUpdate.NetPay, paySlipUpdate.SuperAnnuation);
+
+                if (!result.IsSuccess)
+                    return BadRequest(new BaseApiResponse
+                    {
+                        Message = result.Message,
+                        Code = InternalApiStatusCode.Error
+                    });
+
+                return Ok(new BaseApiResponse
+                {
+                    Message = result.Message,
+                    Code = InternalApiStatusCode.Success,
                 });
 
             }
