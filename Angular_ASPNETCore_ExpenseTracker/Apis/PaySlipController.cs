@@ -77,12 +77,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         [HttpPost]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         [ProducesResponseType(typeof(BaseApiResponse<long>), 200)]
-        public ActionResult AddPaySlip([FromBody]PaySlipUpdateInput paySlipUpdate)
+        public ActionResult AddPaySlip([FromBody]PaySlipInput paySlip)
         {
             try
             {
-                var result = _paySlipService.AddPaySlip(paySlipUpdate.PeriodStart, paySlipUpdate.PeriodEnd, paySlipUpdate.Frequency,
-                    paySlipUpdate.TotalEarnings, paySlipUpdate.NetPay, paySlipUpdate.SuperAnnuation);
+                var result = _paySlipService.AddPaySlip(paySlip.PeriodStart, paySlip.PeriodEnd, paySlip.Frequency,
+                    paySlip.TotalEarnings, paySlip.NetPay, paySlip.SuperAnnuation);
 
                 if (!result.IsSuccess)
                     return BadRequest(new BaseApiResponse

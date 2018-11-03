@@ -54,7 +54,7 @@
                              [limit]="page.size"
                              (page)='setPage($event)'
                              (select)='onSelect($event)'>
-                <ngx-datatable-column name="Frequency"></ngx-datatable-column>
+
                 <ngx-datatable-column name="TotalEarnings">
                   <ng-template let-value="value"
                                ngx-datatable-cell-template>
@@ -73,6 +73,7 @@
                     {{value | currency:'USD':'symbol':'1.2-4'}}
                   </ng-template>
                 </ngx-datatable-column>
+                <ngx-datatable-column name="Frequency"></ngx-datatable-column>
                 <ngx-datatable-column name="Start Date"
                                       prop="periodStart">
                   <ng-template let-value="value"

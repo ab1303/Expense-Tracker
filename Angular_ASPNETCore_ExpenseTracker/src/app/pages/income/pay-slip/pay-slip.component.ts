@@ -30,6 +30,16 @@ export class PaySlipComponent implements OnInit {
       if (this.mode === EDIT_MODE) {
         const paySlipId = +params.get('id');
         this.paySlipModel = paySlipService.paySlips.find(ps => ps.id === paySlipId);
+      } else {
+        this.paySlipModel  = {
+          id: 0,
+          frequency: null,
+          periodStart: null,
+          periodEnd: null,
+          totalEarnings: null,
+          netPay: null,
+          superAnnuation: null
+        } 
       }
     })
   }
@@ -104,7 +114,7 @@ export class PaySlipComponent implements OnInit {
       let paySlip: IPaySlip = (<any>Object).assign({}, this.paySlipModel, this.paySlipForm.value) as IPaySlip;
 
       if (this.mode === ADD_MODE) {
-        this.paySlipService.addPaySlip(paySlip.frequency, paySlip.periodStart, paySlip.periodEnd, paySlip.totalEarnings, paySlip.netPay, paySlip.superAnnuation)
+        this.paySlipService.addPaySlip(paySlip)
           .subscribe(
             () => this.onSaveComplete(),
             (error: any) => this.errorMessage = <any>error

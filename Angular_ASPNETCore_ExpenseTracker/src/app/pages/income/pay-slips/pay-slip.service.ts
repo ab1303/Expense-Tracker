@@ -42,18 +42,11 @@ export class PaySlipService {
   }
 
 
-  addPaySlip(frequency: Number, periodStart: Date, periodEnd: Date, totalEarnings: Number, netPay: Number, superAnnuation: Number)
+  addPaySlip(paySlip: IPaySlip)
     : Observable<GenericBaseApiResponse<number>> {
 
     return this.http
-      .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {
-        frequency,
-        periodStart,
-        periodEnd,
-        totalEarnings,
-        netPay,
-        superAnnuation,
-      })
+      .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, paySlip)
       .catch(this.handleError);
 
   }
