@@ -13,18 +13,20 @@ import {
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatIconModule,
     MatRadioModule,
     MatRippleModule,
     MatSidenavModule,
-	MatTabsModule,
-	MatAutocompleteModule,
-	MatInputModule,
-	MatToolbarModule,
-	MatSlideToggleModule,
-	MatDialogModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatToolbarModule,
+    MatSlideToggleModule,
+    MatDialogModule,
 } from "@angular/material";
+
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+
 
 import { NguUtilityModule } from 'ngu-utility/ngu-utility.module';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
@@ -60,11 +62,11 @@ export const customCurrencyMaskConfig = {
     suffix: "",
     thousands: ",",
     nullable: true
-  };
+};
 
 @NgModule({
-	imports: [
-		CommonModule,
+    imports: [
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
@@ -72,7 +74,7 @@ export const customCurrencyMaskConfig = {
         MatCardModule,
         MatCheckboxModule,
         MatDatepickerModule,
-        MatNativeDateModule,
+        MatMomentDateModule,
         MatIconModule,
         MatRadioModule,
         MatRippleModule,
@@ -86,23 +88,23 @@ export const customCurrencyMaskConfig = {
         ModalModule.forRoot(),
         PopoverModule.forRoot(),
         NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
-	],
-	declarations: [
-		AppBackdropComponent,
-		FooterComponent,
-		SearchSidebarComponent,
-		SearchCardComponent,
-		AutoNumericDirective,
-	],
-	exports: [
-		CommonModule,
+    ],
+    declarations: [
+        AppBackdropComponent,
+        FooterComponent,
+        SearchSidebarComponent,
+        SearchCardComponent,
+        AutoNumericDirective,
+    ],
+    exports: [
+        CommonModule,
         FormsModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatCardModule,
         MatCheckboxModule,
         MatDatepickerModule,
-        MatNativeDateModule,
+        MatMomentDateModule,
         MatIconModule,
         MatRadioModule,
         MatRippleModule,
@@ -115,22 +117,25 @@ export const customCurrencyMaskConfig = {
         AlertModule,
         MalihuScrollbarModule,
         ModalModule,
-		PopoverModule,
-		MatInputModule,
-		MatAutocompleteModule,  
+        PopoverModule,
+        MatInputModule,
+        MatAutocompleteModule,
         MatToolbarModule,
         MatSlideToggleModule,
         MatDialogModule,
         NgxCurrencyModule,
-		SearchSidebarComponent,
-		SearchCardComponent,
-		AutoNumericDirective,
-	]
+        SearchSidebarComponent,
+        SearchCardComponent,
+        AutoNumericDirective,
+    ],
+    // providers: [
+    //     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
+    // ]
 })
 export class SharedModule {
-	static forRoot(): ModuleWithProviders {
-		return {
-			ngModule: SharedModule
-		};
-	}
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: SharedModule
+        };
+    }
 }

@@ -20,6 +20,9 @@ import { PaySlipService } from './pay-slips/pay-slip.service';
     SharedModule.forRoot(), RouterModule.forChild(INCOME_ROUTES)
   ],
   declarations: [IncomeComponent, PaySlipsComponent, PaySlipComponent],
-  providers: [PaySlipService]
+  providers: [
+    PaySlipService,
+    // { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+  ]
 })
 export class IncomeModule { }
