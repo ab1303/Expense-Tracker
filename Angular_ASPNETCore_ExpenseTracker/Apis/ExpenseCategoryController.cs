@@ -23,7 +23,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         }
 
         [HttpGet]
-        [Authorize]
         [ProducesResponseType(typeof(ExpenseCategoryResponse), 200)]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         public ActionResult Get()
