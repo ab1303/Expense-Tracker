@@ -9,8 +9,8 @@ namespace ETS.DomainCore.Model
         public long Id { get; set; }
         public PaySlipFrequency Frequency { get; set; }
         public string FrequencyString { get { return Frequency.ToString(); } private set { } }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTimeOffset StartDate { get; set; }
+        public DateTimeOffset EndDate { get; set; }
         public decimal TotalEarnings { get; set; }
         public decimal NetEarnings { get; set; }
         public decimal SuperAnnuation { get; set; }

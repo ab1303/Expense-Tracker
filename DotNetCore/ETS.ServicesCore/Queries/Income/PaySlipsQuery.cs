@@ -52,8 +52,8 @@ namespace ETS.Services.Queries.Income
                     Frequency = p.Frequency,
                     SuperAnnuation = p.SuperAnnuation,
                     NetPay = p.NetEarnings,
-                    PeriodEnd = p.EndDate,
-                    PeriodStart = p.StartDate
+                    PeriodEnd = p.EndDate.UtcDateTime,
+                    PeriodStart = p.StartDate.UtcDateTime
                 });
                
             totalFound = query.Count();
