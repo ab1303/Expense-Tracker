@@ -59,7 +59,8 @@ export class PaySlipComponent implements OnInit {
     // });
 
     this.paySlipForm = new FormGroup({
-      frequency: new FormControl(`${this.paySlipModel.frequency}`, Validators.required),
+      // frequency: new FormControl(`${this.paySlipModel.frequency}`, Validators.required),
+      frequency: new FormControl(this.paySlipModel.frequency, Validators.required),
       periodStart: new FormControl(this.paySlipModel.periodStart, Validators.required),
       periodEnd: new FormControl(this.paySlipModel.periodEnd, Validators.required),
       totalEarnings: new FormControl(this.paySlipModel.totalEarnings, Validators.required),

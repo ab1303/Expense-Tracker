@@ -50,6 +50,7 @@ export class PaySlipsComponent implements OnInit {
 
 
   private summaryTotal(columnName: string): number {
+    if(this.paySlips.length === 0) return 0;
     const total = this.paySlips.map(r => r[columnName]).reduce((sum, cell) => sum += !!cell ? cell : 0);
     return total;
   }
