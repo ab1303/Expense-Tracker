@@ -3,8 +3,7 @@ import { BrowserModule, Title } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpModule } from "@angular/http";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { ResponsiveModule } from "ng2-responsive";
 
 
@@ -39,13 +38,13 @@ export interface StoreType {
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ServicesModule,
     ResponsiveModule,
     SharedModule.forRoot(),
     AppRoutingModule,
+    HttpClient,
     HttpClientModule,
     HttpInterceptorModule,
     ExpensesModule,

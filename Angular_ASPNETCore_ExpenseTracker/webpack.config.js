@@ -10,9 +10,11 @@ const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
-const { InsertConcatAssetsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
+
+//const { InsertConcatAssetsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
+const { InsertConcatAssetsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
-const { AotPlugin } = require('@ngtools/webpack');
+const { AotPlugin } = require('webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
@@ -389,7 +391,8 @@ module.exports = {
 				"node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.js"
 			]
 		}),
-		new InsertConcatAssetsWebpackPlugin([
+
+	    new InsertConcatAssetsWebpackPlugin([
 			"scripts"
 		]),
 		new CopyWebpackPlugin([
