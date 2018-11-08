@@ -11,10 +11,13 @@ const cssnano = require('cssnano');
 
 const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
 
-//const { InsertConcatAssetsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
-const { InsertConcatAssetsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('webpack');
+const { ScriptsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
+//const { ScriptsWebpackPlugin, NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('webpack');
 const { CommonsChunkPlugin } = require('webpack').optimize;
-const { AotPlugin } = require('webpack');
+//const { AotPlugin } = require('@ngtools/webpack');
+// import {AngularCompilerPlugin} from '@ngtools/webpack'
+const { AngularCompilerPlugin } = require('@ngtools/webpack');
+
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
@@ -110,7 +113,11 @@ module.exports = {
 				"exclude": [
 					/(\\|\/)node_modules(\\|\/)/
 				]
-			},
+            },
+		    {
+		        test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+		        loader: '@ngtools/webpack'
+		    },
 			{
 				"test": /\.html$/,
 				"loader": "raw-loader"
@@ -390,11 +397,15 @@ module.exports = {
 				"node_modules\\jquery\\dist\\jquery.js",
 				"node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.js"
 			]
-		}),
-
-	    new InsertConcatAssetsWebpackPlugin([
-			"scripts"
-		]),
+        }),
+	    new ScriptsWebpackPlugin({
+	        name: "scripts",
+	        sourceMap: true,
+            scripts: [
+                "node_modules\\jquery\\dist\\jquery.js",
+                "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.js"
+            ]
+	    }),
 		new CopyWebpackPlugin([
 			{
 				"context": "src",
@@ -487,16 +498,21 @@ module.exports = {
 			"async": "common"
 		}),
 		new NamedModulesPlugin({}),
-		new AotPlugin({
-			"mainPath": "main.ts",
-			"replaceExport": false,
-			"hostReplacementPaths": {
-				"environments\\environment.ts": "environments\\environment.ts"
-			},
-			"exclude": [],
-			"tsConfigPath": "src\\tsconfig.app.json",
-			"skipCodeGeneration": true
-		})
+		//new AotPlugin({
+		//	"mainPath": "main.ts",
+		//	"replaceExport": false,
+		//	"hostReplacementPaths": {
+		//		"environments\\environment.ts": "environments\\environment.ts"
+		//	},
+		//	"exclude": [],
+		//	"tsConfigPath": "src\\tsconfig.app.json",
+		//	"skipCodeGeneration": true
+		//})
+	    new AngularCompilerPlugin({
+	        tsConfigPath: 'src\\tsconfig.app.json',
+            entryModule: 'src\\app\\app.module#AppModule',
+	        sourceMap: true
+	    }),
 	],
 	"node": {
 		"fs": "empty",
