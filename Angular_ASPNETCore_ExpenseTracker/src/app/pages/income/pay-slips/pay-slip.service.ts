@@ -39,6 +39,7 @@ export class PaySlipService {
       .pipe(
         tap(response => this.paySlips = (response as PaySlipApiResponse).paySlips)
       )
+      .map((response: Response) => <PaySlipApiResponse>response)
       .catch(this.handleError);
   }
 
@@ -60,6 +61,7 @@ export class PaySlipService {
 
     return this.http
       .put(`${API_URL}/Update`, paySlip, { headers: headers })
+      .map((response: Response) => <GenericBaseApiResponse<number>>response)
       .catch(this.handleError);
 
   }

@@ -39,7 +39,7 @@ export class ExpenseRegisterService {
       })
       .map((response: Response) => {
         // let response = res.json();
-        return response;
+        return response as IndividualTransactionsApiResponse;
       })
       .catch(this.handleError);
   }
@@ -50,7 +50,7 @@ export class ExpenseRegisterService {
       .get(`${API_URL}/SearchLookups`)
       .map((response: Response) => {
         // let response = res.json();
-        return response;
+        return response as SearchLookups;
       })
       .catch(this.handleError);
   }

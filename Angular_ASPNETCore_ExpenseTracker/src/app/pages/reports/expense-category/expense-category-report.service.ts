@@ -17,10 +17,7 @@ export class ExpenseCategoryReportService {
   getExpenseCategories(): Observable<ExpenseCategoryReportApiResponse> {
     return this.http
       .get(API_URL)
-      .map((response: Response) => {
-        // let response = res.json();
-        return response;
-      })
+      .map((response: Response) => <ExpenseCategoryReportApiResponse>response)
       .catch(this.handleError);
   }
 

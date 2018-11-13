@@ -1,4 +1,4 @@
-export interface BaseApiResponse {
+export interface BaseApiResponse extends Response {
     code: number;
     message: string;
 };

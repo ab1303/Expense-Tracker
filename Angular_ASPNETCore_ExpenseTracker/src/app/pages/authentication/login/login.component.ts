@@ -1,17 +1,8 @@
 import {
   Component,
   OnInit,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  ElementRef,
-  HostListener,
-  HostBinding
 } from "@angular/core";
-import { GlobalState } from "../../../app.state";
-import { ConfigService } from "../../../shared/services/config/config.service";
+
 import { Router, ActivatedRoute } from "@angular/router";
 import { SecurityService } from "../../../security/security.service";
 import { AppUser, RegisterUser } from "../../../security/app-user";

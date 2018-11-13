@@ -19,7 +19,7 @@ export class UsersService {
       .get(API_URL)
       .map((response: Response) => {
         // let response = res.json();
-        return response;
+        return <usersApiResponse>response;
       })
       .catch(this.handleError);
   }

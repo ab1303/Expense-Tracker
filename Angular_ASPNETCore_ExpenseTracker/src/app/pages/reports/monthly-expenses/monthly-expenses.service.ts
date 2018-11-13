@@ -19,7 +19,7 @@ export class MonthlyExpensesReportService {
       .get(API_URL)
       .map((response: Response) => {
         // let response = res.json();
-        return response;
+        return response as MonthlyExpensesReportApiResponse;
       })
       .catch(this.handleError);
   }

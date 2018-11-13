@@ -1,4 +1,4 @@
-import {Component, OnInit, trigger, state, style, transition, animate, ElementRef, HostListener, ViewEncapsulation, ViewChild} from "@angular/core";
+import { Component, OnInit, ElementRef, ViewEncapsulation } from "@angular/core";
 import { GlobalState } from "../../app.state";
 import { ConfigService } from "../../shared/services/config/config.service";
 import { ThemesService } from '../../shared/services/themes/themes.service';
@@ -12,12 +12,12 @@ import { SecurityService } from "../../security/security.service";
 })
 export class TopNavbarComponent implements OnInit {
 
-  currentTheme: any ;
-	
-  constructor( private securityService: SecurityService,
-    private _elementRef: ElementRef, 
+  currentTheme: any;
+
+  constructor(private securityService: SecurityService,
+    private _elementRef: ElementRef,
     private _state: GlobalState,
-    public config: ConfigService, 
+    public config: ConfigService,
     public themes: ThemesService) {
     this._state.subscribe('app.isApp_MobileSidebarLeftOpen', (isApp_MobileSidebarLeftOpen) => {
       this.config.appLayout.isApp_MobileSidebarLeftOpen = isApp_MobileSidebarLeftOpen;
@@ -33,16 +33,16 @@ export class TopNavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-	setTheme() {
-			this.themes.setTheme(this.currentTheme);
-	}
-	
+  setTheme() {
+    this.themes.setTheme(this.currentTheme);
+  }
+
   toggleAppMobileLeftMenuSidebar() {
     this.config.appLayout.isApp_MobileSidebarLeftOpen = !this.config.appLayout.isApp_MobileSidebarLeftOpen;
-				this.config.appLayout.isApp_BackdropVisible = !this.config.appLayout.isApp_BackdropVisible;
-				this._state.notifyDataChanged('app.isApp_MobileSidebarLeftOpen', this.config.appLayout.isApp_MobileSidebarLeftOpen);
-				this._state.notifyDataChanged('app.isApp_BackdropVisible', this.config.appLayout.isApp_BackdropVisible);
-				return false;
+    this.config.appLayout.isApp_BackdropVisible = !this.config.appLayout.isApp_BackdropVisible;
+    this._state.notifyDataChanged('app.isApp_MobileSidebarLeftOpen', this.config.appLayout.isApp_MobileSidebarLeftOpen);
+    this._state.notifyDataChanged('app.isApp_BackdropVisible', this.config.appLayout.isApp_BackdropVisible);
+    return false;
   }
 
 

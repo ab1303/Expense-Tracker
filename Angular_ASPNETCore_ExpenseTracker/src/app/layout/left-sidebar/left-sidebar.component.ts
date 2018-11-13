@@ -1,12 +1,6 @@
 import {
 	Component,
-	ViewEncapsulation,
 	OnInit,
-	trigger,
-	state,
-	style,
-	transition,
-	animate,
 	ElementRef,
 	HostListener
 } from '@angular/core';
