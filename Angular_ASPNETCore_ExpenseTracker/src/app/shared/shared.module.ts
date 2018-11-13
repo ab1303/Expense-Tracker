@@ -39,7 +39,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import { NgxCurrencyModule } from "ngx-currency";
-
+import { NgDateRangePickerModule } from "ng-daterangepicker";
 
 // UI Shared Components
 import { FooterComponent } from '../layout/footer/footer.component';
@@ -81,6 +81,7 @@ export const customCurrencyMaskConfig = {
         MatSidenavModule,
         MatTabsModule,
         MatDialogModule,
+        NgDateRangePickerModule,
         BsDropdownModule.forRoot(),
         AlertModule.forRoot(),
         TabsModule.forRoot(),
@@ -124,6 +125,7 @@ export const customCurrencyMaskConfig = {
         MatSlideToggleModule,
         MatDialogModule,
         NgxCurrencyModule,
+        NgDateRangePickerModule,
         SearchSidebarComponent,
         SearchCardComponent,
         AutoNumericDirective,

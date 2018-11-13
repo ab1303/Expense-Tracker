@@ -19,6 +19,10 @@
       "dom"
     ]
   },
+  "include": [
+    "src/**/*",
+    "node_modules/ng-daterangepicker/src/ng-daterangepicker/ng-daterangepicker.module.ts"
+  ],
   "exclude": [
     "node_modules",
     "wwwroot/lib",

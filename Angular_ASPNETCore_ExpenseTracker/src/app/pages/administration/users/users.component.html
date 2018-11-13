@@ -14,15 +14,6 @@
 		<div class="content-body container">
 			<div class="card card-datatable">
 				<header class="card-header p-30">
-					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
-						<mat-toolbar class="activeHeaderColor">
-							<span>{{itemCount}} {{itemsSelected}}</span>
-							<span class="demo-fill-remaining"></span>
-							<button mat-icon-button>
-								<mat-icon class="mat-24">delete</mat-icon>
-							</button>
-						</mat-toolbar>
-					</div>
 					<h2 class="card-title">User Details</h2>
 					<ul class="actions icons top-right">
 						<li>
@@ -40,16 +31,8 @@
 					</ul>
 				</header>
 				<div class="card-block p-0">
-					<div class="data-filter-wrapper" [ngClass]="{'active' : isSearchActive}">
-						<i class="zmdi zmdi-search search filter-icons"></i>
-						<input type='text' class='data-filter' placeholder='Filter user...' (keyup)='updateFilter($event)' [(ngModel)]="searchValue"
-						/>
-						<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)">
-							<i class="zmdi zmdi-close"></i>
-						</a>
-					</div>
 					<ngx-datatable #table style="width: 100%" class="material" [rows]="rows" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50"
-					 [rowHeight]="'auto'" [limit]="10" [selected]="selected" [selectionType]="'checkbox'" (select)='onSelect($event)'>
+					 [rowHeight]="'auto'" [limit]="10" [selected]="selected" [selectionType]="'checkbox'" >
 						<ngx-datatable-column name="Name">
 							<ng-template let-row="row" ngx-datatable-cell-template>
 								<a href="javascript:void(0)">

@@ -16,7 +16,7 @@ import { AlertService } from "../../../shared/services/alert/alert.service";
 })
 export class LoginComponent implements OnInit {
   user: AppUser = new AppUser();
-  registerUser: AppUser = new RegisterUser();
+  registerUser: RegisterUser = new RegisterUser();
   securityObject: AppUserAuth = null;
   returnUrl: string;
   checked: boolean = false;

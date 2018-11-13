@@ -9,10 +9,10 @@
 
             <ul class="actions icons top-right">
               <li>
-                <a href="javascript:void(0)"
+                <!-- <a href="javascript:void(0)"
                    (click)="rightSidenav2.toggle()">
                   <i class="zmdi zmdi-search"></i>
-                </a>
+                </a> -->
               </li>
             </ul>
           </header>
@@ -53,7 +53,7 @@
                              [offset]="page.pageNumber"
                              [limit]="page.size"
                              (page)='setPage($event)'
-                             (select)='onSelect($event)'>
+                             >
 
                 <ngx-datatable-column name="Total Earnings">
                   <ng-template let-value="value"

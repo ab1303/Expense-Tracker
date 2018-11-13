@@ -13,24 +13,14 @@
 		<div class="content-body">
 			<div class="card card-datatable">
 				<header class="card-header p-30">
-					<div class="selected-toolbar"
-					     [ngClass]="{'active' : isToolbarActive}">
-						<mat-toolbar class="activeHeaderColor">
-							<span>{{itemCount}} {{itemsSelected}}</span>
-							<span class="demo-fill-remaining"></span>
-							<button mat-icon-button>
-								<mat-icon class="mat-24">delete</mat-icon>
-							</button>
-						</mat-toolbar>
-					</div>
 					<h2 class="card-title">Manage Exepnse Sheets</h2>
 					<ul class="actions icons top-right">
-						<li>
+						<!-- <li>
 							<a href="javascript:void(0)"
 							   (click)="isSearchActive = !isSearchActive;">
 								<i class="zmdi zmdi-search"></i>
 							</a>
-						</li>
+						</li> -->
 					</ul>
 					<ul class="actions fab bottom-right">
 						<li>
@@ -43,7 +33,7 @@
 					</ul>
 				</header>
 				<div class="card-block p-0">
-					<div class="data-filter-wrapper"
+					<!-- <div class="data-filter-wrapper"
 					     [ngClass]="{'active' : isSearchActive}">
 						<i class="zmdi zmdi-search search filter-icons"></i>
 						<input type='text'
@@ -56,7 +46,7 @@
 						   (click)="triggerClose($event)">
 							<i class="zmdi zmdi-close"></i>
 						</a>
-					</div>
+					</div> -->
 
 				</div>
 			</div>

@@ -12,17 +12,17 @@ import { SharedModule } from "../shared/shared.module";
 import { ScrollbarDirective } from "../shared/directives/scrollbar.directive";
 import { NavDropDownDirectives } from "../shared/directives/nav-dropdown.directive";
 
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
+// import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+// import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 
-const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-	suppressScrollX: true
-};
+// const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+// 	suppressScrollX: true
+// };
 
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
+// const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+//     suppressScrollX: true
+// };
 
 
 @NgModule({
@@ -40,13 +40,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         CommonModule,
         FormsModule,
         SharedModule.forRoot(),
-        PerfectScrollbarModule
+        // PerfectScrollbarModule
     ],
     providers: [
-        {
-            provide: PERFECT_SCROLLBAR_CONFIG,
-            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }
+        // {
+        //     provide: PERFECT_SCROLLBAR_CONFIG,
+        //     useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        // }
     ]
 })
 export class LayoutModule {
