@@ -1,9 +1,10 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { IndividualTransactionsApiResponse, SearchLookups } from "./transaction";
-import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
@@ -75,10 +76,10 @@ export class ExpenseRegisterService {
       } catch (err) {
         errMessage = error.statusText;
       }
-      return Observable.throw(errMessage);
+      return observableThrowError(errMessage);
       // Use the following instead if using lite-server
       //return Observable.throw(err.text() || 'backend server error');
     }
-    return Observable.throw(error || "ASP.NET Core server error");
+    return observableThrowError(error || "ASP.NET Core server error");
   }
 }

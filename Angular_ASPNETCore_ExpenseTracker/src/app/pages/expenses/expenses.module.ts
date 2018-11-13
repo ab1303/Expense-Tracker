@@ -16,7 +16,6 @@ import { ExpenseSheetComponent } from "./expense-sheet/expense-sheet.component";
 import { ExpenseSheetService } from './expense-sheet/expense-sheet.service';
 import { ExpenseRegisterService } from './expense-register/expense-register.service';
 import { ExpenseRegisterComponent } from './expense-register/expense-register.component';
-import { DataTablesComponent } from "./data-tables/data-tables.component";
 import { BulkEditModalComponent } from './expense-register/components/bulk-edit-modal/bulk-edit-modal.component';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { BulkEditModalComponent } from './expense-register/components/bulk-edit-
     ExpensesComponent,
     ExpenseSheetComponent,
     ExpenseRegisterComponent,
-    DataTablesComponent,
     BulkEditModalComponent
   ],
   imports: [

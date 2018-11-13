@@ -5,7 +5,7 @@ import {
   RouterStateSnapshot,
   Router
 } from "@angular/router";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { SecurityService, BEARER_TOKEN_KEY } from "./security.service";
 
 @Injectable()

@@ -3,7 +3,7 @@ import { BrowserModule, Title } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { ResponsiveModule } from "ng2-responsive";
 
 
@@ -25,38 +25,37 @@ const APP_PROVIDERS = [AppState, GlobalState, Title];
 
 
 export interface StoreType {
-  state: InternalStateType;
-  restoreInputValues: () => void;
-  disposeOldHosts: () => void;
+    state: InternalStateType;
+    restoreInputValues: () => void;
+    disposeOldHosts: () => void;
 }
 
 @NgModule({
-  declarations: [
-    AppComponent, 
-    HasClaimDirective,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    ServicesModule,
-    ResponsiveModule,
-    SharedModule.forRoot(),
-    AppRoutingModule,
-    HttpClient,
-    HttpClientModule,
-    HttpInterceptorModule,
-    ExpensesModule,
-    IncomeModule,
-  ],
-  providers: [
-    APP_PROVIDERS,
-    SecurityService,
-    AuthGuard
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HasClaimDirective,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        ServicesModule,
+        ResponsiveModule,
+        SharedModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        HttpInterceptorModule,
+        ExpensesModule,
+        IncomeModule,
+    ],
+    providers: [
+        APP_PROVIDERS,
+        SecurityService,
+        AuthGuard
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public appState: AppState) {}
+    constructor(public appState: AppState) { }
 }

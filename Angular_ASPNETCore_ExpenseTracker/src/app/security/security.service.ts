@@ -1,10 +1,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import jwtdecode from "jwt-decode";
-import { Observable } from "rxjs/Observable";
-import { of } from "rxjs/observable/of";
-import { tap } from "rxjs/operators/tap";
-import { Subscriber } from "rxjs";
+import { Observable ,  of ,  Subscriber } from "rxjs";
+import { tap } from "rxjs/operators";
 
 
 import { API_BASE_ADDRESS } from '../app.constants';

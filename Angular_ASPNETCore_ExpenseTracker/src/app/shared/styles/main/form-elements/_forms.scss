@@ -1,5 +1,5 @@
 .form-horizontal {
-	.mat-input-container,
+	.mat-form-field,
 	.mat-select {
 		display: block;
 	}
@@ -10,7 +10,7 @@
 		padding-top: calc(.4rem - 1px * 2) !important;
 	}
 
-	.mat-input-container,
+	.mat-form-field,
 	.mat-select {
 		display: inline-block;
 	}
