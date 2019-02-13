@@ -90,7 +90,8 @@ module.exports = {
 		"styles": [
 			"./node_modules\\bootstrap\\dist\\css\\bootstrap.min.css",
 			"./node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css",
-			"./node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css",
+            "./node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css",
+		    "./node_modules\\@uppy\\dashboard\\dist\\style.min.css",
 			"./src\\styles.scss"
 		]
 	},
