@@ -8,7 +8,11 @@ project.json.old
 **/wwwroot/app/**/*.map
 
 **/wwwroot/devDist/**/*.js
+**/wwwroot/devDist/**/*.json
 **/wwwroot/devDist/**/*.map
+**/wwwroot/devDist/*
+
+
 
 dist/
 

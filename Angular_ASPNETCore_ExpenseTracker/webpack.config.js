@@ -91,7 +91,7 @@ module.exports = {
 			"./node_modules\\bootstrap\\dist\\css\\bootstrap.min.css",
 			"./node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css",
             "./node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css",
-		    "./node_modules\\@uppy\\dashboard\\dist\\style.min.css",
+		    "./node_modules\\@uppy\\dashboard\\dist\\style.css",
 			"./src\\styles.scss"
 		]
 	},
@@ -128,7 +128,8 @@ module.exports = {
 				"exclude": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.css$/,
@@ -154,7 +155,8 @@ module.exports = {
 				"exclude": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.scss$|\.sass$/,
@@ -188,7 +190,8 @@ module.exports = {
 				"exclude": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.less$/,
@@ -220,7 +223,8 @@ module.exports = {
 				"exclude": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.styl$/,
@@ -253,7 +257,8 @@ module.exports = {
 				"include": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.css$/,
@@ -279,7 +284,8 @@ module.exports = {
 				"include": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.scss$|\.sass$/,
@@ -313,7 +319,8 @@ module.exports = {
 				"include": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.less$/,
@@ -345,7 +352,8 @@ module.exports = {
 				"include": [
 					path.join(process.cwd(), "node_modules\\bootstrap\\dist\\css\\bootstrap.min.css"),
 					path.join(process.cwd(), "node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.css"),
-					path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+                    path.join(process.cwd(), "node_modules\\@swimlane\\ngx-datatable\\assets\\icons.css"),
+				    path.join(process.cwd(), "node_modules\\@uppy\\dashboard\\dist\\style.css"),
 					path.join(process.cwd(), "src\\styles.scss")
 				],
 				"test": /\.styl$/,
