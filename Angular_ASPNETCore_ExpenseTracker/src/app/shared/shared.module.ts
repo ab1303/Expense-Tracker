@@ -50,6 +50,7 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
 
 // Custom Directive
 import { AutoNumericDirective } from './directives/autoNumeric/ngAutoNumeric';
+import { UppyService } from './components/uppy/uppy.service';
 
 
 export const customCurrencyMaskConfig = {
@@ -128,9 +129,9 @@ export const customCurrencyMaskConfig = {
         SearchCardComponent,
         AutoNumericDirective,
     ],
-    // providers: [
-    //     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
-    // ]
+    providers: [
+        UppyService,
+    ]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {
