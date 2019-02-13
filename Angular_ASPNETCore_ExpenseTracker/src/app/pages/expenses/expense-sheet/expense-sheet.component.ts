@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import * as Dashboard from '@uppy/dashboard';
+
 
 import { TrackByService } from "../../../core/trackby.service";
 
@@ -33,17 +35,26 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const uppy = this.uppyService.uppy as any;
-    const instance3 = uppy.Core({ autoProceed: false })
-      .use(uppy.Dashboard, {
+
+    const fileUploaderUppy = new uppy({
+      id: 'file',
+      restrictions: {
+        maxFileSize: 1024 * 1024 * 5,
+        maxNumberOfFiles: 3,
+      },
+    });
+
+    fileUploaderUppy
+      .use(Dashboard, {
         target: '.instance3',
         replaceTargetContent: true,
         inline: true,
       })
-      .use(uppy.Tus, { endpoint: 'https://master.tus.io/files/' })
-      .use(uppy.Webcam, { target: uppy.Dashboard })
+      // .use(uppy.Tus, { endpoint: 'https://master.tus.io/files/' })
+      // .use(uppy.Webcam, { target: uppy.Dashboard })
       .run()
 
-    instance3.on("complete", (data) => console.log("Received 'complete' event from instance 3", 'Upload complete'));
+      fileUploaderUppy.on("complete", (data) => console.log("Received 'complete' event from instance 3", 'Upload complete'));
   }
   ngOnDestroy(): void {
     this.onDestroy$.next();
