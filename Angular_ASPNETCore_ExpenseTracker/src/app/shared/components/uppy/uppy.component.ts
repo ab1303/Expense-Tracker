@@ -1,47 +1,66 @@
 import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectionStrategy } from "@angular/core";
+import * as Uppy from '@uppy/core';
+import * as Dashboard from '@uppy/dashboard';
 import { Subject } from "rxjs";
+
 import { UppyService } from "./uppy.service";
 import { v4 } from 'uuid';
 
 
 export type UppyPluginConfigurations = [
-    String,
-    any
-  ][];
+  String,
+  any
+][];
 
+export interface UppyLocaleStrings {
+  dropPaste: string,
+};
 
-  
 @Component({
-    selector: 'uppy',
-    templateUrl: './uppy.component.html',
-    styleUrls: ['./uppy.component.css',],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
-  })
-  export class UppyComponent implements OnInit, AfterViewInit {
-    @Input() plugins: UppyPluginConfigurations = []
-    @Input() on: Subject<[string, any, any, any]>
-  
-    uuid = v4();
+  selector: 'uppy',
+  template: `<uppy-dashboard [uppy]="uppy" [height]="470" [note]="note" [localeStrings]="localeStrings">
+  </uppy-dashboard>`,
+  styleUrls: ['./uppy.component.scss',],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class UppyComponent implements OnInit {
+  @Input() parentId: number;
+  @Input() plugins: UppyPluginConfigurations = [];
+  @Input() on: Subject<[string, any, any, any]>;
 
-    constructor(public uppyService: UppyService) {
-    }
-  
-    ngOnInit() {
-    }
-  
-    ngAfterViewInit() {
-      const uppyInstance = this.uppyService.configure(this.plugins, this.uuid)
-  
-      const events = ['file-added', 'file-removed', 'upload', 'upload-progress', 'upload-success', 'complete', 'upload-error', 'info-visible', 'info-hidden']
-  
-      events.forEach(ev => uppyInstance.on(ev, (data1, data2, data3) => {
-        if (this.on)
-          this.on.next([ev, data1, data2, data3])
-  
-      }))
-  
-    }
-  
+  note: string = "Maximum file upload size is 5 MB";
+  uppy: Uppy.Uppy;
+  localeStrings: UppyLocaleStrings = {
+    dropPaste: 'Drag & drop or %{browse} file(s) to upload',
+  };
+
+  constructor(public uppyService: UppyService) {
   }
-  
+
+  ngOnInit() {
+
+    const uppyOptions = {
+      id: 'file',
+      restrictions: {
+        maxFileSize: 1024 * 1024 * 5,
+        maxNumberOfFiles: 3,
+        minNumberOfFiles: 1,
+        allowedFileTypes: []
+      }
+    };
+
+    this.uppy = new Uppy.Uppy(uppyOptions);
+    this.uppy.setMeta({ id: this.parentId });
+
+    const events = ['file-added', 'file-removed', 'upload', 'upload-progress', 'upload-success', 'complete', 'upload-error', 'info-visible', 'info-hidden']
+
+    events.forEach(ev => this.uppy.on(ev, (data1, data2, data3) => {
+      if (this.on)
+        this.on.next([ev, data1, data2, data3])
+
+    }))
+
+  }
+
+}
