@@ -21,6 +21,8 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
   uppyEvent = new Subject<[string, any, any, any]>();
   onDestroy$ = new Subject<void>();
 
+  fileUploadUrl: string = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
+
   constructor(public trackby: TrackByService, public uppyService: UppyService) {
     this.uppyEvent
       .takeUntil(this.onDestroy$)
@@ -55,7 +57,7 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
     //   .run()
 
     //   fileUploaderUppy.on("complete", (data) => console.log("Received 'complete' event from instance 3", 'Upload complete'));
-    
+
   }
   ngOnDestroy(): void {
     this.onDestroy$.next();

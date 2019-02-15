@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectionStrategy } from "@angular/core";
 import * as Uppy from '@uppy/core';
-import * as Dashboard from '@uppy/dashboard';
+import * as XHRUpload from '@uppy/xhr-upload';
 import { Subject } from "rxjs";
 
 import { UppyService } from "./uppy.service";
@@ -26,6 +26,7 @@ export interface UppyLocaleStrings {
 })
 export class UppyComponent implements OnInit {
   @Input() parentId: number;
+  @Input() fileUploadUrl: string;
   @Input() plugins: UppyPluginConfigurations = [];
   @Input() on: Subject<[string, any, any, any]>;
 
@@ -46,21 +47,47 @@ export class UppyComponent implements OnInit {
         maxFileSize: 1024 * 1024 * 5,
         maxNumberOfFiles: 3,
         minNumberOfFiles: 1,
-        allowedFileTypes: []
+        allowedFileTypes: ['.xls','.xlsx']
       }
     };
 
     this.uppy = new Uppy.Uppy(uppyOptions);
     this.uppy.setMeta({ id: this.parentId });
 
+    this.uppy.use(XHRUpload, {
+      endpoint: this.fileUploadUrl,
+      formData: true,
+      // headers: authHeader,
+      fieldName: 'fileAttachment',
+    })
+
     const events = ['file-added', 'file-removed', 'upload', 'upload-progress', 'upload-success', 'complete', 'upload-error', 'info-visible', 'info-hidden']
 
+    this.uppy.on('upload-progress', this.uploadProgress);
+    this.uppy.on('upload-success', this.uploadSuccess);
+    this.uppy.on('upload-error', this.uploadError);
+
+    // Publish Event to subscribers
     events.forEach(ev => this.uppy.on(ev, (data1, data2, data3) => {
       if (this.on)
         this.on.next([ev, data1, data2, data3])
 
-    }))
+    }));
 
   }
+
+  uploadProgress(file, progress) {
+
+  }
+
+  uploadSuccess(file, response) {
+    console.log(response);
+  }
+
+  uploadError(file, errResponse) {
+    console.log(errResponse);
+  }
+
+
 
 }

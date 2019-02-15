@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, AfterViewInit, ElementRef } from "@angular/core";
 import * as Dashboard from '@uppy/dashboard';
 import * as Uppy from '@uppy/core';
 import { v4 } from 'uuid'
@@ -17,7 +17,7 @@ export class UppyDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
 
   plugin: Uppy.Plugin;
   dashboardRefClass: string = `DashboardContainer-${v4()}`;
-  constructor() {
+  constructor(private hostElement: ElementRef) {
   }
 
   ngOnInit() {
@@ -33,12 +33,15 @@ export class UppyDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
       locale: {
         strings: this.localeStrings
       },
-      target:`.${this.dashboardRefClass}`,
+      // target:`.${this.dashboardRefClass}`,
+      target:this.hostElement.nativeElement,
       replaceTargetContent: true,
       inline: true
     };
 
     this.uppy.use(Dashboard, options);
+
+    // TODO: AE-13
     this.plugin = this.uppy.getPlugin(options.id);
   }
 
