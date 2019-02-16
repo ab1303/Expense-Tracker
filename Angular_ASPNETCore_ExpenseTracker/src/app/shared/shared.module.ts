@@ -50,9 +50,9 @@ import { SearchCardComponent } from './components/search-card/search-card.compon
 
 // Custom Directive
 import { AutoNumericDirective } from './directives/autoNumeric/ngAutoNumeric';
-import { UppyService } from './components/uppy/uppy.service';
 import { UppyDashboardComponent } from './components/uppy/components/uppy.dashboard/uppy.dashboard.component';
 import { UppyComponent } from './components/uppy/uppy.component';
+import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
 
 
 export const customCurrencyMaskConfig = {
@@ -98,6 +98,7 @@ export const customCurrencyMaskConfig = {
         SearchSidebarComponent,
         SearchCardComponent,
         AutoNumericDirective,
+        UppyContainerDirective,
         UppyComponent,
         UppyDashboardComponent,
     ],
@@ -132,11 +133,11 @@ export const customCurrencyMaskConfig = {
         SearchSidebarComponent,
         SearchCardComponent,
         AutoNumericDirective,
+        UppyContainerDirective,
         UppyComponent,
         UppyDashboardComponent,
     ],
     providers: [
-        UppyService,
     ]
 })
 export class SharedModule {

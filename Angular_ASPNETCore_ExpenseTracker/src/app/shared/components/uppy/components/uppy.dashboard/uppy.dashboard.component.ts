@@ -2,33 +2,29 @@ import { Component, Input, OnInit, OnDestroy, AfterViewInit, ElementRef } from "
 import * as Dashboard from '@uppy/dashboard';
 import * as Uppy from '@uppy/core';
 import { v4 } from 'uuid'
-import { UppyLocaleStrings } from "../../uppy.component";
+import { UppyComponent } from "../../uppy.component";
+import { UppyLocaleStrings } from "../../UppyLocaleStrings";
 
 @Component({
   selector: 'uppy-dashboard',
   templateUrl: './uppy.dashboard.component.html',
 })
-export class UppyDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
-  
-  @Input() uppy: Uppy.Uppy;
+export class UppyDashboardComponent implements AfterViewInit  {
   @Input() height: number;
+  @Input() width: number;
   @Input() note: string;
   @Input() localeStrings: UppyLocaleStrings;
 
   plugin: Uppy.Plugin;
   dashboardRefClass: string = `DashboardContainer-${v4()}`;
-  constructor(private hostElement: ElementRef) {
-  }
-
-  ngOnInit() {
-    const uppy = this.uppy
-  
+  constructor(private hostElement: ElementRef, private uppyComponent: UppyComponent) {
   }
 
   ngAfterViewInit(): void {
     const options = {
       id: 'uppy:Dashboard',
       height: this.height,
+      width:this.width,
       note: this.note,
       locale: {
         strings: this.localeStrings
@@ -39,14 +35,7 @@ export class UppyDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
       inline: true
     };
 
-    this.uppy.use(Dashboard, options);
-
-    // TODO: AE-13
-    this.plugin = this.uppy.getPlugin(options.id);
-  }
-
-  ngOnDestroy(): void {
-    this.uppy.removePlugin(this.plugin);
+    this.uppyComponent.Uppy.use(Dashboard, options);
   }
 
 }

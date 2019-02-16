@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import * as Dashboard from '@uppy/dashboard';
 
 
 import { TrackByService } from "../../../core/trackby.service";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
-import { UppyService } from "../../../shared/components/uppy/uppy.service";
 import { Subject } from "rxjs";
+import { BsModalRef, ModalDirective } from "ngx-bootstrap";
 
 const URL = "path_to_api";
 const API_URL = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
@@ -23,7 +23,11 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
 
   fileUploadUrl: string = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
 
-  constructor(public trackby: TrackByService, public uppyService: UppyService) {
+  @ViewChild("uploadSheetModal") uploadSheetModal: ModalDirective;
+
+  showUploadSheetModal: boolean = false;
+
+  constructor(public trackby: TrackByService) {
     this.uppyEvent
       .takeUntil(this.onDestroy$)
       .filter(([ev]) => ev['complete'])
@@ -36,6 +40,23 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
+    this.uploadSheetModal.onShow.subscribe(() => { 
+      this.showUploadSheetModal = true;
+    })
+
+    
+    this.uploadSheetModal.onShown.subscribe(() => { 
+      console.log(this.uploadSheetModal);
+    })
+
+    this.uploadSheetModal.onHide.subscribe(() => { 
+      this.showUploadSheetModal = false;
+    });
+
+    // this.uploadSheetModal.onHide = () => console.log('Modal onHide');
+    // this.uploadSheetModal.onShow = () => console.log('Modal onShow');
+
     // const uppy = this.uppyService.uppy as any;
 
     // const fileUploaderUppy = new uppy({
