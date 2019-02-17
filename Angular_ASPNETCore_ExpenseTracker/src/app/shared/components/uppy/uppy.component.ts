@@ -1,11 +1,9 @@
 import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Renderer2, Inject, HostBinding, Host } from "@angular/core";
 import * as Uppy from '@uppy/core';
-import * as XHRUpload from '@uppy/xhr-upload';
+import XHRUpload from '@uppy/xhr-upload';
 import { Subject } from "rxjs";
 
 import { UppyLocaleStrings } from "./UppyLocaleStrings";
-import { UppyContainerDirective } from "./uppy.container.directive";
-
 
 export type UppyPluginConfigurations = [
   String,
@@ -15,13 +13,13 @@ export type UppyPluginConfigurations = [
 
 @Component({
   selector: 'uppy',
-  template: `<uppy-dashboard [height]="uppyContainer" [width]="containerWidth" [note]="note" [localeStrings]="localeStrings">
+  template: `<uppy-dashboard [note]="note" [localeStrings]="localeStrings">
   </uppy-dashboard>`,
   styleUrls: ['./uppy.component.scss',],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UppyComponent implements OnInit, AfterViewInit {
+export class UppyComponent implements OnInit  {
   @Input() parentId: number;
   @Input() fileUploadUrl: string;
   @Input() plugins: UppyPluginConfigurations = [];
@@ -35,15 +33,7 @@ export class UppyComponent implements OnInit, AfterViewInit {
 
 
 
-  height: number;
-  width: number;
-
-
   get Uppy(): Uppy.Uppy { return this._uppy; }
-
-  constructor(@Host() private uppyContainer: UppyContainerDirective) {
-    console.log(this.uppyContainer);
-  }
 
   ngOnInit() {
 
@@ -80,10 +70,6 @@ export class UppyComponent implements OnInit, AfterViewInit {
 
     }));
 
-  }
-
-  ngAfterViewInit(){
-    console.log(this.uppyContainer);
   }
 
   uploadProgress(file, progress) {

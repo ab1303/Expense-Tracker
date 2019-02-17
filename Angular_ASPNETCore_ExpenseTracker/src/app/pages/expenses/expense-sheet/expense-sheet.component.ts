@@ -45,11 +45,6 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showUploadSheetModal = true;
     })
 
-    
-    this.uploadSheetModal.onShown.subscribe(() => { 
-      console.log(this.uploadSheetModal);
-    })
-
     this.uploadSheetModal.onHide.subscribe(() => { 
       this.showUploadSheetModal = false;
     });

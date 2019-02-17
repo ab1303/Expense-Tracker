@@ -29,14 +29,11 @@ export class ExpenseCategoryComponent implements OnInit {
     const dialogRef = this.dialog.open(AddModalComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: `);
-      console.log(result);
 
       const { categoryName, categoryDescription } = result.model;
       this.expenseCategoryService.addExpenseCategory(categoryName, categoryDescription)
         .subscribe(
           response => {
-            console.log(response);
             this.expenseCategories = [
               ...this.expenseCategories,
               {

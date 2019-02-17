@@ -1,19 +1,19 @@
-import { Directive, Optional, Host, ElementRef, AfterViewInit } from '@angular/core';
+import { Directive, Optional, Host, ElementRef, AfterViewInit, Renderer2, OnInit } from '@angular/core';
 
 @Directive({
     exportAs: 'uppy-container',
     selector: '[uppy-container]',
 })
-export class UppyContainerDirective implements AfterViewInit {
-
+export class UppyContainerDirective implements OnInit  {
+    
     constructor(
-        @Host() private hostElement: ElementRef
+        @Host() private hostElement: ElementRef,
+        private renderer: Renderer2
     ) {
 
     }
-    
-    ngAfterViewInit(): void {
-        console.log(this.hostElement);
-    }
 
+    ngOnInit(): void {
+        this.renderer.setStyle(this.hostElement.nativeElement,'display', 'block');
+    }
 }

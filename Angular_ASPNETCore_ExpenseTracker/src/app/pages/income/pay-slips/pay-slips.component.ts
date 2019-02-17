@@ -40,7 +40,6 @@ export class PaySlipsComponent implements OnInit {
   }
 
   deletePaySlip(id) {
-    console.log(`delete payslip id: ${id}`);
     this.paySlipService.deletePaySlip(id)
       .subscribe(
         () => this.paySlips = this.paySlips.filter(ps => ps.id !== id),

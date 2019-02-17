@@ -248,18 +248,18 @@
   version "2.53.43"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-2.53.43.tgz#2de3d718819bc20165754c4a59afb7e9833f6707"
 
-"@uppy/companion-client@0.27.3":
-  version "0.27.3"
-  resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-0.27.3.tgz#aa3c83e933cde3be96485bf8ea21f58626b88f71"
+"@uppy/companion-client@0.27.2":
+  version "0.27.2"
+  resolved "https://registry.yarnpkg.com/@uppy/companion-client/-/companion-client-0.27.2.tgz#526572b5129d7786c06368e8def5bc46c5980048"
   dependencies:
     namespace-emitter "^2.0.1"
 
-"@uppy/core@^0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-0.29.1.tgz#f998e47f7cbd44473078242eec86af998cf3c581"
+"@uppy/core@^0.27.0":
+  version "0.27.3"
+  resolved "https://registry.yarnpkg.com/@uppy/core/-/core-0.27.3.tgz#0cf2c4b05a4d797afb747fb04ddaea53719f678f"
   dependencies:
-    "@uppy/store-default" "0.27.1"
-    "@uppy/utils" "0.29.1"
+    "@uppy/store-default" "0.27.0"
+    "@uppy/utils" "0.27.1"
     cuid "^2.1.1"
     lodash.throttle "^4.1.1"
     mime-match "^1.0.2"
@@ -267,15 +267,15 @@
     preact "^8.2.9"
     prettier-bytes "^1.0.4"
 
-"@uppy/dashboard@^0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/dashboard/-/dashboard-0.29.1.tgz#14e2e4804e3a48d0565b2e63eabd157633981cd2"
+"@uppy/dashboard@^0.27.2":
+  version "0.27.5"
+  resolved "https://registry.yarnpkg.com/@uppy/dashboard/-/dashboard-0.27.5.tgz#6b88e2ff31fcc33bb1adf43a7eb35c9446af4342"
   dependencies:
-    "@uppy/informer" "0.29.1"
-    "@uppy/provider-views" "0.29.1"
-    "@uppy/status-bar" "0.29.1"
-    "@uppy/thumbnail-generator" "0.29.1"
-    "@uppy/utils" "0.29.1"
+    "@uppy/informer" "0.27.4"
+    "@uppy/provider-views" "0.27.4"
+    "@uppy/status-bar" "0.27.4"
+    "@uppy/thumbnail-generator" "0.27.4"
+    "@uppy/utils" "0.27.1"
     classnames "^2.2.6"
     drag-drop "2.13.3"
     lodash.throttle "^4.1.1"
@@ -284,53 +284,53 @@
     prettier-bytes "^1.0.4"
     resize-observer-polyfill "^1.5.0"
 
-"@uppy/informer@0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/informer/-/informer-0.29.1.tgz#98fcbd0d1ebcdd3d323952195a04a8960deffcd5"
+"@uppy/informer@0.27.4":
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/@uppy/informer/-/informer-0.27.4.tgz#5ef5aeff70bef006495e03ee174a6de3db50139f"
   dependencies:
-    "@uppy/utils" "0.29.1"
+    "@uppy/utils" "0.27.1"
     preact "^8.2.9"
 
-"@uppy/provider-views@0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/provider-views/-/provider-views-0.29.1.tgz#70412655192c63d4f7561094305c5a4bd5c85ca8"
+"@uppy/provider-views@0.27.4":
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/@uppy/provider-views/-/provider-views-0.27.4.tgz#d416f4a178c2095630b39528800920457586461a"
   dependencies:
-    "@uppy/utils" "0.29.1"
+    "@uppy/utils" "0.27.1"
     classnames "^2.2.6"
     preact "^8.2.9"
 
-"@uppy/status-bar@0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/status-bar/-/status-bar-0.29.1.tgz#0da499daaafbebe3343a41b4772efb63ca8d67b2"
+"@uppy/status-bar@0.27.4":
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/@uppy/status-bar/-/status-bar-0.27.4.tgz#da10b14493c0ad8863c602cfb9584f73faa0d760"
   dependencies:
-    "@uppy/utils" "0.29.1"
+    "@uppy/utils" "0.27.1"
     classnames "^2.2.6"
     lodash.throttle "^4.1.1"
     preact "^8.2.9"
     prettier-bytes "^1.0.4"
 
-"@uppy/store-default@0.27.1":
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/@uppy/store-default/-/store-default-0.27.1.tgz#0954b3255781215d024db08ad9bf8a5d510008fa"
+"@uppy/store-default@0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@uppy/store-default/-/store-default-0.27.0.tgz#3afeb640352d142fe1b15d6e73b1034626ab4ced"
 
-"@uppy/thumbnail-generator@0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/thumbnail-generator/-/thumbnail-generator-0.29.1.tgz#0539e89ae8b02baa06c80d438919607aae44e2c9"
+"@uppy/thumbnail-generator@0.27.4":
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/@uppy/thumbnail-generator/-/thumbnail-generator-0.27.4.tgz#964de632a21db7e12d93be7bb6caf93619e5e00b"
   dependencies:
-    "@uppy/utils" "0.29.1"
+    "@uppy/utils" "0.27.1"
 
-"@uppy/utils@0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/utils/-/utils-0.29.1.tgz#5167cd6451363d51683e686af6cbfc697cc6c823"
+"@uppy/utils@0.27.1":
+  version "0.27.1"
+  resolved "https://registry.yarnpkg.com/@uppy/utils/-/utils-0.27.1.tgz#53e610d4e5eebc5ecd722f4d711fe4ff20f2d19c"
   dependencies:
     lodash.throttle "^4.1.1"
 
-"@uppy/xhr-upload@^0.29.1":
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-0.29.1.tgz#174eed08840d0d5fb7ba8a91cc8cb1cc98115dfe"
+"@uppy/xhr-upload@^0.27.1":
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/@uppy/xhr-upload/-/xhr-upload-0.27.4.tgz#2a9692335324f8afaae3ec92978bd1b890fe0d12"
   dependencies:
-    "@uppy/companion-client" "0.27.3"
-    "@uppy/utils" "0.29.1"
+    "@uppy/companion-client" "0.27.2"
+    "@uppy/utils" "0.27.1"
     cuid "^2.1.1"
 
 abbrev@1:
