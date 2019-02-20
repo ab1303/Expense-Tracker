@@ -1,5 +1,4 @@
-<div id="content_wrapper"
-     class="fullWidth3-wrapper">
+<div id="content_wrapper" class="fullWidth3-wrapper">
 	<div class="content">
 		<div class="header-wrapper overlay header-md">
 			<header class="container-fluid">
@@ -13,8 +12,7 @@
 		<div class="content-body">
 			<div class="card card-datatable">
 				<header class="card-header p-30">
-					<div class="selected-toolbar"
-					     [ngClass]="{'active' : isToolbarActive}">
+					<div class="selected-toolbar" [ngClass]="{'active' : isToolbarActive}">
 						<mat-toolbar class="activeHeaderColor">
 							<span>{{itemCount}} {{itemsSelected}}</span>
 							<span class="demo-fill-remaining"></span>
@@ -26,34 +24,26 @@
 					<h2 class="card-title">Manage Exepnse Sheets</h2>
 					<ul class="actions icons top-right">
 						<li>
-							<a href="javascript:void(0)"
-							   (click)="isSearchActive = !isSearchActive;">
+							<a href="javascript:void(0)" (click)="isSearchActive = !isSearchActive;">
 								<i class="zmdi zmdi-search"></i>
 							</a>
 						</li>
 					</ul>
 					<ul class="actions fab bottom-right">
 						<li>
-							<button class="btn btn-accent btn-fab"
-							        (click)="uploadSheetModal.show()"
-							        mat-ripple>
+							<button class="btn btn-accent btn-fab" (click)="showUppyUploadModal(uppyModalTemplate)"
+								mat-ripple>
 								<i class="zmdi zmdi-plus"></i>
 							</button>
 						</li>
 					</ul>
 				</header>
 				<div class="card-block p-0">
-					<div class="data-filter-wrapper"
-					     [ngClass]="{'active' : isSearchActive}">
+					<div class="data-filter-wrapper" [ngClass]="{'active' : isSearchActive}">
 						<i class="zmdi zmdi-search search filter-icons"></i>
-						<input type='text'
-						       class='data-filter'
-						       placeholder='Filter customer name...'
-						       (keyup)='updateFilter($event)'
-						       [(ngModel)]="searchValue" />
-						<a href="javascript:void(0)"
-						   class="close filter-icons"
-						   (click)="triggerClose($event)">
+						<input type='text' class='data-filter' placeholder='Filter customer name...'
+							(keyup)='updateFilter($event)' [(ngModel)]="searchValue" />
+						<a href="javascript:void(0)" class="close filter-icons" (click)="triggerClose($event)">
 							<i class="zmdi zmdi-close"></i>
 						</a>
 					</div>
@@ -64,12 +54,83 @@
 	</div>
 
 </div>
-<footer id="footer_wrapper"
-        class="footer_wrapper"></footer>
+<footer id="footer_wrapper" class="footer_wrapper"></footer>
+
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>
+ 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is a modal.
+  </div>
+</ng-template>
+
+
+<ng-template #uppyModalTemplate>
+	<div class="modal-header">
+	  <h4 class="modal-title pull-left">Modal</h4>
+	  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+		<span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	<div class="modal-body">
+	  This is a modal.
+	</div>
+  </ng-template>
+
+<!-- 
+<ng-template #uppyModalTemplate>
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title float-left">Upload Expense Sheet</h4>
+					<button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row m-b-30">
+							<div class="col-xs-12">
+								<span id="lblImportTemplate">
+									Select your monthly expense sheet for upload by clicking on the Choose File Button.
+									<br />
+								</span>
+							</div>
+						</div>
+
+						<div class="row" uppy-container>
+							<div>
+								<h3>Choose File</h3>
+							</div>
+							<uppy [on]="uppyEvent" parentId="2" [fileUploadUrl]="fileUploadUrl"></uppy>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default btn-flat" (click)="bsModalRef.hide()">
+						Cancel
+					</button>
+					<button type="button" class="btn btn-accent">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-template> -->
+
+<!-- 
+<uppy-modal #uploadSheetModal></uppy-modal> -->
+
 
 
 <!-- Modal Basic ===========================================================-->
-
+<!-- 
 <div class="modal fade"
      bsModal
      #uploadSheetModal="bs-modal"
@@ -122,4 +183,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->

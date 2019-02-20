@@ -53,6 +53,7 @@ import { AutoNumericDirective } from './directives/autoNumeric/ngAutoNumeric';
 import { UppyDashboardComponent } from './components/uppy/components/uppy.dashboard/uppy.dashboard.component';
 import { UppyComponent } from './components/uppy/uppy.component';
 import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
+import { UppyModalComponent } from './components/uppy-modal/uppy-modal.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -101,6 +102,7 @@ export const customCurrencyMaskConfig = {
         UppyContainerDirective,
         UppyComponent,
         UppyDashboardComponent,
+        UppyModalComponent,
     ],
     exports: [
         CommonModule,
@@ -136,6 +138,7 @@ export const customCurrencyMaskConfig = {
         UppyContainerDirective,
         UppyComponent,
         UppyDashboardComponent,
+        UppyModalComponent,
     ],
     providers: [
     ]

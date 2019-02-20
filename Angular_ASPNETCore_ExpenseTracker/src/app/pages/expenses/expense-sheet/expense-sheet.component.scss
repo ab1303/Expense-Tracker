@@ -459,3 +459,8 @@
 		font-size: 25px;
 	}
 }
+
+.modal.fade .modal-dialog{
+	opacity: 1;
+	transform: inherit;
+}

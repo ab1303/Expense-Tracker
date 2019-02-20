@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef, TemplateRef } from "@angular/core";
 
 
 import { TrackByService } from "../../../core/trackby.service";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { Subject } from "rxjs";
-import { BsModalRef, ModalDirective } from "ngx-bootstrap";
+import { BsModalService, BsModalRef } from "ngx-bootstrap";
 
 const URL = "path_to_api";
 const API_URL = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
@@ -16,17 +16,15 @@ const API_URL = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
   styleUrls: ["./expense-sheet.component.scss"],
 
 })
-export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ExpenseSheetComponent implements OnDestroy, AfterViewInit {
   uppyEvent = new Subject<[string, any, any, any]>();
   onDestroy$ = new Subject<void>();
 
   fileUploadUrl: string = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
-
-  @ViewChild("uploadSheetModal") uploadSheetModal: ModalDirective;
-
-  showUploadSheetModal: boolean = false;
-
-  constructor(public trackby: TrackByService) {
+  bsModalRef:BsModalRef;
+  modalRef:BsModalRef;
+  @ViewChild('uppyModalTemplate') uppyModalTemplate: TemplateRef<any>
+  constructor(public trackby: TrackByService, private modalService: BsModalService ) {
     this.uppyEvent
       .takeUntil(this.onDestroy$)
       .filter(([ev]) => ev['complete'])
@@ -40,22 +38,20 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    this.uploadSheetModal.onShow.subscribe(() => { 
-      this.showUploadSheetModal = true;
-    })
-
-    this.uploadSheetModal.onHide.subscribe(() => { 
-      this.showUploadSheetModal = false;
-    });
 
   }
+
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
 
+  showUppyUploadModal(template: TemplateRef<any> ){
+    this.bsModalRef = this.modalService.show(template);
+  }
 
-
-  ngOnInit() { }
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template, { animated: true });
+  }
 
 }
