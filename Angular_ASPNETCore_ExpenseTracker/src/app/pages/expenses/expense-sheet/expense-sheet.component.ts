@@ -46,12 +46,4 @@ export class ExpenseSheetComponent implements OnDestroy, AfterViewInit {
     this.onDestroy$.complete();
   }
 
-  showUppyUploadModal(template: TemplateRef<any> ){
-    this.bsModalRef = this.modalService.show(template);
-  }
-
-  openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, { animated: true });
-  }
-
 }

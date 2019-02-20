@@ -1,39 +1,33 @@
 <ng-template #uppyModalTemplate>
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title float-left">Upload Expense Sheet</h4>
-                    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row m-b-30">
-                            <div class="col-xs-12">
-                                <span id="lblImportTemplate">
-                                    Select your monthly expense sheet for upload by clicking on the Choose File Button.
-                                    <br />
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="row" uppy-container>
-                            <div>
-                                <h3>Choose File</h3>
-                            </div>
-                            <uppy [on]="uppyEvent" parentId="2" [fileUploadUrl]="fileUploadUrl"></uppy>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-flat" (click)="bsModalRef.hide()">
-                        Cancel
-                    </button>
-                    <button type="button" class="btn btn-accent">Ok</button>
+    <div class="modal-header">
+        <h4 class="modal-title float-left">Upload Expense Sheet</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="row m-b-30">
+                <div class="col-xs-12">
+                    <span id="lblImportTemplate">
+                        Select your monthly expense sheet for upload by clicking on the Choose File Button.
+                        <br />
+                    </span>
                 </div>
             </div>
+
+            <div class="row" uppy-container>
+                <div>
+                    <h3>Choose File</h3>
+                </div>
+                <uppy [on]="uppyEvent" parentId="2" [fileUploadUrl]="fileUploadUrl"></uppy>
+            </div>
         </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-flat" (click)="bsModalRef.hide()">
+            Cancel
+        </button>
+        <button type="button" class="btn btn-accent">Ok</button>
     </div>
 </ng-template>
