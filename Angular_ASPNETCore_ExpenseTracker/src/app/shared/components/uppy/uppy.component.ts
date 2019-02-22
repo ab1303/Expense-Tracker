@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, AfterViewInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Renderer2, Inject, HostBinding, Host } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation, ChangeDetectionStrategy, ElementRef, Renderer2, Inject, HostBinding, Host } from "@angular/core";
 import * as Uppy from '@uppy/core';
 import XHRUpload from '@uppy/xhr-upload';
 import { Subject } from "rxjs";
 
+import uppyEvents from './uppy-events.types';
 import { UppyLocaleStrings } from "./UppyLocaleStrings";
 
 export type UppyPluginConfigurations = [
@@ -19,7 +20,7 @@ export type UppyPluginConfigurations = [
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UppyComponent implements OnInit  {
+export class UppyComponent implements OnInit {
   @Input() parentId: number;
   @Input() fileUploadUrl: string;
   @Input() plugins: UppyPluginConfigurations = [];
@@ -57,11 +58,14 @@ export class UppyComponent implements OnInit  {
       fieldName: 'fileAttachment',
     })
 
-    const events = ['file-added', 'file-removed', 'upload', 'upload-progress', 'upload-success', 'complete', 'upload-error', 'info-visible', 'info-hidden']
+    const events = [
+      uppyEvents.FILE_ADDED, uppyEvents.FILE_REMOVED, 
+      uppyEvents.UPLOAD, uppyEvents.UPLOAD_PROGRESS, uppyEvents.UPLOAD_SUCCESS, uppyEvents.COMPLETE, uppyEvents.UPLOAD_ERROR, 
+      uppyEvents.INFO_INVISIBLE, uppyEvents.INFO_HIDDEN];
 
-    this._uppy.on('upload-progress', this.uploadProgress);
-    this._uppy.on('upload-success', this.uploadSuccess);
-    this._uppy.on('upload-error', this.uploadError);
+    this._uppy.on(uppyEvents.UPLOAD_PROGRESS, this.uploadProgress);
+    this._uppy.on(uppyEvents.UPLOAD_SUCCESS, this.uploadSuccess);
+    this._uppy.on(uppyEvents.UPLOAD_ERROR, this.uploadError);
 
     // Publish Event to subscribers
     events.forEach(ev => this._uppy.on(ev, (data1, data2, data3) => {
@@ -73,7 +77,8 @@ export class UppyComponent implements OnInit  {
   }
 
   uploadProgress(file, progress) {
-
+    console.log(file);
+    console.log(progress);
   }
 
   uploadSuccess(file, response) {

@@ -6,10 +6,9 @@ import { TrackByService } from "../../../core/trackby.service";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { Subject } from "rxjs";
-import { BsModalRef, ModalDirective } from "ngx-bootstrap";
+import { ModalDirective } from "ngx-bootstrap";
+import uppyEventsTypes from "../../../shared/components/uppy/uppy-events.types";
 
-const URL = "path_to_api";
-const API_URL = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
 
 @Component({
   selector: "expense-sheet",
@@ -30,7 +29,7 @@ export class ExpenseSheetComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(public trackby: TrackByService) {
     this.uppyEvent
       .takeUntil(this.onDestroy$)
-      .filter(([ev]) => ev['complete'])
+      .filter(([ev]) => ev[uppyEventsTypes.COMPLETE])
       .subscribe(
         ([ev, data1, data2, data3]) =>
           console.log("Received '" + ev + "' event from instance 1", 'Upload complete'),
