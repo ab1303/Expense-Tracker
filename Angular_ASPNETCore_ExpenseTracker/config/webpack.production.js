@@ -6,6 +6,8 @@ const webpack = require('webpack'),
   path = require('path'),
   rootDir = path.resolve(__dirname, '..');
 
+console.log('Running file webpack.production.js');
+
 var aotPlugin = new ngToolsWebpack.AotPlugin({
   tsConfigPath: "./tsconfig.aot.json",
 });

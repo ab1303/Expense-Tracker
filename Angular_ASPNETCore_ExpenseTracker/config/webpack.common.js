@@ -62,7 +62,7 @@ const webpack = require('webpack'),
     rootDir = path.resolve(__dirname, '..');
 
    
-   
+console.log('Running file webpack.common.js');
    
     
 

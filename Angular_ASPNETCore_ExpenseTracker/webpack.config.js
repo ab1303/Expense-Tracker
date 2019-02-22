@@ -59,6 +59,7 @@ const postcssPlugins = function () {
 
 
 const outputPath = path.join(process.cwd(), "wwwroot");
+console.log('Running file webpack.config.js');
 console.log(`Output file path : ${outputPath}`);
 
 

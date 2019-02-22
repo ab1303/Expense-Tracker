@@ -5,6 +5,7 @@ const webpack = require('webpack'),
   path = require('path'),
   rootDir = path.resolve(__dirname, '..');
 
+  console.log('Running file webpack.development.js');
   console.log('root dir: ' + rootDir);
 
 const env = process.env.NODE_ENV;
