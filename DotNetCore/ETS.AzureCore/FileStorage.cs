@@ -27,12 +27,12 @@ namespace ETS.Azure
         private async Task<string> CreateBlobAsync(string containerName, string fileName, byte[] fileBytes, bool publicAccess = false)
         {
             if (string.IsNullOrWhiteSpace(fileName))
-                throw new ArgumentNullException("fileName", "The fileName cannot be null.");
+                throw new ArgumentNullException(nameof(fileName), "The fileName cannot be null.");
 
             if (fileBytes == null)
-                throw new ArgumentNullException("fileBytes", "The fileBytes cannot be null.");
+                throw new ArgumentNullException(nameof(fileBytes), "The fileBytes cannot be null.");
 
-            var blob = CreateBlob(containerName, fileName, publicAccess);
+            var blob = await CreateBlobAsync(containerName, fileName, publicAccess);
 
             if (fileBytes.Length <= MaxBlobSize)
             {
@@ -58,21 +58,21 @@ namespace ETS.Azure
             return blob.Uri.ToString();
         }
 
-        private string CreateBlob(string containerName, string fileName, string data, bool publicAccess = false)
+        private async Task<string> CreateBlobAsync(string containerName, string fileName, string data, bool publicAccess = false)
         {
-            var blob = CreateBlob(containerName, fileName, publicAccess);
+            var blob = await CreateBlobAsync(containerName, fileName, publicAccess);
 
-            blob.UploadTextAsync(data);
+            await blob.UploadTextAsync(data);
 
             return blob.Uri.ToString();
         }
 
-        private CloudBlockBlob CreateBlob(string containerName, string fileName, bool publicAccess = false)
+        private async Task<CloudBlockBlob> CreateBlobAsync(string containerName, string fileName, bool publicAccess = false)
         {
             var client = _cloudStorageAccount.CreateCloudBlobClient();
             var container = client.GetContainerReference(containerName.ToLower());
 
-            container.CreateIfNotExistsAsync();
+            await container.CreateIfNotExistsAsync();
 
             if (publicAccess)
             {
@@ -80,7 +80,7 @@ namespace ETS.Azure
                 {
                     PublicAccess = BlobContainerPublicAccessType.Blob
                 };
-                container.SetPermissionsAsync(containerPermissions);
+                await container.SetPermissionsAsync(containerPermissions);
             }
             var blob = container.GetBlockBlobReference(fileName);
             blob.Properties.ContentType = Path.GetExtension(fileName).GetContentType();
@@ -166,9 +166,9 @@ namespace ETS.Azure
             return blob.DeleteIfExistsAsync();
         }
 
-        public string StoreFile(FileFolder fileFolder, string fileName, string data)
+        public async Task<string> StoreFile(FileFolder fileFolder, string fileName, string data)
         {
-            return CreateBlob(fileFolder.ToString(), fileName, data);
+            return await CreateBlobAsync(fileFolder.ToString(), fileName, data);
         }
 
         public Task<bool> IsFileExists(FileFolder fileFolder, string fileName)

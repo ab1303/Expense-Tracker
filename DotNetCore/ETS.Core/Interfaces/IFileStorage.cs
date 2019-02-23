@@ -22,7 +22,7 @@ namespace ETS.Core.Interfaces
 
         Task<bool> DeletePublicFileAsync(string fileName);
         Task<bool> DeleteFileAsync(FileFolder fileFolder, string fileName);
-        string StoreFile(FileFolder fileFolder, string fileName, string data);
+        Task<string> StoreFile(FileFolder fileFolder, string fileName, string data);
         Task<bool> IsFileExists(FileFolder fileFolder, string fileName);
         Task<string> GetFileUrl(FileFolder fileFolder, string fileName);
         string SaveUploadFile(FileFolder fileFolder, string fileName, byte[] byteArray);
