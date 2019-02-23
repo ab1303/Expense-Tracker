@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 import { HttpClientModule } from "@angular/common/http";
 import { ResponsiveModule } from "ng2-responsive";
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 import { AppComponent } from "./app.component";
@@ -48,6 +50,11 @@ export interface StoreType {
     AppRoutingModule,
     HttpClientModule,
     HttpInterceptorModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
     ExpensesModule,
     IncomeModule,
   ],

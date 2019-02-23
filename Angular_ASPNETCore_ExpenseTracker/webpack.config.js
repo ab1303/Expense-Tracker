@@ -394,8 +394,9 @@ module.exports = {
 		new ConcatPlugin({
 			"uglify": false,
 			"sourceMap": true,
-			"name": "scripts",
-			"fileName": "[name].bundle.js",
+            "name": "scripts",
+            "outputPath": outputPath,
+            "fileName": "devDist/[name].bundle.js",
 			"filesToConcat": [
 				"node_modules\\jquery\\dist\\jquery.js",
 				"node_modules\\malihu-custom-scrollbar-plugin\\jquery.mCustomScrollbar.js"

@@ -23,33 +23,36 @@
 					</button>
 				</li>
 			</ul>
-			<div class="card"
-			     *ngFor="let expenseCategory of expenseCategories;trackBy:trackby.expenseCateogry">
-				<header class="card-header">
-					<h2 class="card-title">{{expenseCategory.name}}</h2>
-					<small class="card-subtitle">created by on </small>
-					<ul class="actions icons top-right">
-						<li class="dropdown"
-						    dropdown>
-							<a href="javascript:void(0)"
-							   dropdownToggle>
-								<i class="zmdi zmdi-more-vert"></i>
-							</a>
-							<ul class="dropdown-menu btn-primary dropdown-menu-right">
-								<li>
-									<a href="javascript:void(0)">Edit Category</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
+			<div class="card-container">
+				<div class="card m-10 w-300"
+				     *ngFor="let expenseCategory of expenseCategories;trackBy:trackby.expenseCateogry">
+					<header class="card-header">
+						<h2 class="card-title">{{expenseCategory.name}}</h2>
+						<small class="card-subtitle">created by on </small>
+						<ul class="actions icons top-right">
+							<li class="dropdown"
+							    dropdown>
+								<a href="javascript:void(0)"
+								   dropdownToggle>
+									<i class="zmdi zmdi-more-vert"></i>
+								</a>
+								<ul class="dropdown-menu btn-primary dropdown-menu-right">
+									<li>
+										<a href="javascript:void(0)">Edit Category</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 
-				</header>
-				<div class="card-block">
-					<p>
-						{{expenseCategory.description}}
-					</p>
+					</header>
+					<div class="card-block">
+						<p>
+							{{expenseCategory.description}}
+						</p>
+					</div>
 				</div>
 			</div>
+
 		</div>
 
 	</div>

@@ -43,7 +43,6 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         //    in the request header and then falls back to reading the body.
         [HttpPost("UploadFile")]
         [DisableFormValueModelBinding]
-        //[ValidateAntiForgeryToken] // TODO:
         public async Task<IActionResult> UploadFile()
         {
             if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
@@ -81,11 +80,12 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
 
                             _logger.LogInformation($"Copied the uploaded file '{uploadedFileUri}'");
 
+                            var uri = uploadedFileUri;
                             _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(
                                 x => x.Handle(
                                     new ProcessMonthlyExpenseFileUploadRequest
                                     {
-                                        FileUri = uploadedFileUri,
+                                        FileUri = uri,
                                         FileName = fileName
                                     }));
                         }
