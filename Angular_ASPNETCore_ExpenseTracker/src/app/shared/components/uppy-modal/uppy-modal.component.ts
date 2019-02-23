@@ -1,7 +1,8 @@
 import {
   Component,
   TemplateRef,
-  ViewChild
+  ViewChild,
+  Input
 } from "../../../../../node_modules/@angular/core";
 import {
   BsModalRef,
@@ -13,9 +14,10 @@ import {
   templateUrl: "./uppy-modal.component.html"
 })
 export class UppyModalComponent {
-  bsModalRef: BsModalRef;
-
+  @Input('fileUploadUrl') fileUploadUrl:string;
   @ViewChild("uppyModalTemplate") uppyModalTemplate: TemplateRef<any>;
+  
+  bsModalRef: BsModalRef;
   constructor(private modalService: BsModalService) {}
 
   showUppyUploadModal() {

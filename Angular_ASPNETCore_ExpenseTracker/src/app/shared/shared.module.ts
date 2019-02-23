@@ -54,6 +54,7 @@ import { UppyDashboardComponent } from './components/uppy/components/uppy.dashbo
 import { UppyComponent } from './components/uppy/uppy.component';
 import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
 import { UppyModalComponent } from './components/uppy-modal/uppy-modal.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 export const customCurrencyMaskConfig = {

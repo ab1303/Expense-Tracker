@@ -6,7 +6,6 @@ import { TrackByService } from "../../../core/trackby.service";
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { Subject } from "rxjs";
 import uppyEventsTypes from "../../../shared/components/uppy/uppy-events.types";
-import { BsModalService, BsModalRef } from "ngx-bootstrap";
 
 
 @Component({
@@ -20,10 +19,7 @@ export class ExpenseSheetComponent implements OnDestroy, AfterViewInit {
   onDestroy$ = new Subject<void>();
 
   fileUploadUrl: string = `${API_BASE_ADDRESS}/Expenses/UploadFile`;
-  bsModalRef:BsModalRef;
-  modalRef:BsModalRef;
-  @ViewChild('uppyModalTemplate') uppyModalTemplate: TemplateRef<any>
-  constructor(public trackby: TrackByService, private modalService: BsModalService ) {
+  constructor(public trackby: TrackByService ) {
     this.uppyEvent
       .takeUntil(this.onDestroy$)
       .filter(([ev]) => ev[uppyEventsTypes.COMPLETE])

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Angular_ASPNETCore_ExpenseTracker.Infrastructure.Attributes;
@@ -43,61 +44,36 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
         //    in the request header and then falls back to reading the body.
         [HttpPost("UploadFile")]
         [DisableFormValueModelBinding]
-        public async Task<IActionResult> UploadFile()
+        //[ValidateAntiForgeryToken] // TODO:
+        public async Task<JsonResult> UploadFile(IFormFile fileAttachment)
         {
-            if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
+            if (fileAttachment == null) throw new ArgumentNullException(nameof(fileAttachment));
+
+            string uploadedFileUri;
+            using (var reader = new StreamReader(fileAttachment.OpenReadStream()))
             {
-                return BadRequest($"Expected a multipart request, but got {Request.ContentType}");
-            }
+                var targetStream = new MemoryStream();
+                await reader.BaseStream.CopyToAsync(targetStream);
 
+                var parsedContentDisposition = ContentDispositionHeaderValue.Parse(fileAttachment.ContentDisposition);
+                var fileName = parsedContentDisposition.FileName.ToString();
 
-            string uploadedFileUri = null;
+                uploadedFileUri = await _fileStorage.StoreFileAsync(
+                    ETS.Core.Enums.FileFolder.MonthlyExpenseSheets,
+                    fileName, targetStream.ToArray());
 
-            var boundary = MultipartRequestHelper.GetBoundary(
-                MediaTypeHeaderValue.Parse(Request.ContentType),
-                _defaultFormOptions.MultipartBoundaryLengthLimit);
-            var reader = new MultipartReader(boundary, HttpContext.Request.Body);
+                _logger.LogInformation($"Copied the uploaded fileAttachment '{uploadedFileUri}'");
 
-            var section = await reader.ReadNextSectionAsync();
-            while (section != null)
-            {
-                ContentDispositionHeaderValue contentDisposition;
-                var hasContentDispositionHeader = ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out contentDisposition);
-
-                if (hasContentDispositionHeader)
-                {
-                    if (MultipartRequestHelper.HasFileContentDisposition(contentDisposition))
-                    {
-                        // Upload file to Azure Storage
-                        using (var targetStream = new MemoryStream())
+                var uri = uploadedFileUri;
+                _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(
+                    x => x.Handle(
+                        new ProcessMonthlyExpenseFileUploadRequest
                         {
-                            await section.Body.CopyToAsync(targetStream);
-
-                            var fileName = HeaderUtilities.RemoveQuotes(contentDisposition.FileName).ToString();
-                            uploadedFileUri = await _fileStorage.StoreFileAsync(
-                                ETS.Core.Enums.FileFolder.MonthlyExpenseSheets,
-                                fileName, targetStream.ToArray());
-
-                            _logger.LogInformation($"Copied the uploaded file '{uploadedFileUri}'");
-
-                            var uri = uploadedFileUri;
-                            _backgroundJobClient.Enqueue<IProcessMonthlyExpenseFileUploadRequest>(
-                                x => x.Handle(
-                                    new ProcessMonthlyExpenseFileUploadRequest
-                                    {
-                                        FileUri = uri,
-                                        FileName = fileName
-                                    }));
-                        }
-
-                    }
-                }
-
-                // Drains any remaining section body that has not been consumed and
-                // reads the headers for the next section.
-                section = await reader.ReadNextSectionAsync();
+                            FileUri = uri,
+                            FileName = fileName
+                        }));
             }
-
+            
             return Json(new
             {
                 fileUri = uploadedFileUri,

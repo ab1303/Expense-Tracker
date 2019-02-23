@@ -7,19 +7,7 @@
     </div>
     <div class="modal-body">
         <div class="container">
-            <div class="row m-b-30">
-                <div class="col-xs-12">
-                    <span id="lblImportTemplate">
-                        Select your monthly expense sheet for upload by clicking on the Choose File Button.
-                        <br />
-                    </span>
-                </div>
-            </div>
-
             <div class="row" uppy-container>
-                <div>
-                    <h3>Choose File</h3>
-                </div>
                 <uppy [on]="uppyEvent" parentId="2" [fileUploadUrl]="fileUploadUrl"></uppy>
             </div>
         </div>
