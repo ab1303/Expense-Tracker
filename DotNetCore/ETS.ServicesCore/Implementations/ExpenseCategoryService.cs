@@ -67,5 +67,40 @@ namespace ETS.Services.Implementations
             }
 
         }
+
+        public ServiceResult UpdateExpenseCategory(long id, string name, string description)
+        {
+            try
+            {
+                var expenseCategory = _repositories.ExpenseCategory.FindById(id);
+
+                if(expenseCategory == null)
+                    return new ServiceResult
+                    {
+                        Exception = new ArgumentException($"Invalid argument {nameof(id)}")
+                    };
+
+                expenseCategory.Name = name;
+                expenseCategory.Description = description;
+
+                _repositories.ExpenseCategory.Update(expenseCategory);
+
+                _dataContext.SaveChanges();
+
+                return new ServiceResult
+                {
+                    Status = ServiceStatus.Success,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Exception = ex
+                };
+            }
+
+        }
     }
 }

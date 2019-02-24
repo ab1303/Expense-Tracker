@@ -10,5 +10,6 @@ namespace ETS.Services.Interfaces
     {
         List<ExpenseCategoryDTO> GetExpenseCategories();
         ServiceResult<long> AddExpenseCategory(string name, string description);
+        ServiceResult UpdateExpenseCategory(long id, string name, string description);
     }
 }

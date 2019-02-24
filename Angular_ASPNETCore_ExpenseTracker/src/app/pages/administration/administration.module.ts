@@ -13,11 +13,12 @@ import { ExpenseCategoryComponent } from "./expense-category/expense-category.co
 import { ExpenseCategoryService } from "./expense-category/expense-category.service";
 import { UsersService } from "./users/users.service";
 import { TrackByService } from "../../core/trackby.service";
-import { AddModalComponent } from "./expense-category/components/add-modal/add-modal.component";
+import { AddModalComponent as ExpenseCategoryAddModal } from "./expense-category/components/add-modal/add-modal.component";
+import { EditModalComponent as ExpenseCategoryEditModal } from "./expense-category/components/edit-modal/edit-modal.component";
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
-  declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent, AddModalComponent],
+  declarations: [AdminComponent, UsersComponent, ExpenseCategoryComponent, ExpenseCategoryAddModal, ExpenseCategoryEditModal],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,6 +27,6 @@ import { FormsModule } from "@angular/forms";
     RouterModule.forChild(ADMIN_ROUTES)
   ],
   providers: [ExpenseCategoryService, UsersService, TrackByService],
-  entryComponents: [AddModalComponent],
+  entryComponents: [ExpenseCategoryAddModal, ExpenseCategoryEditModal],
 })
 export class AdminModule { }

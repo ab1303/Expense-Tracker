@@ -82,6 +82,40 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             }
         }
 
+        [Route("Update")]
+        [HttpPost]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        [ProducesResponseType(typeof(BaseApiResponse), 200)]
+        public ActionResult UpdateExpenseCategory(long id, [FromBody]ExpenseCategoryInput expenseCategory)
+        {
+            try
+            {
+                var result = _expenseCategoryService.UpdateExpenseCategory(id, expenseCategory.CategoryName, expenseCategory.CategoryDescription);
+                if (!result.IsSuccess)
+                    return BadRequest(new BaseApiResponse
+                    {
+                        Message = result.Message,
+                        Code = InternalApiStatusCode.Error
+                    });
+
+                return Ok(new BaseApiResponse
+                {
+                    Message = result.Message,
+                    Code = InternalApiStatusCode.Error,
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse
+                {
+                    Message = ex.Message,
+                    Code = InternalApiStatusCode.Error
+                });
+            }
+        }
+
 
     }
 }

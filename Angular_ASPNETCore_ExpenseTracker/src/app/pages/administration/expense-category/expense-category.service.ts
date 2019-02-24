@@ -39,6 +39,18 @@ export class ExpenseCategoryService {
 
   }
 
+  
+  updateExpenseCategory(categoryName: string, categoryDescription: string): Observable<GenericBaseApiResponse<number>> {
+    return this.http
+      .post<GenericBaseApiResponse<number>>(`${API_URL}/Update`, {
+        categoryName,
+        categoryDescription,
+      })
+      .catch(this.handleError);
+
+  }
+
+
   private handleError(error: any) {
     console.error("server error:", error);
     if (error instanceof Response) {
