@@ -38,7 +38,10 @@
 								</a>
 								<ul class="dropdown-menu btn-primary dropdown-menu-right">
 									<li (click)="openEditDialog(expenseCategory)">
-										<a href="javascript:void(0)">Edit Category</a>
+										<a href="javascript:void(0)">Edit</a>
+									</li>
+									<li (click)="deleteExpenseCategory(expenseCategory.id)">
+										<a href="javascript:void(0)">Delete</a>
 									</li>
 								</ul>
 							</li>

@@ -102,5 +102,37 @@ namespace ETS.Services.Implementations
             }
 
         }
+
+        public ServiceResult DeleteExpenseCategory(long id)
+        {
+            try
+            {
+                var expenseCategory = _repositories.ExpenseCategory.FindById(id);
+
+                if (expenseCategory == null)
+                    return new ServiceResult
+                    {
+                        Exception = new ArgumentException($"Invalid argument {nameof(id)}")
+                    };
+
+                _repositories.ExpenseCategory.Delete(expenseCategory);
+
+                _dataContext.SaveChanges();
+
+                return new ServiceResult
+                {
+                    Status = ServiceStatus.Success,
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult
+                {
+                    Exception = ex
+                };
+            }
+
+        }
     }
 }

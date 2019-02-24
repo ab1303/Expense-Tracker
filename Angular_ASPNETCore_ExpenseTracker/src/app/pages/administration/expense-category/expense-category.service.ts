@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { API_BASE_ADDRESS } from "../../../app.constants";
 import { ExpenseCategoryApiResponse } from "./expense-category";
@@ -8,9 +8,7 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import { GenericBaseApiResponse } from "../../../shared/model/api-responses/GenericBaseApiResponse";
-
-
-
+import { BaseApiResponse } from "../../../shared/model/api-responses/base-api-response";
 
 
 const API_URL = `${API_BASE_ADDRESS}/ExpenseCategory`;
@@ -22,7 +20,6 @@ export class ExpenseCategoryService {
     return this.http
       .get(API_URL)
       .map((response: Response) => {
-        // let response = res.json();
         return response;
       })
       .catch(this.handleError);
@@ -40,14 +37,21 @@ export class ExpenseCategoryService {
   }
 
   
-  updateExpenseCategory(categoryName: string, categoryDescription: string): Observable<GenericBaseApiResponse<number>> {
+  updateExpenseCategory(id: number, categoryName: string, categoryDescription: string): Observable<GenericBaseApiResponse<number>> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
     return this.http
-      .post<GenericBaseApiResponse<number>>(`${API_URL}/Update`, {
+      .put<GenericBaseApiResponse<number>>(`${API_URL}/Update/${id}`, {
         categoryName,
         categoryDescription,
-      })
+      }, { headers: headers })
       .catch(this.handleError);
 
+  }
+
+  
+  deleteExpenseCategory(id: number): Observable<BaseApiResponse> {
+    return this.http.delete<BaseApiResponse>(`${API_URL}/Delete/${id}`).catch(this.handleError);
   }
 
 

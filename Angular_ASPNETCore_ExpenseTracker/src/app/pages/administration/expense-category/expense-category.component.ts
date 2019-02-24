@@ -5,6 +5,7 @@ import { ExpenseCategory } from "./types/expense-category.model";
 import { AddModalComponent } from "./components/add-modal/add-modal.component";
 import { EditModalComponent } from "./components/edit-modal/edit-modal.component";
 import { MatDialog } from "@angular/material";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "expense-category",
@@ -20,7 +21,8 @@ export class ExpenseCategoryComponent implements OnInit {
   constructor(
     private expenseCategoryService: ExpenseCategoryService,
     public dialog: MatDialog,
-    public trackby: TrackByService
+    public trackby: TrackByService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class ExpenseCategoryComponent implements OnInit {
     const dialogRef = this.dialog.open(AddModalComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if(!result.model) return;
       const { categoryName, categoryDescription } = result.model;
       this.expenseCategoryService.addExpenseCategory(categoryName, categoryDescription)
         .subscribe(
@@ -49,6 +51,7 @@ export class ExpenseCategoryComponent implements OnInit {
                 dateChanged: null,
               }
             ];
+            this.toastrService.success('Expense category added')
           }
         )
 
@@ -64,25 +67,41 @@ export class ExpenseCategoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if(!result.model) return;
       const { categoryName, categoryDescription } = result.model;
-      this.expenseCategoryService.addExpenseCategory(categoryName, categoryDescription)
+      this.expenseCategoryService.updateExpenseCategory(expenseCategory.id, categoryName, categoryDescription)
         .subscribe(
           response => {
             this.expenseCategories = [
-              ...this.expenseCategories,
-              {
-                id: response.model,
-                name: categoryName,
-                description: categoryDescription,
-                dateCreated: null,
-                dateChanged: null,
-              }
+              ...this.expenseCategories.map(e => {
+                if(e.id !== expenseCategory.id) return e;
+                return {
+                  id: response.model,
+                  name: categoryName,
+                  description: categoryDescription,
+                  dateCreated: null,
+                  dateChanged: null,
+                }; 
+              })
             ];
+            this.toastrService.success('Expense category updated');
           }
         )
 
     });
+  }
+
+  deleteExpenseCategory(id){
+    this.expenseCategoryService.deleteExpenseCategory(id)
+    .subscribe(
+      response => {
+        this.toastrService.success('Expense category deleted');
+        this.expenseCategories = [
+          ...this.expenseCategories.filter(e => e.id !== id),
+        ];
+        
+      }
+    )
   }
 
 

@@ -82,8 +82,8 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             }
         }
 
-        [Route("Update")]
-        [HttpPost]
+        [Route("Update/{id}")]
+        [HttpPut]
         [ProducesResponseType(typeof(BaseApiResponse), 400)]
         [ProducesResponseType(typeof(BaseApiResponse), 200)]
         public ActionResult UpdateExpenseCategory(long id, [FromBody]ExpenseCategoryInput expenseCategory)
@@ -91,6 +91,40 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
             try
             {
                 var result = _expenseCategoryService.UpdateExpenseCategory(id, expenseCategory.CategoryName, expenseCategory.CategoryDescription);
+                if (!result.IsSuccess)
+                    return BadRequest(new BaseApiResponse
+                    {
+                        Message = result.Message,
+                        Code = InternalApiStatusCode.Error
+                    });
+
+                return Ok(new BaseApiResponse
+                {
+                    Message = result.Message,
+                    Code = InternalApiStatusCode.Error,
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return BadRequest(new BaseApiResponse
+                {
+                    Message = ex.Message,
+                    Code = InternalApiStatusCode.Error
+                });
+            }
+        }
+
+        [Route("Delete/{id}")]
+        [HttpDelete]
+        [ProducesResponseType(typeof(BaseApiResponse), 400)]
+        [ProducesResponseType(typeof(BaseApiResponse), 200)]
+        public ActionResult RemoveExpenseCategory(long id)
+        {
+            try
+            {
+                var result = _expenseCategoryService.DeleteExpenseCategory(id);
                 if (!result.IsSuccess)
                     return BadRequest(new BaseApiResponse
                     {
