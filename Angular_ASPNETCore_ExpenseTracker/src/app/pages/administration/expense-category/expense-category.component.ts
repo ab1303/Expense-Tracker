@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ExpenseCategoryService } from "./expense-category.service";
 import { TrackByService } from "../../../core/trackby.service";
-import { ExpenseCategory } from "../../../shared/model/domain/expense-category.model";
+import { ExpenseCategory } from "./types/expense-category.model";
 import { AddModalComponent } from "./components/add-modal/add-modal.component";
 import { MatDialog } from "@angular/material";
 
@@ -25,7 +25,7 @@ export class ExpenseCategoryComponent implements OnInit {
   }
 
 
-  openDialog() {
+  openAddDialog() {
     const dialogRef = this.dialog.open(AddModalComponent);
 
     dialogRef.afterClosed().subscribe(result => {

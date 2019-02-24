@@ -5,7 +5,6 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-add-modal',
   templateUrl: './add-modal.component.html',
-  styleUrls: ['./add-modal.component.scss']
 })
 export class AddModalComponent implements OnInit {
   model: { categoryName: string, categoryDescription: string } = {
