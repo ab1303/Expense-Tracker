@@ -1,64 +1,37 @@
-<div id="content_wrapper"
-     class="boxedlayout3-wrapper">
-	<div class="content">
-		<div class="header-wrapper header-sm shadow-none">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col">
-						<header>
-							<h1>Expense Categories</h1>
-
-						</header>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="content-body container">
-			<ul class="actions fab center-right">
-				<li>
-					<button class="btn btn-accent btn-fab"
-					        mat-ripple
-					        (click)="openAddDialog()">
-						<i class="zmdi zmdi-plus"></i>
-					</button>
-				</li>
-			</ul>
-			<div class="card-container">
-				<div class="card m-10 w-300"
-				     *ngFor="let expenseCategory of expenseCategories;trackBy:trackby.expenseCateogry">
-					<header class="card-header">
-						<h2 class="card-title">{{expenseCategory.name}}</h2>
-						<small class="card-subtitle">created by on </small>
-						<ul class="actions icons top-right">
-							<li class="dropdown"
-							    dropdown>
-								<a href="javascript:void(0)"
-								   dropdownToggle>
-									<i class="zmdi zmdi-more-vert"></i>
-								</a>
-								<ul class="dropdown-menu btn-primary dropdown-menu-right">
-									<li (click)="openEditDialog(expenseCategory)">
-										<a href="javascript:void(0)">Edit</a>
-									</li>
-									<li (click)="deleteExpenseCategory(expenseCategory.id)">
-										<a href="javascript:void(0)">Delete</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-
-					</header>
-					<div class="card-block">
-						<p>
-							{{expenseCategory.description}}
-						</p>
-					</div>
-				</div>
-			</div>
-
-		</div>
-
-	</div>
-	<footer id="footer_wrapper"
-	        class="footer_wrapper"></footer>
-</div>
+<page-layout [canAdd]="true" (onAdd)="openAddDialog($event)">
+  <h1>Expense Categories</h1>
+  <div class="card-container">
+    <div
+      class="card m-10 w-300"
+      *ngFor="
+        let expenseCategory of expenseCategories;
+        trackBy: trackby.expenseCateogry
+      "
+    >
+      <header class="card-header">
+        <h2 class="card-title">{{ expenseCategory.name }}</h2>
+        <small class="card-subtitle">created by on </small>
+        <ul class="actions icons top-right">
+          <li class="dropdown" dropdown>
+            <a href="javascript:void(0)" dropdownToggle>
+              <i class="zmdi zmdi-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu btn-primary dropdown-menu-right">
+              <li (click)="openEditDialog(expenseCategory)">
+                <a href="javascript:void(0)">Edit</a>
+              </li>
+              <li (click)="deleteExpenseCategory(expenseCategory.id)">
+                <a href="javascript:void(0)">Delete</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </header>
+      <div class="card-block">
+        <p>
+          {{ expenseCategory.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</page-layout>

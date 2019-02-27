@@ -14,13 +14,11 @@
         </div>
         <div class="content-body container">
             <ul class="actions fab center-right">
-                <ng-container *ngTemplateOutlet="addAction ? addButtonTemplate: null"></ng-container>
+                <ng-container *ngTemplateOutlet="canAdd ? addButtonTemplate: null"></ng-container>
             </ul>
         </div>
-
+        <ng-content select=".card-container"></ng-content>
     </div>
-    <footer id="footer_wrapper"
-            class="footer_wrapper"></footer>
 </div>
 
 
@@ -28,7 +26,7 @@
     <li>
         <button class="btn btn-accent btn-fab"
                 mat-ripple
-                (click)="openAddDialog()">
+                (click)="onAddClick()">
             <i class="zmdi zmdi-plus"></i>
         </button>
     </li>

@@ -54,7 +54,7 @@ import { UppyDashboardComponent } from './components/uppy/components/uppy.dashbo
 import { UppyComponent } from './components/uppy/uppy.component';
 import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
 import { UppyModalComponent } from './components/uppy-modal/uppy-modal.component';
-import { ToastrModule } from 'ngx-toastr';
+import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -104,6 +104,7 @@ export const customCurrencyMaskConfig = {
         UppyComponent,
         UppyDashboardComponent,
         UppyModalComponent,
+        PageLayoutComponent,
     ],
     exports: [
         CommonModule,
@@ -140,6 +141,7 @@ export const customCurrencyMaskConfig = {
         UppyComponent,
         UppyDashboardComponent,
         UppyModalComponent,
+        PageLayoutComponent,
     ],
     providers: [
     ]
