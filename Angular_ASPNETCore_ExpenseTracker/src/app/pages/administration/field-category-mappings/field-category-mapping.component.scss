@@ -1,0 +1,64 @@
+// background: rgb(244, 245, 247);
+
+@import "../../../shared/styles/main/util/color-variables";
+
+.container{
+    display: flex;
+
+    &-column {
+        height: 90vh;
+        border: none !important;
+        background: $shade15;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-radius: 6px;
+        margin-bottom: 30px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+        
+        .header{
+            position: sticky;
+            background: $shade30;
+            top: 0px;
+            height: 50px;
+            display: flex;
+            padding: 4px;
+            margin-bottom:16px;
+            .search-bar{
+                flex-basis: 1;
+            }
+            .icons{
+                margin:auto 7px;
+                &:hover{
+                    background: $shade40;
+                }
+            }
+        }
+
+        &-body{
+
+        }
+
+        .card-item{
+            height:30px;
+            margin:8px;
+            padding:0px 4px;
+            border-radius: 3px;
+            background: $shade20;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+            -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+            -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+
+        }
+    }
+}
+
+

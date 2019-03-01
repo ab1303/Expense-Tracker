@@ -1,4 +1,27 @@
-<page-layout [canAdd]="true" (onAdd)="onAdd($event)">
+<page-layout [canAdd]="true"
+             (onAdd)="onAdd($event)">
 	<h1>Field Category Mapping</h1>
 
+	<div class="container">
+		<div class="container-column w-300">
+			<div class="header">
+				<div class="search-bar"> placeholder for search bar with title</div>
+				<div class="icons">
+					<mat-icon>add</mat-icon>
+				</div>
+			</div>
+			<div class="body">
+				This is body
+				<div class="card-item">
+					Zakat
+				</div>
+				<div class="card-item">
+					Groceries
+				</div>
+				<div class="card-item">
+					Eating out
+				</div>
+			</div>
+		</div>
+	</div>
 </page-layout>
