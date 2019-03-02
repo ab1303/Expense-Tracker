@@ -1,0 +1,25 @@
+<!-- 
+
+/* Inspired by course from eggHead.io on Advanced Angular Component Patterns
+
+<toggle-editor>
+    <toggle-normal></toggle-normal>
+    <toggle-edit></toggle-edit>
+</toggle-editor>
+
+where 
+<toggle-normal> & <toggle-edit> are optional components..
+if they aren't provided then
+<toggle-normal> will be label
+<toggle-edit> will be input
+
+*/
+-->
+
+
+<ng-container *ngTemplateOutlet="!isEditing && toggleNormal ? normalTmpl : null"></ng-container>
+<ng-container *ngTemplateOutlet="isEditing && toggleEdit? ? editTmpl : null"></ng-container>
+
+
+<ng-template #normalTmpl> Markup for label</ng-template>
+<ng-template #editTmpl> Markup for input </ng-template>
