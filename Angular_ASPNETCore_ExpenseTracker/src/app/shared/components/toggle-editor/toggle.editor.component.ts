@@ -1,8 +1,6 @@
 
 
-import { Component, ContentChild } from "@angular/core";
-import { ToggleNormal } from "./toggle.normal.component";
-import { ToggleEdit } from "./toggle.edit.component";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: 'toggle-editor',
@@ -10,7 +8,17 @@ import { ToggleEdit } from "./toggle.edit.component";
 })
 export class ToggleEditor {
     isEditing: boolean = false;
-    @ContentChild(ToggleNormal) toggleNormal: ToggleNormal;
-    @ContentChild(ToggleEdit) toggleEdit: ToggleEdit;
+    hasToggleEdit: boolean = false;
+    hasToggleNormal: boolean = false;
+
+    @Input() label: string;
+  
+    constructor(){
+        console.log('toggle editor constructor');
+    }
+
+    toggle() {
+        this.isEditing = !this.isEditing;
+    }
 
 }

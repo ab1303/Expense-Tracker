@@ -55,6 +55,9 @@ import { UppyComponent } from './components/uppy/uppy.component';
 import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
 import { UppyModalComponent } from './components/uppy-modal/uppy-modal.component';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
+import { ToggleEditor } from './components/toggle-editor/toggle.editor.component';
+import { ToggleEdit } from './components/toggle-editor/toggle.edit.component';
+import { ToggleNormal } from './components/toggle-editor/toggle.normal.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -105,6 +108,9 @@ export const customCurrencyMaskConfig = {
         UppyDashboardComponent,
         UppyModalComponent,
         PageLayoutComponent,
+        ToggleEditor,
+        ToggleEdit,
+        ToggleNormal,
     ],
     exports: [
         CommonModule,
@@ -142,6 +148,9 @@ export const customCurrencyMaskConfig = {
         UppyDashboardComponent,
         UppyModalComponent,
         PageLayoutComponent,
+        ToggleEditor,
+        ToggleEdit,
+        ToggleNormal,
     ],
     providers: [
     ]

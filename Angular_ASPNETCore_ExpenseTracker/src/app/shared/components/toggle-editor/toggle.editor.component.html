@@ -16,10 +16,17 @@ if they aren't provided then
 */
 -->
 
+<div (click)="toggle()">
+    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="!isEditing && !hasToggleNormal ? normalTmpl : null"></ng-container>
+    <ng-container *ngTemplateOutlet="isEditing && !hasToggleEdit ? editTmpl : null"></ng-container>
+</div>
 
-<ng-container *ngTemplateOutlet="!isEditing && toggleNormal ? normalTmpl : null"></ng-container>
-<ng-container *ngTemplateOutlet="isEditing && toggleEdit? ? editTmpl : null"></ng-container>
-
-
-<ng-template #normalTmpl> Markup for label</ng-template>
-<ng-template #editTmpl> Markup for input </ng-template>
+<ng-template #normalTmpl>
+    <label class="p-l-10 form-label">{{label}}:</label>
+</ng-template>
+<ng-template #editTmpl>
+    <input matInput
+           placeholder="{{label}}"
+           class="form-control p-l-10">
+</ng-template>

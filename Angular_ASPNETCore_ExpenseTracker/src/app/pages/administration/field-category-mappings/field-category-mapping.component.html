@@ -10,7 +10,12 @@
 					<mat-icon>search</mat-icon>
 				</div>
 			</div>
-			<div class="add-item"><mat-icon>add</mat-icon></div>
+			<toggle-editor [label]="'Expense Category'">
+				<!-- <toggle-normal>
+					<div class="add-item"><mat-icon>add</mat-icon></div>
+				</toggle-normal> -->
+				<!-- <toggle-edit>Show input control here</toggle-edit> -->
+			</toggle-editor>
 			<div class="body">
 				<div class="card-item">
 					Zakat
