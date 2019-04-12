@@ -58,6 +58,7 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { ToggleEditor } from './components/toggle-editor/toggle.editor.component';
 import { ToggleEdit } from './components/toggle-editor/toggle.edit.component';
 import { ToggleNormal } from './components/toggle-editor/toggle.normal.component';
+import { ToggleEditInputRef } from './components/toggle-editor/toggle.edit.input.directive';
 
 
 export const customCurrencyMaskConfig = {
@@ -111,6 +112,7 @@ export const customCurrencyMaskConfig = {
         ToggleEditor,
         ToggleEdit,
         ToggleNormal,
+        ToggleEditInputRef,
     ],
     exports: [
         CommonModule,
@@ -151,6 +153,7 @@ export const customCurrencyMaskConfig = {
         ToggleEditor,
         ToggleEdit,
         ToggleNormal,
+        ToggleEditInputRef,
     ],
     providers: [
     ]

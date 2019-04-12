@@ -16,17 +16,19 @@ if they aren't provided then
 */
 -->
 
-<div (click)="toggle()">
+<div>
     <ng-content></ng-content>
-    <ng-container *ngTemplateOutlet="!isEditing && !hasToggleNormal ? normalTmpl : null"></ng-container>
-    <ng-container *ngTemplateOutlet="isEditing && !hasToggleEdit ? editTmpl : null"></ng-container>
+    <ng-container *ngIf="isEditing; then !hasToggleEdit && editTmpl;else !hasToggleNormal &&normalTmpl"></ng-container>
 </div>
 
 <ng-template #normalTmpl>
-    <label class="p-l-10 form-label">{{label}}:</label>
+    <div (click)="editMode()">
+        <label class="p-l-10 form-label">{{label}}</label>
+    </div>
 </ng-template>
 <ng-template #editTmpl>
-    <input matInput
+    <input toggleEditInputRef
+           matInput
            placeholder="{{label}}"
            class="form-control p-l-10">
 </ng-template>

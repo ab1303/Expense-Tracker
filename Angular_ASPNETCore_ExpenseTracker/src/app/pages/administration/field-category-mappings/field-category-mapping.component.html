@@ -1,5 +1,5 @@
 <page-layout [canAdd]="true"
-             (onAdd)="onAdd($event)">
+			 (onAdd)="onAdd($event)">
 	<h1>Field Category Mapping</h1>
 
 	<div class="container">
@@ -11,10 +11,16 @@
 				</div>
 			</div>
 			<toggle-editor [label]="'Expense Category'">
-				<!-- <toggle-normal>
-					<div class="add-item"><mat-icon>add</mat-icon></div>
-				</toggle-normal> -->
-				<!-- <toggle-edit>Show input control here</toggle-edit> -->
+				<toggle-normal>
+					<div class="add-item">
+						<mat-icon>add</mat-icon>
+					</div>
+				</toggle-normal>
+				<toggle-edit>
+					<input type="text" toggleEditInputRef
+						   value="text label"
+						   #edit />
+				</toggle-edit>
 			</toggle-editor>
 			<div class="body">
 				<div class="card-item">

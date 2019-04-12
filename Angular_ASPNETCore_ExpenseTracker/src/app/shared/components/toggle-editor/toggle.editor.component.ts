@@ -1,24 +1,30 @@
 
 
-import { Component, Input } from "@angular/core";
+import {
+    Component, Input, HostListener,
+    ViewChild, ElementRef, TemplateRef,
+    ChangeDetectorRef, ViewContainerRef,
+    OnInit, AfterViewInit, AfterViewChecked
+}
+    from "@angular/core";
 
 @Component({
     selector: 'toggle-editor',
     templateUrl: './toggle.editor.component.html'
 })
-export class ToggleEditor {
+export class ToggleEditor  {
     isEditing: boolean = false;
     hasToggleEdit: boolean = false;
     hasToggleNormal: boolean = false;
 
     @Input() label: string;
-  
-    constructor(){
-        console.log('toggle editor constructor');
+
+    public editMode() {
+        this.isEditing = true;
     }
 
-    toggle() {
-        this.isEditing = !this.isEditing;
+    public normalMode() {
+        this.isEditing = false;
     }
 
 }
