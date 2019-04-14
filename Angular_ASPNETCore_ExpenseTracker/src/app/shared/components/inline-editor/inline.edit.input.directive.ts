@@ -1,10 +1,10 @@
 import { HostListener, Directive, AfterViewChecked, ElementRef } from "@angular/core";
-import { InlineEditor } from "./inline.editor.component";
+import { InlineEditor } from "./inline-editor.component";
 
 @Directive({
-    selector: '[toggleEditInputRef]'
+    selector: '[inlineEditInputRef]'
 })
-export class ToggleEditInputRef implements AfterViewChecked {
+export class InlineEditInputRef implements AfterViewChecked {
     constructor(public inlineEditor: InlineEditor, private elRef:ElementRef) {
 
     }

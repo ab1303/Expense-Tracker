@@ -1,6 +1,6 @@
 
 import { Component } from "@angular/core";
-import { InlineEditor } from "./inline.editor.component";
+import { InlineEditor } from "./inline-editor.component";
 
 @Component({
     selector: 'inline-edit',
@@ -9,8 +9,8 @@ import { InlineEditor } from "./inline.editor.component";
       <ng-content *ngIf="inlineEditor.isEditing"></ng-content>
     </div>`
 })
-export class ToggleEdit {
+export class InlineEdit {
     constructor(public inlineEditor: InlineEditor) {
-        inlineEditor.hasToggleEdit = true;
+        inlineEditor.hasInlineEdit = true;
     }
 }

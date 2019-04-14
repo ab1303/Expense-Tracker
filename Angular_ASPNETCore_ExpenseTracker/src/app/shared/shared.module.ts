@@ -55,10 +55,10 @@ import { UppyComponent } from './components/uppy/uppy.component';
 import { UppyContainerDirective } from './components/uppy/uppy.container.directive';
 import { UppyModalComponent } from './components/uppy-modal/uppy-modal.component';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
-import { InlineEditor } from './components/inline-editor/inline.editor.component';
-import { ToggleEdit } from './components/inline-editor/inline.edit.component';
-import { ToggleNormal } from './components/inline-editor/inline.normal.component';
-import { ToggleEditInputRef } from './components/inline-editor/inline.edit.input.directive';
+import { InlineEditor } from './components/inline-editor/inline-editor.component';
+import { InlineEdit } from './components/inline-editor/inline.edit.component';
+import { InlineDisplay } from './components/inline-editor/inline.normal.component';
+import { InlineEditInputRef } from './components/inline-editor/inline.edit.input.directive';
 
 
 export const customCurrencyMaskConfig = {
@@ -110,9 +110,9 @@ export const customCurrencyMaskConfig = {
         UppyModalComponent,
         PageLayoutComponent,
         InlineEditor,
-        ToggleEdit,
-        ToggleNormal,
-        ToggleEditInputRef,
+        InlineEdit,
+        InlineDisplay,
+        InlineEditInputRef,
     ],
     exports: [
         CommonModule,
@@ -151,9 +151,9 @@ export const customCurrencyMaskConfig = {
         UppyModalComponent,
         PageLayoutComponent,
         InlineEditor,
-        ToggleEdit,
-        ToggleNormal,
-        ToggleEditInputRef,
+        InlineEdit,
+        InlineDisplay,
+        InlineEditInputRef,
     ],
     providers: [
     ]

@@ -1,6 +1,6 @@
 
 import { Component } from "@angular/core";
-import { InlineEditor } from "./inline.editor.component";
+import { InlineEditor } from "./inline-editor.component";
 
 @Component({
     selector: 'inline-normal',
@@ -10,9 +10,9 @@ import { InlineEditor } from "./inline.editor.component";
     </div>
     `
 })
-export class ToggleNormal {
+export class InlineDisplay {
     constructor(public inlineEditor: InlineEditor) {
-        inlineEditor.hasToggleNormal = true;
+        inlineEditor.hasInlineDisplay = true;
     }
 
     gotoEditMode(){
