@@ -10,18 +10,18 @@
 					<mat-icon>search</mat-icon>
 				</div>
 			</div>
-			<toggle-editor [label]="'Expense Category'">
-				<toggle-normal>
+			<inline-editor [label]="'Expense Category'">
+				<inline-normal>
 					<div class="add-item">
 						<mat-icon>add</mat-icon>
 					</div>
-				</toggle-normal>
-				<toggle-edit>
-					<input type="text" toggleEditInputRef
-						   value="text label"
-						   #edit />
-				</toggle-edit>
-			</toggle-editor>
+				</inline-normal>
+				<inline-edit>
+					<input toggleEditInputRef
+						   type="text"
+						   value="text label" />
+				</inline-edit>
+			</inline-editor>
 			<div class="body">
 				<div class="card-item">
 					Zakat

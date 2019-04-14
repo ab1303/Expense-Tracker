@@ -1,22 +1,22 @@
 import { HostListener, Directive, AfterViewChecked, ElementRef } from "@angular/core";
-import { ToggleEditor } from "./toggle.editor.component";
+import { InlineEditor } from "./inline.editor.component";
 
 @Directive({
     selector: '[toggleEditInputRef]'
 })
 export class ToggleEditInputRef implements AfterViewChecked {
-    constructor(public toggleEditor: ToggleEditor, private elRef:ElementRef) {
+    constructor(public inlineEditor: InlineEditor, private elRef:ElementRef) {
 
     }
 
     @HostListener("blur")
     onBlur() {
-        this.toggleEditor.normalMode();
+        this.inlineEditor.normalMode();
     }
 
     
     ngAfterViewChecked() {
-        if (this.toggleEditor.isEditing) {
+        if (this.inlineEditor.isEditing) {
             this.elRef.nativeElement.focus();
         }
     }

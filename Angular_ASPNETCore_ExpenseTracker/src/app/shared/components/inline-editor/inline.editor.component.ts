@@ -1,18 +1,15 @@
 
 
 import {
-    Component, Input, HostListener,
-    ViewChild, ElementRef, TemplateRef,
-    ChangeDetectorRef, ViewContainerRef,
-    OnInit, AfterViewInit, AfterViewChecked
+    Component, Input
 }
     from "@angular/core";
 
 @Component({
-    selector: 'toggle-editor',
-    templateUrl: './toggle.editor.component.html'
+    selector: 'inline-editor',
+    templateUrl: './inline.editor.component.html'
 })
-export class ToggleEditor  {
+export class InlineEditor  {
     isEditing: boolean = false;
     hasToggleEdit: boolean = false;
     hasToggleNormal: boolean = false;
