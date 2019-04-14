@@ -1,5 +1,4 @@
 import { EventEmitter } from "@angular/core";
-import { InlineEditorError } from "./inline-editor-error.interface";
 import { InlineConfig } from "../types/inline-configs";
 import { InlineEditorState, InlineEditorStateOptions } from "./inline-editor-state.class";
 import { InlineEditor } from "../inline-editor.component";
@@ -32,7 +31,6 @@ export class ExternalEvents {
     public onEnter: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEscape: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEdit: EventEmitter<InlineEditorEvent> = new EventEmitter();
-    public onError: EventEmitter<InlineEditorError | InlineEditorError[]> = new EventEmitter();
 }
 
 export interface InternalEvent {
