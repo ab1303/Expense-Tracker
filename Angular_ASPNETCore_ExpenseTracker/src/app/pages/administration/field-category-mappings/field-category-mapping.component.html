@@ -10,7 +10,7 @@
 					<mat-icon>search</mat-icon>
 				</div>
 			</div>
-			<inline-editor [label]="'Expense Category'">
+			<inline-editor [label]="'Expense Category'" [(ngModel)]="editableText" (onBlur)="saveEditable($event)">
 				<inline-normal>
 					<div class="add-item">
 						<mat-icon>add</mat-icon>

@@ -24,12 +24,12 @@ export class InternalEvents {
 
 export class ExternalEvents {
     public onChange: EventEmitter<InlineEditorEvent> = new EventEmitter();
-    public onSave: EventEmitter<InlineEditorEvent> = new EventEmitter();
-    public onKeyPress: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onFocus: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onBlur: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onKeyPress: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEnter: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEscape: EventEmitter<InlineEditorEvent> = new EventEmitter();
+    public onSave: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEdit: EventEmitter<InlineEditorEvent> = new EventEmitter();
 }
 

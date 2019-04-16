@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import jwtdecode from "jwt-decode";
+// import jwtdecode from "jwt-decode";
+import * as decode from 'jwt-decode';
 import { Observable } from "rxjs/Observable";
 import { of } from "rxjs/observable/of";
 import { tap } from "rxjs/operators/tap";
@@ -117,7 +118,7 @@ export class SecurityService {
 
  private getIdentity(): Observable<AppUserAuth> {
     // Decode bearer token and pass in username
-    const decodedToken = jwtdecode(localStorage.getItem(BEARER_TOKEN_KEY));
+    const decodedToken = decode(localStorage.getItem(BEARER_TOKEN_KEY));
     return this.http.get<AppUserAuth>(
       `${API_URL}/identity?userName=${decodedToken.sub}`,
       {
@@ -136,7 +137,7 @@ export class SecurityService {
     if (!token) return true;
 
     try {
-      const decoded = jwtdecode(token);
+      const decoded = decode(token);
       const now = Date.now() / 1000;
 
       // X minute buffer zone (X * 60 seconds)

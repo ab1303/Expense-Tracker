@@ -9,6 +9,12 @@ import { Component } from "@angular/core";
 
 export class FieldCategoryMappingComponent {
 
+    editableText = 'myText';
+
+    saveEditable(value) {
+        //call to http service
+        console.log('http.service: ' + value);
+      }
 
     onAdd(data){
         console.log(data);
