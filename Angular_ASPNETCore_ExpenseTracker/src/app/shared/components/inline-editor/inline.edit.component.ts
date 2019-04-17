@@ -6,7 +6,7 @@ import { InlineEditInputRef } from "./inline.edit.input.directive";
   selector: "inline-edit",
   template: `
     <div>
-      <ng-content *ngIf="inlineEditor.isEditing"></ng-content>
+      <ng-content *ngIf="inlineEditor.state.isEditing()"></ng-content>
     </div>
   `
 })

@@ -6,7 +6,7 @@ import { InlineEditor } from "./inline-editor.component";
     selector: 'inline-normal',
     template: `
     <div (click)="gotoEditMode()">
-      <ng-content *ngIf="!inlineEditor.isEditing"></ng-content>
+      <ng-content *ngIf="!inlineEditor.state.isEditing()"></ng-content>
     </div>
     `
 })

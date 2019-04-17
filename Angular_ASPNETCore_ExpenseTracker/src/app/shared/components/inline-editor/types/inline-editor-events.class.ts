@@ -17,7 +17,6 @@ export class InternalEvents {
     public onKeyPress: EventEmitter<InternalEvent> = new EventEmitter();
     public onEnter: EventEmitter<InternalEvent> = new EventEmitter();
     public onEscape: EventEmitter<InternalEvent> = new EventEmitter();
-    public onSave: EventEmitter<InternalEvent> = new EventEmitter();
     public onEdit: EventEmitter<InternalEvent> = new EventEmitter();
     public onUpdateConfig: EventEmitter<InlineConfig> = new EventEmitter();
 }
@@ -29,7 +28,6 @@ export class ExternalEvents {
     public onKeyPress: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEnter: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEscape: EventEmitter<InlineEditorEvent> = new EventEmitter();
-    public onSave: EventEmitter<InlineEditorEvent> = new EventEmitter();
     public onEdit: EventEmitter<InlineEditorEvent> = new EventEmitter();
 }
 

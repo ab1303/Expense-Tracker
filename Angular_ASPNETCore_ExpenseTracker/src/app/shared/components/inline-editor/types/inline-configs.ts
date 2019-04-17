@@ -14,9 +14,6 @@ export interface InlineBaseConfig  {
 export interface InlineConfig extends InlineBaseConfig {
     required: boolean;
     disabled: boolean;
-    saveOnBlur: boolean;
-    saveOnChange: boolean;
-    saveOnEnter: boolean;
     cancelOnEscape: boolean;
     editOnClick: boolean;
     onlyValue: boolean;

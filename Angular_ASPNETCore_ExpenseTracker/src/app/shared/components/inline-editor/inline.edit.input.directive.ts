@@ -15,7 +15,7 @@ export class InlineEditInputRef implements AfterViewChecked {
 
   @HostListener("blur")
   onBlur() {
-    this.inlineEditor.normalMode(); // imperative programming
+    // this.inlineEditor.normalMode(); // imperative programming
 
     // reactive programming
 
@@ -26,7 +26,7 @@ export class InlineEditInputRef implements AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    if (this.inlineEditor.isEditing) {
+    if (this.inlineEditor.state.isEditing()) {
       this.elRef.nativeElement.focus();
     }
   }

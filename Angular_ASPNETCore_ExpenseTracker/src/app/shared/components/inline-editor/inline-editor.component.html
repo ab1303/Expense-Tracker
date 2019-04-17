@@ -18,7 +18,7 @@ if they aren't provided then
 
 <div>
     <ng-content></ng-content>
-    <ng-container *ngIf="isEditing; then !hasInlineEdit && editTmpl;else !hasInlineDisplay && displayTmpl"></ng-container>
+    <ng-container *ngIf="state.isEditing(); then !hasInlineEdit && editTmpl;else !hasInlineDisplay && displayTmpl"></ng-container>
 </div>
 
 <ng-template #displayTmpl>
