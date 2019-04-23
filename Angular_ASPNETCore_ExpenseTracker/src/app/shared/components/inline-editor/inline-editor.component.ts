@@ -74,9 +74,8 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
 
   @Input() label: string;
   @Input() public config: InlineConfig;
-  @Output()
-  public onChange: EventEmitter<InlineEditorEvent | any> = this.events.external
-    .onChange;
+  @Output() public onChange: EventEmitter<InlineEditorEvent | any> = this.events
+    .external.onChange;
   @Output() public onEdit: EventEmitter<InlineEditorEvent | any> = this.events
     .external.onEdit;
   @Output() public onEnter: EventEmitter<InlineEditorEvent | any> = this.events
@@ -89,16 +88,6 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
     .external.onFocus;
   @Output() public onBlur: EventEmitter<InlineEditorEvent | any> = this.events
     .external.onBlur;
-
-  public editMode() {
-    // this.isEditing = true;
-    this.edit({ editing: true });
-  }
-
-  public normalMode() {
-    // this.isEditing = false;
-    this.edit({ editing: false });
-  }
 
   private _editOnClick?: boolean;
   @Input() public set editOnClick(editOnClick: boolean | undefined) {
@@ -256,6 +245,8 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
 
     this.subscriptions.onEscapeSubscription = this.events.internal.onEscape.subscribe(
       ({ event, state }: InternalEvent) => {
+        this.edit({ editing: false });
+
         this.emit(this.onEscape, {
           event,
           state: state.getState()
@@ -296,6 +287,10 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
     });
 
     this.events.internal.onUpdateStateOfChild.emit(this.state.clone());
+    this.events.internal.onEdit.emit({
+      event,
+      state: this.state.clone()
+    });
 
     if (editing) {
       this.emit(this.onEdit, {

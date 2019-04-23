@@ -22,7 +22,7 @@ if they aren't provided then
 </div>
 
 <ng-template #displayTmpl>
-    <div (click)="editMode()">
+    <div (click)="edit({ editing: true })">
         <label class="p-l-10 form-label">{{label}}</label>
     </div>
 </ng-template>
