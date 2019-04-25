@@ -1,5 +1,5 @@
 .form-horizontal {
-	.mat-input-container,
+	.mat-form-field,
 	.mat-select {
 		display: block;
 	}
@@ -10,7 +10,7 @@
 		padding-top: calc(.4rem - 1px * 2) !important;
 	}
 
-	.mat-input-container,
+	.mat-form-field,
 	.mat-select {
 		display: inline-block;
 	}
@@ -21,7 +21,7 @@
 	margin-left: -15px;
 }
 .form-vertical {
-	.mat-input-infix {
+	.mat-form-field-infix {
 		border-top: none !important;
 	}
 }
@@ -31,13 +31,13 @@
 	position: relative;
 
 	.float-never {
-		.mat-input-infix {
+		.mat-form-field-infix {
 			padding: rem(10px) 0 !important;
 		}
 	}
 
 	.float-never {
-		.mat-input-prefix + .mat-input-infix {
+		.mat-form-field-prefix + .mat-form-field-infix {
 			text-indent: 12px;
 			padding: rem(11px) 0 !important;
 		}
@@ -45,7 +45,7 @@
 
 	.float-always,
 	.float-auto {
-		.mat-input-prefix + .mat-input-infix {
+		.mat-form-field-prefix + .mat-form-field-infix {
 			padding: rem(12px) 0 0 !important;
 			text-indent: 12px;
 		}
@@ -54,7 +54,7 @@
 
 .float-always,
 .float-auto {
-	.mat-input-wrapper {
+	.mat-form-field-wrapper {
 		padding-bottom: rem(30px) !important;
 		width: 100%;
 	}

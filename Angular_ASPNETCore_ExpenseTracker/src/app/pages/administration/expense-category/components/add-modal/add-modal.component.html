@@ -8,7 +8,7 @@
     <div class="form-group row">
       <label class="col-2 col-form-label text-right">Name:</label>
       <div class="col-10">
-        <mat-input-container class="float-never">
+        <mat-form-field class="float-never">
           <input matInput
                  class="form-control"
                  type="text"
@@ -19,19 +19,19 @@
           <mat-error *ngIf="categoryName.invalid && (categoryName.dirty || categoryName.touched) && categoryName.hasError('required')">
             Category Name is <strong>required</strong>
           </mat-error>
-        </mat-input-container>
+        </mat-form-field>
       </div>
     </div>
     <div class="form-group row">
       <label class="col-2 col-form-label text-right">Description:</label>
       <div class="col-10">
-        <mat-input-container class="float-never">
+        <mat-form-field class="float-never">
           <textarea matInput
                     class="form-control"
                     [(ngModel)]="model.categoryDescription"
                     #categoryDescription="ngModel"
                     name="categoryDescription"></textarea>
-        </mat-input-container>
+        </mat-form-field>
       </div>
     </div>
 
