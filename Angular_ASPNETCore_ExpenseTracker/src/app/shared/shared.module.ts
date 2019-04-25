@@ -28,7 +28,6 @@ import {
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 
-import { NguUtilityModule } from 'ngu-utility/ngu-utility.module';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 // ngx-bootstrap4
 // http://valor-software.com/ngx-bootstrap/index-bs4.html#/

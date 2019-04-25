@@ -19,9 +19,7 @@ export class ExpenseCategoryService {
   getExpenseCategories(): Observable<ExpenseCategoryApiResponse> {
     return this.http
       .get(API_URL)
-      .map((response: Response) => {
-        return response;
-      })
+      .map((response: ExpenseCategoryApiResponse) => response)
       .catch(this.handleError);
   }
 

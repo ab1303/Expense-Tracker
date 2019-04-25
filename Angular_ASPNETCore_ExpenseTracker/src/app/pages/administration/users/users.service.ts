@@ -16,7 +16,7 @@ export class UsersService {
   getUsers(): Observable<usersApiResponse> {
     return this.http
       .get(API_URL)
-      .map((response: Response) => {
+      .map((response: usersApiResponse) => {
         // let response = res.json();
         return response;
       })

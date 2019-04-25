@@ -36,7 +36,7 @@ export class ExpenseRegisterService {
       .get(API_URL, {
         params: parameters,
       })
-      .map((response: Response) => {
+      .map((response: IndividualTransactionsApiResponse) => {
         // let response = res.json();
         return response;
       })
@@ -47,7 +47,7 @@ export class ExpenseRegisterService {
   getSearchLookups(): Observable<SearchLookups> {
     return this.http
       .get(`${API_URL}/SearchLookups`)
-      .map((response: Response) => {
+      .map((response: SearchLookups) => {
         // let response = res.json();
         return response;
       })

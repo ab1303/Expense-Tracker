@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { FileUploadModule } from 'ng2-file-upload';
 
 import { TrackByService } from "../../core/trackby.service";
 import { SharedModule } from "../../shared/shared.module";
@@ -29,7 +28,6 @@ import { BulkEditModalComponent } from './expense-register/components/bulk-edit-
   ],
   imports: [
     CommonModule,
-    FileUploadModule,
     NgxDatatableModule,
     SharedModule.forRoot(), RouterModule.forChild(EXPENSES_ROUTES)],
   entryComponents: [BulkEditModalComponent],

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy, AfterViewInit, ElementRef } from "@angular/core";
-import Dashboard from '@uppy/dashboard';
+import * as Dashboard from '@uppy/dashboard';
 import * as Uppy from '@uppy/core';
 import { v4 } from 'uuid'
 import { UppyComponent } from "../../uppy.component";
