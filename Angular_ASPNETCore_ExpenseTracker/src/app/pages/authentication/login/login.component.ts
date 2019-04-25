@@ -1,15 +1,4 @@
-import {
-  Component,
-  OnInit,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  ElementRef,
-  HostListener,
-  HostBinding
-} from "@angular/core";
+import { Component, OnInit, ElementRef, HostListener, HostBinding } from "@angular/core";
 import { GlobalState } from "../../../app.state";
 import { ConfigService } from "../../../shared/services/config/config.service";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -19,57 +8,56 @@ import { AppUserAuth } from "../../../security/app-user-auth";
 import { AlertService } from "../../../shared/services/alert/alert.service";
 
 @Component({
-  selector: ".content_inner_wrapper",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+    selector: ".content_inner_wrapper",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"]
 })
 export class LoginComponent implements OnInit {
-  user: AppUser = new AppUser();
-  registerUser: AppUser = new RegisterUser();
-  securityObject: AppUserAuth = null;
-  returnUrl: string;
-  checked: boolean = false;
-  toggleRegister: boolean = false;
+    user: AppUser = new AppUser();
+    registerUser: AppUser = new RegisterUser();
+    securityObject: AppUserAuth = null;
+    returnUrl: string;
+    checked: boolean = false;
+    toggleRegister: boolean = false;
 
-  /**
-   *
-   */
-  constructor(
-    private alertService: AlertService,
-    private securityService: SecurityService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    /**
+     *
+     */
+    constructor(
+        private alertService: AlertService,
+        private securityService: SecurityService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {}
 
-  ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParamMap.get("returnUrl");
-  }
+    ngOnInit(): void {
+        this.returnUrl = this.route.snapshot.queryParamMap.get("returnUrl");
+    }
 
-  login() {
-    this.securityService.login(this.user).subscribe(
-      resp => {
-        this.securityObject = resp;
-        if (this.returnUrl) {
-          this.router.navigateByUrl(this.returnUrl);
-        }
-      },
-      () => {
-        // Initialize security object to display error message
-        this.securityObject = new AppUserAuth();
-      }
-    );
-  }
+    login() {
+        this.securityService.login(this.user).subscribe(
+            resp => {
+                this.securityObject = resp;
+                if (this.returnUrl) {
+                    this.router.navigateByUrl(this.returnUrl);
+                }
+            },
+            () => {
+                // Initialize security object to display error message
+                this.securityObject = new AppUserAuth();
+            }
+        );
+    }
 
     register() {
-        this.securityService.create(this.registerUser)
-            .subscribe(
-                data => {
-                    this.alertService.success('Registration successful', true);
-                    this.toggleRegister = !this.toggleRegister
-                },
-                error => {
-                    this.alertService.error(error);
-                });
+        this.securityService.create(this.registerUser).subscribe(
+            data => {
+                this.alertService.success("Registration successful", true);
+                this.toggleRegister = !this.toggleRegister;
+            },
+            error => {
+                this.alertService.error(error);
+            }
+        );
     }
-    
 }

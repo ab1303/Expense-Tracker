@@ -1,4 +1,4 @@
-import {Component, OnInit, trigger, state, style, transition, animate, ElementRef, HostListener, ViewEncapsulation, ViewChild} from "@angular/core";
+import {Component, OnInit, ElementRef, HostListener, ViewEncapsulation, ViewChild} from "@angular/core";
 import { GlobalState } from "../../app.state";
 import { ConfigService } from "../../shared/services/config/config.service";
 import { ThemesService } from '../../shared/services/themes/themes.service';
