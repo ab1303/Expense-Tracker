@@ -34,6 +34,6 @@ export class InlineEditorService {
     }
 
     public destroy() {
-        Object.values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
+        (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 }

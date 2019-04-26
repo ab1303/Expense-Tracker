@@ -1,19 +1,10 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "outDir": "../out-tsc/app",
-    "lib": [ "es2017", "dom" ],
-    "baseUrl": "",
-    "types": [
-      "node",
-      "jquery",
-      "mcustomscrollbar"
-    ]
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"outDir": "../out-tsc/app",
+		"module": "es2015",
+		"baseUrl": "",
+		"types": ["node","jquery", "mcustomscrollbar"]
+	},
+	"exclude": ["test.ts", "**/*.spec.ts"]
 }

@@ -63,7 +63,7 @@ export class InlineEditInputRef implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngOnDestroy(): void {
-    Object.values(this.subscriptions).forEach(subscription =>
+    (<any>Object).values(this.subscriptions).forEach(subscription =>
       subscription.unsubscribe()
     );
   }

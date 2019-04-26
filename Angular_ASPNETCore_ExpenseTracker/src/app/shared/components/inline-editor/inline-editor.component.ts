@@ -256,7 +256,7 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
   }
 
   ngOnDestroy(): void {
-    Object.values(this.subscriptions).forEach(subscription =>
+    (<any>Object).values(this.subscriptions).forEach(subscription =>
       subscription.unsubscribe()
     );
     this.service.destroy();
