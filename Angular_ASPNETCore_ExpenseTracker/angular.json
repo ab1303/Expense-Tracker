@@ -24,6 +24,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
               "node_modules/@swimlane/ngx-datatable/assets/icons.css",
+              "node_modules/@uppy/dashboard/dist/style.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -84,6 +85,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
               "node_modules/@swimlane/ngx-datatable/assets/icons.css",
+              "node_modules/@uppy/dashboard/dist/style.css",
               "src/styles.scss"
             ],
             "assets": [
