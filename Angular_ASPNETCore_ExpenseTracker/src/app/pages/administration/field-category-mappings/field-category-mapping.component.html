@@ -9,7 +9,7 @@
                     <mat-icon>search</mat-icon>
                 </div>
             </div>
-            <inline-editor [label]="'Expense Category'" (onBlur)="saveEditable($event)">
+            <inline-editor [label]="'Expense Category'" (onBlur)="saveEditable($event)" (onEnter)="saveEditable($event)">
                 <inline-normal>
                     <div class="add-item">
                         <mat-icon>add</mat-icon>

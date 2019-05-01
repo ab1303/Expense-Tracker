@@ -206,6 +206,7 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
             event,
             state: state.getState()
           });
+          return;
         }
 
         this.isEnterKeyPressed = false;
@@ -235,7 +236,7 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
         });
 
         this.edit({ editing: false });
-
+        this.isEnterKeyPressed = false;
         this.emit(this.onEnter, {
           event,
           state: state.getState()
