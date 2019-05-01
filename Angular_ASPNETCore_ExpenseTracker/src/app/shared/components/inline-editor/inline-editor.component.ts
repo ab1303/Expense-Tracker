@@ -287,12 +287,13 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
     });
 
     this.events.internal.onUpdateStateOfChild.emit(this.state.clone());
-    this.events.internal.onEdit.emit({
-      event,
-      state: this.state.clone()
-    });
 
     if (editing) {
+      this.events.internal.onEdit.emit({
+        event,
+        state: this.state.clone()
+      });
+
       this.emit(this.onEdit, {
         event,
         state: this.state.getState()
@@ -303,14 +304,20 @@ export class InlineEditor implements OnInit, OnDestroy, ControlValueAccessor {
   public save({ event, state: hotState }: ExternalEvent) {
     const prevState = this.state.getState();
 
-    const state = {
+    
+
+    const modifiedState = {
       ...prevState,
-      ...hotState
+      ...hotState,
     };
 
-    this.state = this.state.newState(state);
+    if(this.refreshNGModel){
+      this.refreshNGModel(modifiedState.value);
+    } else {
+      modifiedState.value = '';
+    }
 
-    this.refreshNGModel(state.value);
+    this.state = this.state.newState(modifiedState);
   }
 
   public saveAndClose(outsideEvent: ExternalEvent) {

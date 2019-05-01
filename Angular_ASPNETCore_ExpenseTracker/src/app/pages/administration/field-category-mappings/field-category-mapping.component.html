@@ -1,38 +1,39 @@
-<page-layout [canAdd]="true"
-			 (onAdd)="onAdd($event)">
-	<h1>Field Category Mapping</h1>
+<page-layout [canAdd]="true" (onAdd)="onAdd($event)">
+    <h1>Field Category Mapping</h1>
 
-	<div class="container">
-		<div class="container-column w-300">
-			<div class="header">
-				<div class="search-bar"> Source Mappings</div>
-				<div class="icons">
-					<mat-icon>search</mat-icon>
+    <div class="container">
+        <div class="container-column w-300">
+            <div class="header">
+                <div class="search-bar">Source Mappings</div>
+                <div class="icons">
+                    <mat-icon>search</mat-icon>
+                </div>
+            </div>
+            <inline-editor [label]="'Expense Category'" (onBlur)="saveEditable($event)">
+                <inline-normal>
+                    <div class="add-item">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                </inline-normal>
+                <inline-edit>
+                    <input inlineEditInputRef type="text" />
+                </inline-edit>
+            </inline-editor>
+            <div class="body">
+                <!-- <div class="card-item">
+                    Zakat
+                </div>
+                <div class="card-item">
+                    Groceries
+                </div>
+                <div class="card-item">
+                    Eating out
+				</div> -->
+				
+				<div class="card-item" *ngFor="let sourceValue of sourceValues; trackBy: sourceValue">
+					{{sourceValue}}
 				</div>
-			</div>
-			<inline-editor [label]="'Expense Category'" [(ngModel)]="editableText" (onBlur)="saveEditable($event)">
-				<inline-normal>
-					<div class="add-item">
-						<mat-icon>add</mat-icon>
-					</div>
-				</inline-normal>
-				<inline-edit>
-					<input inlineEditInputRef
-						   type="text"
-						    />
-				</inline-edit>
-			</inline-editor>
-			<div class="body">
-				<div class="card-item">
-					Zakat
-				</div>
-				<div class="card-item">
-					Groceries
-				</div>
-				<div class="card-item">
-					Eating out
-				</div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </page-layout>
