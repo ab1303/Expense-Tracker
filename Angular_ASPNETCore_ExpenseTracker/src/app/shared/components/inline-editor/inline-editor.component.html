@@ -16,19 +16,14 @@ if they aren't provided then
 */
 -->
 
-<div>
-    <ng-content></ng-content>
-    <ng-container *ngIf="state.isEditing(); then !hasInlineEdit && editTmpl;else !hasInlineDisplay && displayTmpl"></ng-container>
-</div>
+<ng-content></ng-content>
+<ng-container *ngIf="state.isEditing(); then !hasInlineEdit && editTmpl; else !hasInlineDisplay && displayTmpl"></ng-container>
 
 <ng-template #displayTmpl>
     <div (click)="edit({ editing: true })">
-        <label class="p-l-10 form-label">{{label}}</label>
+        <label class="p-l-10 form-label">{{ label }}</label>
     </div>
 </ng-template>
 <ng-template #editTmpl>
-    <input inlineEditInputRef
-           matInput
-           placeholder="{{label}}"
-           class="form-control p-l-10">
+    <input inlineEditInputRef matInput placeholder="{{ label }}" class="form-control p-l-10" />
 </ng-template>

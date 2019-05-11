@@ -9,28 +9,20 @@
                     <mat-icon>search</mat-icon>
                 </div>
             </div>
-            <inline-editor [label]="'Expense Category'" (onBlur)="saveEditable($event)" (onEnter)="saveEditable($event)">
+            <inline-editor [label]="'Expense Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
                 <inline-normal>
                     <div class="add-item">
                         <mat-icon>add</mat-icon>
                     </div>
                 </inline-normal>
                 <inline-edit>
-                    <input inlineEditInputRef type="text" />
+                    <div class="input-item">
+                        <input inlineEditInputRef type="text" />
+                    </div>
                 </inline-edit>
             </inline-editor>
             <div class="body">
-                <!-- <div class="card-item">
-                    Zakat
-                </div>
-                <div class="card-item">
-                    Groceries
-                </div>
-                <div class="card-item">
-                    Eating out
-				</div> -->
-				
-				<div class="card-item" *ngFor="let sourceValue of sourceValues; trackBy: sourceValue">
+				<div class="card-item" *ngFor="let sourceValue of sourceValues$ | async">
 					{{sourceValue}}
 				</div>
             </div>

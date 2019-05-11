@@ -2,7 +2,7 @@
 
 @import "../../../shared/styles/main/util/color-variables";
 
-.container{
+.container {
     display: flex;
 
     &-column {
@@ -14,13 +14,13 @@
         flex-direction: column;
         border-radius: 6px;
         margin-bottom: 30px;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-        
-        .header{
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+        .header {
             position: sticky;
             background: $shade30;
             top: 0px;
@@ -28,49 +28,55 @@
             display: flex;
             justify-content: space-between;
             padding: 4px;
-            margin-bottom:16px;
-            .search-bar{
+            margin-bottom: 16px;
+            .search-bar {
             }
-            .icons{
-                right:0;
-                margin:auto 7px;
-                &:hover{
+            .icons {
+                right: 0;
+                margin: auto 7px;
+                &:hover {
                     background: $shade40;
                 }
             }
         }
 
-        .add-item{
-            height:30px;
-            margin:8px;
+        .add-item {
+            height: 30px;
+            margin: 8px;
             border-radius: 3px;
             background: $shade30;
             text-align: center;
-            &:hover{
+            &:hover {
                 background: $shade40;
             }
         }
 
-        &-body{
+        .input-item {
+            display: flex;
+            justify-content: center;
 
+            > input {
+                margin: 8px;
+                width: 100%;
+            }
         }
 
-        .card-item{
-            height:30px;
-            margin:8px;
-            padding:0px 4px;
+        &-body {
+        }
+
+        .card-item {
+            height: 30px;
+            margin: 8px;
+            padding: 0px 4px;
             border-radius: 3px;
             background: $shade20;
             display: flex;
             align-items: center;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-            -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-            -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         }
     }
 }
-
-

@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Subject, Observable } from "rxjs/Rx";
 
 
 @Component({
@@ -10,17 +11,24 @@ import { Component } from "@angular/core";
 export class FieldCategoryMappingComponent {
 
     private sourceValues: string[] = [];
+    private sourceValuesSubject: Subject<string[]> = new Subject<string[]>();
+    private sourceValuesStream$: Observable<Array<string>> = this.sourceValuesSubject.asObservable();
+
     editableText:string;
     
+    constructor(){
+         this.sourceValuesStream$.subscribe(x => console.log(x))
+    }
+
+
     saveEditable(value) {
-        if(!value) return;
-        this.sourceValues.push(value);
         //call to http service
-        console.log('http.service: ' + value);
       }
 
-    onAdd(data){
-        console.log(data);
+    onAddSourceItem(data){
+        if(!data) return;
+        this.sourceValues.push(data);
+        this.sourceValuesSubject.next(this.sourceValues);
     }
 
 }
