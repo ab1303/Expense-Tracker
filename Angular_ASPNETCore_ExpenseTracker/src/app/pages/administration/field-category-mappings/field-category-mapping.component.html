@@ -4,7 +4,7 @@
     <div class="container">
         <div class="container-column w-300">
             <div class="header">
-                <div class="search-bar">Source Mappings</div>
+                <div class="search-bar">Source</div>
                 <div class="icons">
                     <mat-icon>search</mat-icon>
                 </div>
@@ -22,9 +22,13 @@
                 </inline-edit>
             </inline-editor>
             <div class="body">
-				<div class="card-item" *ngFor="let sourceValue of sourceValues$ | async">
+                <!-- <div class="card-item" *ngFor="let sourceValue of sourceValuesStream$ | async">
 					{{sourceValue}}
-				</div>
+                </div> -->
+
+                <div *ngFor="let sourceValue of sourceValuesStream$ | async">
+                    <toggle-card-item [label]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
+                </div>
             </div>
         </div>
     </div>
