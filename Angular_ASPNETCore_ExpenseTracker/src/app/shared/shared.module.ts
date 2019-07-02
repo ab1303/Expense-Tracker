@@ -59,6 +59,7 @@ import { InlineEdit } from './components/inline-editor/inline.edit.component';
 import { InlineDisplay } from './components/inline-editor/inline.normal.component';
 import { InlineEditInputRef } from './components/inline-editor/inline.edit.input.directive';
 import { ToggleCardItemComponent } from './components/toggle-card-item/toggle-card-item.component';
+import { FilterTextComponent } from './components/filter-text/filter-text.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -90,6 +91,7 @@ export const customCurrencyMaskConfig = {
         MatSidenavModule,
         MatTabsModule,
         MatDialogModule,
+        MatInputModule,
         BsDropdownModule.forRoot(),
         AlertModule.forRoot(),
         TabsModule.forRoot(),
@@ -114,6 +116,7 @@ export const customCurrencyMaskConfig = {
         InlineDisplay,
         InlineEditInputRef,
         ToggleCardItemComponent,
+        FilterTextComponent,
     ],
     exports: [
         CommonModule,
@@ -156,6 +159,7 @@ export const customCurrencyMaskConfig = {
         InlineDisplay,
         InlineEditInputRef,
         ToggleCardItemComponent,
+        FilterTextComponent,
     ],
     providers: [
     ]

@@ -20,25 +20,7 @@
         -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 
-        .header {
-            position: sticky;
-            background: $shade30;
-            top: 0px;
-            height: 50px;
-            display: flex;
-            justify-content: space-between;
-            padding: 4px;
-            margin-bottom: 16px;
-            .search-bar {
-            }
-            .icons {
-                right: 0;
-                margin: auto 7px;
-                &:hover {
-                    background: $shade40;
-                }
-            }
-        }
+       
 
         .add-item {
             height: 30px;

@@ -31,4 +31,11 @@ export class FieldCategoryMappingComponent {
         this.sourceValuesSubject.next(this.sourceValues);
     }
 
+    onRemoveItem(data){
+        console.log(data);
+        if(!data) return;
+        this.sourceValues = this.sourceValues.filter(s => s !== data);
+        this.sourceValuesSubject.next(this.sourceValues);
+    }
+
 }

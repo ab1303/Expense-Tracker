@@ -1,5 +1,4 @@
-@import "../../styles/main/util/color-variables" ;
-
+@import "../../styles/main/util/color-variables";
 
 .card-item {
     height: 30px;
@@ -14,4 +13,21 @@
     -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+    span{
+        flex-grow: 1;
+    }
+
+    i {
+        visibility: hidden;
+        right: 0;
+        margin: auto 7px;
+    }
+
+    &:hover {
+        i {
+            cursor: pointer;
+            visibility: visible;
+        }
+    }
 }

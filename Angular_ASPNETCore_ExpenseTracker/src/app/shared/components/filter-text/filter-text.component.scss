@@ -1,0 +1,17 @@
+@import "../../styles/main/util/color-variables";
+
+.filter-container {
+    position: sticky;
+    background: $shade30;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    margin-bottom: 16px;
+    min-height: 57px;
+
+    .icons {
+        right: 0;
+        margin: auto 7px;
+    }
+}

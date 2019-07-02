@@ -3,12 +3,13 @@
 
     <div class="container">
         <div class="container-column w-300">
-            <div class="header">
+            <app-filter-text [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
+            <!-- <div class="header">
                 <div class="search-bar">Source</div>
                 <div class="icons">
                     <mat-icon>search</mat-icon>
                 </div>
-            </div>
+            </div> -->
             <inline-editor [label]="'Expense Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
                 <inline-normal>
                     <div class="add-item">
@@ -27,7 +28,7 @@
                 </div> -->
 
                 <div *ngFor="let sourceValue of sourceValuesStream$ | async">
-                    <toggle-card-item [label]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
+                    <toggle-card-item (onRemove)="onRemoveItem($event)" [label]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
                 </div>
             </div>
         </div>
