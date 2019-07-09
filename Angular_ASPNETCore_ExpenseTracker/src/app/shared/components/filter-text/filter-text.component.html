@@ -1,13 +1,13 @@
 <div class="filter-container">
-    <span *ngIf="!isFiltering; else fitler">{{ normalLabel }}</span>
+    <span *ngIf="!isFiltering; else filter">{{ normalLabel }}</span>
 
-    <ng-template #fitler>
+    <ng-template #filter>
         <mat-form-field>
-            <input matInput placeholder="{{ filterLabel }}" value="" />
+            <input #filterElem matInput placeholder="{{ filterLabel }}" [formControl]="filterCtrl" />
         </mat-form-field>
     </ng-template>
 
-    <span class="icons" (click)="isFiltering = !isFiltering" [style.color]="isFiltering ? '#3474da' : '#757e84'">
+    <span class="icons" (click)="toggleFiltering()" [style.color]="isFiltering ? '#3474da' : '#757e84'">
         <mat-icon >filter_list</mat-icon>
     </span>
 </div>

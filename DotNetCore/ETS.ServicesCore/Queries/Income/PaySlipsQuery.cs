@@ -15,7 +15,7 @@ namespace ETS.Services.Queries.Income
             public const string StartDate = "PeriodStart";
         }
 
-        public class Result 
+        public class Result
         {
             public long Id { get; set; }
             public PaySlipFrequency Frequency { get; set; }
@@ -55,13 +55,16 @@ namespace ETS.Services.Queries.Income
                     PeriodEnd = p.EndDate.UtcDateTime,
                     PeriodStart = p.StartDate.UtcDateTime
                 });
-               
+
             totalFound = query.Count();
 
             var orderBy = $"{DefaultSortBy.StartDate} DESC";
 
-            var results = ReturnAllResults ? query.OrderBy(orderBy).ToArray() :
-                query.OrderBy(orderBy).Skip(_pagedListArgs.PageSize * _pagedListArgs.PageNumber).Take(_pagedListArgs.PageSize).ToArray();
+            var results = ReturnAllResults
+                ? query.OrderBy(orderBy).ToArray()
+                : query.OrderBy(orderBy)
+                .Skip(_pagedListArgs.PageSize * _pagedListArgs.PageNumber)
+                .Take(_pagedListArgs.PageSize).ToArray();
 
 
             return results;

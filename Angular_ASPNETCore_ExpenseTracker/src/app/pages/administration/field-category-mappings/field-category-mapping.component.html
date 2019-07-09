@@ -3,7 +3,7 @@
 
     <div class="container">
         <div class="container-column w-300">
-            <app-filter-text [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
+            <app-filter-text [normalLabel]="'Source'" [filterLabel]="'Filter Source'" (filter)="filterSources($event)"></app-filter-text>
             <!-- <div class="header">
                 <div class="search-bar">Source</div>
                 <div class="icons">
