@@ -2,6 +2,7 @@ import { Component, Input, Inject, PLATFORM_ID, Output, ViewChild, ElementRef, C
 import { isPlatformBrowser } from "@angular/common";
 import { FormControl } from "@angular/forms";
 import { Observable } from "rxjs";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 @Component({
     selector: "app-filter-text",
@@ -17,8 +18,7 @@ export class FilterTextComponent {
 
     @Output("filter") filterText$: Observable<string>;
 
-    // @ViewChild("filterElem") elRef: ElementRef;
-
+    // https://stackoverflow.com/questions/39366981/viewchild-in-ngif/46043837#46043837
     @ViewChild("filterElem") set inputElement(elRef: ElementRef) {
         if (elRef && isPlatformBrowser(this.platformId)) {
             this.isFiltering ? elRef.nativeElement.focus() : elRef.nativeElement.blur();
@@ -27,7 +27,10 @@ export class FilterTextComponent {
     }
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object, private cdRef: ChangeDetectorRef) {
-        this.filterText$ = this.filterCtrl.valueChanges;
+        this.filterText$ = this.filterCtrl.valueChanges.pipe(
+            debounceTime(300),
+            distinctUntilChanged()
+        );
     }
 
     toggleFiltering() {

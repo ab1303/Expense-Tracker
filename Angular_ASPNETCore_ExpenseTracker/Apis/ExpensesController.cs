@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using Angular_ASPNETCore_ExpenseTracker.Infrastructure;
 using ETS.Core.Interfaces;
 using ETS.Jobs.Request;
 using Hangfire;

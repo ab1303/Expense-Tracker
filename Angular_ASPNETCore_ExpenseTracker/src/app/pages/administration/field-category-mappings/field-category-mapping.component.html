@@ -27,7 +27,7 @@
 					{{sourceValue}}
                 </div> -->
 
-                <div *ngFor="let sourceValue of sourceValuesStream$ | async">
+                <div *ngFor="let sourceValue of sourceValues$ | async">
                     <toggle-card-item (onRemove)="onRemoveItem($event)" [label]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
                 </div>
             </div>

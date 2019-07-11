@@ -1,39 +1,38 @@
-import { Component } from "@angular/core";
-import { Subject, Observable } from "rxjs/Rx";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Subject, Observable, BehaviorSubject } from "rxjs/Rx";
 
 @Component({
     selector: "field-category-mapping",
     templateUrl: "./field-category-mapping.component.html",
     styleUrls: ["./field-category-mapping.component.scss"]
 })
-export class FieldCategoryMappingComponent {
-    private sourceValues: string[] = [];
-    private sourceValuesSubject: Subject<string[]> = new Subject<string[]>();
-    private sourceValuesStream$: Observable<Array<string>> = this.sourceValuesSubject.asObservable();
+export class FieldCategoryMappingComponent  {
+   
+    private sourceValues: string[] = ['Test', 'Test1', 'Test2'];
+    private sourceValues$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(this.sourceValues);
 
     editableText: string;
 
-    constructor() {
-        this.sourceValuesStream$.subscribe(x => console.log(x));
-    }
-
+   
     saveEditable(value) {
         //call to http service
     }
 
-    filterSources(filterText$) {
-        console.log(filterText$);
+    filterSources(filterText) {
+        this.sourceValues$.next(this.sourceValues.filter(src => {
+            return src.startsWith(filterText);
+        }));
     }
     onAddSourceItem(data) {
         if (!data) return;
         this.sourceValues.push(data);
-        this.sourceValuesSubject.next(this.sourceValues);
+        this.sourceValues$.next(this.sourceValues);
     }
 
     onRemoveItem(data) {
         console.log(data);
         if (!data) return;
         this.sourceValues = this.sourceValues.filter(s => s !== data);
-        this.sourceValuesSubject.next(this.sourceValues);
+        this.sourceValues$.next(this.sourceValues);
     }
 }

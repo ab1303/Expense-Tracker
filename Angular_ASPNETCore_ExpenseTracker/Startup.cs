@@ -22,7 +22,6 @@ using ETS.DataCore.Seeders;
 using ETS.DomainCore.Model;
 using ETS.Services;
 using Hangfire;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Angular_ASPNETCore_Seed
 {
