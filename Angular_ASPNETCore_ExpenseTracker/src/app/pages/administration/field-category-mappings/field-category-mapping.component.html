@@ -3,13 +3,8 @@
 
     <div class="container">
         <div class="container-column w-300">
-            <app-filter-text [normalLabel]="'Source'" [filterLabel]="'Filter Source'" (filter)="filterSources($event)"></app-filter-text>
-            <!-- <div class="header">
-                <div class="search-bar">Source</div>
-                <div class="icons">
-                    <mat-icon>search</mat-icon>
-                </div>
-            </div> -->
+            <app-filter-text #filterSources [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
+
             <inline-editor [label]="'Expense Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
                 <inline-normal>
                     <div class="add-item">
@@ -23,12 +18,8 @@
                 </inline-edit>
             </inline-editor>
             <div class="body">
-                <!-- <div class="card-item" *ngFor="let sourceValue of sourceValuesStream$ | async">
-					{{sourceValue}}
-                </div> -->
-
                 <div *ngFor="let sourceValue of sourceValues$ | async">
-                    <toggle-card-item (onRemove)="onRemoveItem($event)" [label]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
+                    <toggle-card-item (onRemove)="onRemoveItem($event)" [label]="sourceValue.text" [activeColor]="'#5ed07d'"></toggle-card-item>
                 </div>
             </div>
         </div>

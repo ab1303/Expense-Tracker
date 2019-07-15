@@ -16,7 +16,8 @@ export class FilterTextComponent {
     @Input() normalLabel: string;
     @Input() filterLabel: string;
 
-    @Output("filter") filterText$: Observable<string>;
+    @Output("filter") 
+    filterText$: Observable<string>;
 
     // https://stackoverflow.com/questions/39366981/viewchild-in-ngif/46043837#46043837
     @ViewChild("filterElem") set inputElement(elRef: ElementRef) {
