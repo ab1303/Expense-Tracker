@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, Input, EventEmitter, Output, ElementRef } from "@angular/core";
+import { fromEvent, Observable } from "rxjs";
+import { tap, map } from "rxjs/operators";
 
 @Component({
     selector: "toggle-card-item",
     styleUrls: ["./toggle-card-item.component.scss"],
     template: `
-        <div class="card-item" (click)="toggle = !toggle" [style.background-color]="toggle ? activeColor : inActiveColor">
+        <div class="card-item" [style.background-color]="isActive ? activeColor : inActiveColor">
             <span>
                 {{ label }}
             </span>
@@ -13,15 +15,19 @@ import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
     `
 })
 export class ToggleCardItemComponent implements OnInit {
+    @Input() id: string;
     @Input() label: string;
+    @Input() isActive: boolean;
     @Input() activeColor: string;
     @Input() inActiveColor: string = "#f1f2f2";
 
     @Output() onRemove: EventEmitter<string> = new EventEmitter<string>();
 
-    toggle: boolean = false;
+    clicks$: Observable<any>;
 
-    constructor() {}
+    constructor(public elementRef: ElementRef) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => this.id));
+    }
 }

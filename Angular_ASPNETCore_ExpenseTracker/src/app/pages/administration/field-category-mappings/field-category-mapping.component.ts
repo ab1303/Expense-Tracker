@@ -1,10 +1,14 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy } from "@angular/core";
-import { BehaviorSubject, Subscription } from "rxjs/Rx";
+import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ViewChildren, QueryList } from "@angular/core";
+import { BehaviorSubject, Subscription, Observable } from "rxjs/Rx";
 import { v4 as uuid } from "uuid";
 
 import { Item } from "./item.model";
 import { FilterTextComponent } from "../../../shared/components/filter-text/filter-text.component";
 import { tap } from "rxjs/operators/tap";
+import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
+import { merge, from } from "rxjs";
+import { mergeMap } from "rxjs-compat/operator/mergeMap";
+import { mergeAll } from "rxjs/operators";
 
 @Component({
     selector: "field-category-mapping",
@@ -13,46 +17,71 @@ import { tap } from "rxjs/operators/tap";
 })
 export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy(): void {
-        (<any>Object).values(this.subscriptions).forEach(subscription =>
-            subscription.unsubscribe()
-          );
+        (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 
     ngAfterViewInit() {
-        this.subscriptions.filterSourcesSubscription = this.filterSources.filterText$.pipe(
-            tap(filterText =>
-                this.sourceValues$.next(
-                    this.sourceValues.filter(src => {
-                        return src.text.startsWith(filterText);
-                    })
+        this.subscriptions.filterSourcesSubscription = this.filterSources.filterText$
+            .pipe(
+                tap(filterText =>
+                    this.sourceValues$.next(
+                        this.sourceValues.filter(src => {
+                            return src.text.startsWith(filterText);
+                        })
+                    )
                 )
             )
-        ).subscribe();
+            .subscribe();
+
+        this.toggleCardItems.forEach(cardItem => this.toggleCardItemsArray$.push(cardItem.clicks$));
+
+        this.subscriptions.cardItemClicksSubscription = from(this.toggleCardItemsArray$)
+            .pipe(
+                mergeAll(),
+                tap(i => {
+                    console.log(`Item clicked:`, i);
+                    this.sourceValues = this.sourceValues.map(item => {
+                        // immutable cause an issue as underlying items on which subscription is made is changed... think switchmap
+                        if (item.id === i) {
+                            item.isActive = !item.isActive;
+                        }
+                        return item;
+                    });
+                    this.sourceValues$.next(this.sourceValues);
+                })
+            )
+            .subscribe();
+
+        this.sourceValues$.pipe(tap(i => console.log("item: ", i))).subscribe();
     }
 
     private sourceValues: Item[] = [
         {
-            id: uuid(),
-            text: "Test"
+            // id: uuid(),
+            id: "1",
+            text: "Test",
+            isActive: false
         },
         {
-            id: uuid(),
-            text: "Test1"
+            id: "2",
+            text: "Test1",
+            isActive: false
         },
         {
-            id: uuid(),
-            text: "Test2"
+            id: "3",
+            text: "Test2",
+            isActive: false
         }
     ];
     private sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
     private subscriptions: { [key: string]: Subscription } = {};
 
-    @ViewChild("filterSources")
-    filterSources: FilterTextComponent;
+    private toggleCardItemsArray$: Array<Observable<any>> = [];
+
+    @ViewChild("filterSources") filterSources: FilterTextComponent;
+    @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
 
     editableText: string;
-
-   
 
     saveEditable(value) {
         //call to http service
@@ -64,7 +93,8 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
         if (!this.sourceValues.find(src => src.text === data)) {
             this.sourceValues.push({
                 id: uuid(),
-                text: data
+                text: data,
+                isActive: false
             });
         }
 

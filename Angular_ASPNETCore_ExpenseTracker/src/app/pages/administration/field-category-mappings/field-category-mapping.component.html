@@ -19,7 +19,13 @@
             </inline-editor>
             <div class="body">
                 <div *ngFor="let sourceValue of sourceValues$ | async">
-                    <toggle-card-item (onRemove)="onRemoveItem($event)" [label]="sourceValue.text" [activeColor]="'#5ed07d'"></toggle-card-item>
+                    <toggle-card-item
+                        (onRemove)="onRemoveItem($event)"
+                        [id]="sourceValue.id"
+                        [label]="sourceValue.text"
+                        [isActive]="sourceValue.isActive"
+                        [activeColor]="'#5ed07d'"
+                    ></toggle-card-item>
                 </div>
             </div>
         </div>
