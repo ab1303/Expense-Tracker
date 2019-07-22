@@ -1,11 +1,11 @@
-<page-layout [canAdd]="true" (onAdd)="onAdd($event)">
+<page-layout>
     <h1>Field Category Mapping</h1>
 
     <div class="container">
         <div class="container-column w-300">
             <app-filter-text #filterSources [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
 
-            <inline-editor [label]="'Expense Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
+            <inline-editor [label]="'Source Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
                 <inline-normal>
                     <div class="add-item">
                         <mat-icon>add</mat-icon>
@@ -21,9 +21,31 @@
                 <div *ngFor="let sourceValue of sourceValues$ | async">
                     <toggle-card-item
                         (onRemove)="onRemoveItem($event)"
-                        [id]="sourceValue.id"
-                        [label]="sourceValue.text"
-                        [isActive]="sourceValue.isActive"
+                        [item]="sourceValue"
+                        [activeColor]="'#5ed07d'"
+                    ></toggle-card-item>
+                </div>
+            </div>
+        </div>
+        <div class="container-column w-300 m-l-20">
+            <app-filter-text #filterSources [normalLabel]="'Destination'" [filterLabel]="'Filter Destination'"></app-filter-text>
+            <inline-editor [label]="'Destination Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
+                <inline-normal>
+                    <div class="add-item">
+                        <mat-icon>add</mat-icon>
+                    </div>
+                </inline-normal>
+                <inline-edit>
+                    <div class="input-item">
+                        <input inlineEditInputRef type="text" />
+                    </div>
+                </inline-edit>
+            </inline-editor>
+            <div class="body">
+                <div *ngFor="let sourceValue of sourceValues$ | async">
+                    <toggle-card-item
+                        (onRemove)="onRemoveItem($event)"
+                        [item]="sourceValue"
                         [activeColor]="'#5ed07d'"
                     ></toggle-card-item>
                 </div>

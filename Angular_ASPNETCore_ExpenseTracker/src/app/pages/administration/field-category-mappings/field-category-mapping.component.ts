@@ -16,6 +16,34 @@ import { mergeAll } from "rxjs/operators";
     styleUrls: ["./field-category-mapping.component.scss"]
 })
 export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
+    private sourceValues: Item[] = [
+        {
+            // id: uuid(),
+            id: "1",
+            text: "Test",
+            isActive: false
+        },
+        {
+            id: "2",
+            text: "Test1",
+            isActive: false
+        },
+        {
+            id: "3",
+            text: "Test2",
+            isActive: false
+        }
+    ];
+
+    private sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
+    private subscriptions: { [key: string]: Subscription } = {};
+
+    private toggleCardItemsArray$: Array<Observable<any>> = [];
+
+    @ViewChild("filterSources") filterSources: FilterTextComponent;
+    @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
+
+    editableText: string;
     ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
@@ -38,13 +66,15 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
         this.subscriptions.cardItemClicksSubscription = from(this.toggleCardItemsArray$)
             .pipe(
                 mergeAll(),
-                tap(i => {
-                    console.log(`Item clicked:`, i);
+                tap(newItem => {
+                    console.log(`Item clicked:`, newItem);
                     this.sourceValues = this.sourceValues.map(item => {
-                        // immutable cause an issue as underlying items on which subscription is made is changed... think switchmap
-                        if (item.id === i) {
+                        if (item.id === newItem.id) {
                             item.isActive = !item.isActive;
-                        }
+                            return item;
+                        } 
+
+                        item.isActive = false;
                         return item;
                     });
                     this.sourceValues$.next(this.sourceValues);
@@ -54,34 +84,6 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
 
         this.sourceValues$.pipe(tap(i => console.log("item: ", i))).subscribe();
     }
-
-    private sourceValues: Item[] = [
-        {
-            // id: uuid(),
-            id: "1",
-            text: "Test",
-            isActive: false
-        },
-        {
-            id: "2",
-            text: "Test1",
-            isActive: false
-        },
-        {
-            id: "3",
-            text: "Test2",
-            isActive: false
-        }
-    ];
-    private sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
-    private subscriptions: { [key: string]: Subscription } = {};
-
-    private toggleCardItemsArray$: Array<Observable<any>> = [];
-
-    @ViewChild("filterSources") filterSources: FilterTextComponent;
-    @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
-
-    editableText: string;
 
     saveEditable(value) {
         //call to http service

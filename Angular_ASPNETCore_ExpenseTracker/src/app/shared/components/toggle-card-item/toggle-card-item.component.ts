@@ -6,18 +6,20 @@ import { tap, map } from "rxjs/operators";
     selector: "toggle-card-item",
     styleUrls: ["./toggle-card-item.component.scss"],
     template: `
-        <div class="card-item" [style.background-color]="isActive ? activeColor : inActiveColor">
+        <div class="card-item" [style.background-color]="item.isActive ? activeColor : inActiveColor">
             <span>
-                {{ label }}
+                {{ item.text }}
             </span>
-            <i (click)="onRemove.emit(label)">remove</i>
+            <i (click)="onRemove.emit(item.text)">remove</i>
         </div>
     `
 })
 export class ToggleCardItemComponent implements OnInit {
-    @Input() id: string;
-    @Input() label: string;
-    @Input() isActive: boolean;
+    @Input() item: {
+        id: string;
+        text: string;
+        isActive: boolean;
+    };
     @Input() activeColor: string;
     @Input() inActiveColor: string = "#f1f2f2";
 
@@ -28,6 +30,6 @@ export class ToggleCardItemComponent implements OnInit {
     constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
-        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => this.id));
+        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => this.item));
     }
 }
