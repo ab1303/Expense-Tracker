@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, OnDestroy, ViewChildren, QueryList } from "@angular/core";
+import { Component, AfterViewInit, ViewChild, OnDestroy, ViewChildren, QueryList } from "@angular/core";
 import { BehaviorSubject, Subscription, Observable } from "rxjs/Rx";
 import { v4 as uuid } from "uuid";
 
@@ -6,9 +6,10 @@ import { Item } from "./item.model";
 import { FilterTextComponent } from "../../../shared/components/filter-text/filter-text.component";
 import { tap } from "rxjs/operators/tap";
 import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
-import { merge, from } from "rxjs";
-import { mergeMap } from "rxjs-compat/operator/mergeMap";
-import { mergeAll } from "rxjs/operators";
+import { from, combineLatest } from "rxjs";
+import { mergeAll, map } from "rxjs/operators";
+import { ExpenseCategoryService } from "../expense-category/expense-category.service";
+import { ExpenseCategoryApiResponse } from "../expense-category/expense-category";
 
 @Component({
     selector: "field-category-mapping",
@@ -35,21 +36,36 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
         }
     ];
 
-    private sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
+    editableText: string;
     private subscriptions: { [key: string]: Subscription } = {};
 
-    private toggleCardItemsArray$: Array<Observable<any>> = [];
-
+    // View Refs
     @ViewChild("filterSources") filterSources: FilterTextComponent;
     @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
 
-    editableText: string;
+    // service observables
+    expenseCategories$: Observable<ExpenseCategoryApiResponse> = this.expenseCategoryService.getExpenseCategories();
+    sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
+    toggleCardItemsArray$: Array<Observable<any>> = [];
+
+    sourceFilter$: Observable<string>;
+
+  
+    vm$: Observable<any>;
+
+    /**
+     *
+     */
+    constructor(private expenseCategoryService: ExpenseCategoryService) {}
+
     ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 
     ngAfterViewInit() {
-        this.subscriptions.filterSourcesSubscription = this.filterSources.filterText$
+        this.toggleCardItems.forEach(cardItem => this.toggleCardItemsArray$.push(cardItem.clicks$));
+
+        this.subscriptions.sourceFilterSubscription = this.filterSources && this.filterSources.filterText$
             .pipe(
                 tap(filterText =>
                     this.sourceValues$.next(
@@ -61,18 +77,18 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
             )
             .subscribe();
 
-        this.toggleCardItems.forEach(cardItem => this.toggleCardItemsArray$.push(cardItem.clicks$));
-
         this.subscriptions.cardItemClicksSubscription = from(this.toggleCardItemsArray$)
             .pipe(
                 mergeAll(),
+
+                // think switchMap fro sourceValue$...??
                 tap(newItem => {
                     console.log(`Item clicked:`, newItem);
                     this.sourceValues = this.sourceValues.map(item => {
                         if (item.id === newItem.id) {
                             item.isActive = !item.isActive;
                             return item;
-                        } 
+                        }
 
                         item.isActive = false;
                         return item;
@@ -82,7 +98,12 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
             )
             .subscribe();
 
-        this.sourceValues$.pipe(tap(i => console.log("item: ", i))).subscribe();
+        this.vm$ = combineLatest(this.sourceValues$, this.expenseCategories$).pipe(
+            map(([sourceValues, expenseCategoriesApiResponse]) => ({
+                sourceValues,
+                expenseCategories: expenseCategoriesApiResponse.expenseCategories
+            }))
+        );
     }
 
     saveEditable(value) {

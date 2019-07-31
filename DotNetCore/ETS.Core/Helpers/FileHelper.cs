@@ -1,7 +1,6 @@
 ﻿using ClosedXML.Excel;
 using FileHelpers;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -230,9 +229,8 @@ namespace ETS.Core.Helpers
                 var sheetData = worksheetPart.Worksheet.GetFirstChild<SheetData>();
 
 
-                var columnDictionary = GetHeaderIndexes(sheetData.Descendants<Row>().First(), sharedStringTable);
-                var typeProperties = typeof(T).GetProperties().Select(p => p.Name).ToList()
-              ;
+                var columnDictionary = GetHeaderIndexes(sheetData.Descendants<Row>().First(), sharedStringTable).ToList();
+                var typeProperties = typeof(T).GetProperties().Select(p => p.Name).ToList()              ;
 
 
                 columnDictionary.ForEach(i =>
@@ -297,7 +295,7 @@ namespace ETS.Core.Helpers
                 var headerColumnIdx = 1;
                 //Write report header
                 WriteXlCellValue(ws, headerRowIdx++, headerColumnIdx, reportName, null);
-                WriteXlCellValue(ws, headerRowIdx++, headerColumnIdx, "Run Date", DateTimeProvider.Now, XLCellValues.DateTime, "dd-MMM-yyyy HH:mm:ss");
+                WriteXlCellValue(ws, headerRowIdx++, headerColumnIdx, "Run Date", DateTimeProvider.Now, XLDataType.DateTime, "dd-MMM-yyyy HH:mm:ss");
 
                 excelRowCounter = headerRowIdx;
                 switch (excelReportHeaderRowOption)
@@ -379,32 +377,32 @@ namespace ETS.Core.Helpers
             return bytes;
         }
 
-        private static XLCellValues GetExcelColumnDataType(System.Type dataType)
+        private static XLDataType GetExcelColumnDataType(System.Type dataType)
         {
             if (dataType == typeof(decimal))
             {
-                return XLCellValues.Number;
+                return XLDataType.Number;
             }
 
             if (dataType == typeof(Boolean))
             {
-                return XLCellValues.Boolean;
+                return XLDataType.Boolean;
             }
 
             if (dataType == typeof(DateTime))
             {
-                return XLCellValues.DateTime;
+                return XLDataType.DateTime;
             }
 
             if (dataType == typeof(TimeSpan))
             {
-                return XLCellValues.TimeSpan;
+                return XLDataType.TimeSpan;
             }
 
-            return XLCellValues.Text;
+            return XLDataType.Text;
         }
 
-        public static void WriteXlCellValue(IXLWorksheet ws, int row, int column, string title, object value, XLCellValues cellValues = XLCellValues.Text, string cellFormat = null)
+        public static void WriteXlCellValue(IXLWorksheet ws, int row, int column, string title, object value, XLDataType cellValues = XLDataType.Text, string cellFormat = null)
         {
             ws.Cell(row, column).Value = value == null
                                           ? string.Format("{0}", title)
@@ -1036,7 +1034,7 @@ namespace ETS.Core.Helpers
 
     public class ExcelColumnProperties
     {
-        public XLCellValues DataType { get; set; }
+        public XLDataType DataType { get; set; }
         public string CellNumberFormat { get; set; }
     }
 }

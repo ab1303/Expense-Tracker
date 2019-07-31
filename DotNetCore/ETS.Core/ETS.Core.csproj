@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ClosedXML" Version="0.87.1" />
+    <PackageReference Include="ClosedXML" Version="0.94.2" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.8.1" />
-    <PackageReference Include="FileHelpers" Version="3.2.7" />
+    <PackageReference Include="FileHelpers" Version="3.4.0" />
   </ItemGroup>
 
 </Project>
