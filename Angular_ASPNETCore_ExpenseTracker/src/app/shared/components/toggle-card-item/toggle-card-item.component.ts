@@ -30,6 +30,9 @@ export class ToggleCardItemComponent implements OnInit {
     constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
-        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => this.item));
+        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => {
+            console.log(this.item);
+            return this.item;
+        }));
     }
 }

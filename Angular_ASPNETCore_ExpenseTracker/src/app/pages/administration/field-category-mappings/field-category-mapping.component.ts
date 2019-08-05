@@ -7,7 +7,7 @@ import { FilterTextComponent } from "../../../shared/components/filter-text/filt
 import { tap } from "rxjs/operators/tap";
 import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
 import { from, combineLatest } from "rxjs";
-import { mergeAll, map } from "rxjs/operators";
+import { mergeAll, map, mergeMap } from "rxjs/operators";
 import { ExpenseCategoryService } from "../expense-category/expense-category.service";
 import { ExpenseCategoryApiResponse } from "../expense-category/expense-category";
 
@@ -43,14 +43,23 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
     @ViewChild("filterSources") filterSources: FilterTextComponent;
     @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
 
-    // service observables
-    expenseCategories$: Observable<ExpenseCategoryApiResponse> = this.expenseCategoryService.getExpenseCategories();
+    expenseCategories$: Observable<Item[]> = this.expenseCategoryService.getExpenseCategories().pipe(
+        map(r =>
+            r.expenseCategories.map(category => {
+                return {
+                    id: category.id.toString(),
+                    text: category.name,
+                    isActive: false
+                };
+            })
+        )
+    );
+   
     sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
     toggleCardItemsArray$: Array<Observable<any>> = [];
 
     sourceFilter$: Observable<string>;
 
-  
     vm$: Observable<any>;
 
     /**
@@ -58,24 +67,26 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
      */
     constructor(private expenseCategoryService: ExpenseCategoryService) {}
 
-    ngOnDestroy(): void {
+       ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 
     ngAfterViewInit() {
         this.toggleCardItems.forEach(cardItem => this.toggleCardItemsArray$.push(cardItem.clicks$));
 
-        this.subscriptions.sourceFilterSubscription = this.filterSources && this.filterSources.filterText$
-            .pipe(
-                tap(filterText =>
-                    this.sourceValues$.next(
-                        this.sourceValues.filter(src => {
-                            return src.text.startsWith(filterText);
-                        })
+        this.subscriptions.sourceFilterSubscription =
+            this.filterSources &&
+            this.filterSources.filterText$
+                .pipe(
+                    tap(filterText =>
+                        this.sourceValues$.next(
+                            this.sourceValues.filter(src => {
+                                return src.text.startsWith(filterText);
+                            })
+                        )
                     )
                 )
-            )
-            .subscribe();
+                .subscribe();
 
         this.subscriptions.cardItemClicksSubscription = from(this.toggleCardItemsArray$)
             .pipe(
@@ -99,9 +110,9 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
             .subscribe();
 
         this.vm$ = combineLatest(this.sourceValues$, this.expenseCategories$).pipe(
-            map(([sourceValues, expenseCategoriesApiResponse]) => ({
+            map(([sourceValues, expenseCategories]) => ({
                 sourceValues,
-                expenseCategories: expenseCategoriesApiResponse.expenseCategories
+                expenseCategories
             }))
         );
     }

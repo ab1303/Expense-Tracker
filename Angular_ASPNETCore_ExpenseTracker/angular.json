@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular4-seed": {
+    "angular7-seed": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -55,19 +55,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular4-seed:build",
+            "browserTarget": "angular7-seed:build",
             "port": 5000
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular4-seed:build:production"
+              "browserTarget": "angular7-seed:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular4-seed:build"
+            "browserTarget": "angular7-seed:build"
           }
         },
         "test": {
@@ -106,7 +106,7 @@
         }
       }
     },
-    "angular4-seed-e2e": {
+    "angular7-seed-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -115,7 +115,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "angular4-seed:serve"
+            "devServerTarget": "angular7-seed:serve"
           }
         },
         "lint": {
@@ -130,7 +130,7 @@
       }
     }
   },
-  "defaultProject": "angular4-seed",
+  "defaultProject": "angular7-seed",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
