@@ -6,11 +6,11 @@ import { Item } from "./item.model";
 import { FilterTextComponent } from "../../../shared/components/filter-text/filter-text.component";
 import { tap } from "rxjs/operators/tap";
 import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
-import { from, combineLatest, of, interval } from "rxjs";
+import { from, combineLatest, of, interval, Subject } from "rxjs";
 import { mergeAll, map, mergeMap, switchAll, merge, switchMap } from "rxjs/operators";
 import { ExpenseCategoryService } from "../expense-category/expense-category.service";
 import { ExpenseCategoryApiResponse } from "../expense-category/expense-category";
-import { publishReplay } from 'rxjs-compat/operator/publishReplay';
+import { publishReplay } from "rxjs-compat/operator/publishReplay";
 
 @Component({
     selector: "field-category-mapping",
@@ -40,8 +40,8 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
 
     editableText: string;
     private subscriptions: { [key: string]: Subscription } = {};
-    private sourceClicksSubscriptions: { [key: string]: Observable<any> } = {}; 
-    private categoryClicksSubscriptions: { [key: string]: Observable<any> } = {}; 
+    private sourceClicksSubscriptions: { [key: string]: BehaviorSubject<Observable<Item>> } = {};
+    private categoryClicksSubscriptions: { [key: string]: BehaviorSubject<Observable<Item>> } = {};
 
     // View Refs
     @ViewChild("filterSources") filterSources: FilterTextComponent;
@@ -61,12 +61,12 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
     );
 
     sourceCardItemsArray$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceCardItemsArray);
-    sourceCardItemsClicks$: BehaviorSubject<Observable<any>[]> = new BehaviorSubject<Observable<any>[]>([]);
+    sourceCardItemsUpdate$: Subject<any> = new Subject<any>();
     sourceFilter$: Observable<string>;
 
     categoryCardItemsArray$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
-    categoryCardItemsClicks$: BehaviorSubject<Observable<any>[]> = new BehaviorSubject<Observable<any>[]>([]);
-
+    categoryCardItemsUpdate$: Subject<any> = new Subject<any>();
+    categoryFilter$: Observable<string>;
     vm$: Observable<any>;
 
     /**
@@ -85,33 +85,68 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
         });
     }
     ngAfterViewInit() {
-        this.categoryCardItems.changes.subscribe(() => {
-            setTimeout(() => {
-                const categoryItemsArray$ = [];
-                this.categoryCardItems.forEach(ci => {
-                    if(!this.categoryClicksSubscriptions[ci.item.id]){
-                        this.categoryClicksSubscriptions[ci.item.id] = ci.clicks$;
-                        categoryItemsArray$.push(ci.clicks$);
-                    }
-                });
-                this.categoryCardItemsClicks$.next(categoryItemsArray$);
-            }, 0);
-        });
-
         this.sourceCardItems.changes.subscribe(() => {
             setTimeout(() => {
-                const sourceItemsArray$ = [];
                 this.sourceCardItems.forEach(si => {
-                    if(!this.sourceClicksSubscriptions[si.item.id]){
-                        this.sourceClicksSubscriptions[si.item.id] = si.clicks$;
-                        sourceItemsArray$.push(si.clicks$);
+                    if (!this.sourceClicksSubscriptions[si.item.id]) {
+                        this.sourceClicksSubscriptions[si.item.id] = new BehaviorSubject(si.clicks$);
+                    } else {
+                        this.sourceClicksSubscriptions[si.item.id].next(si.clicks$);
                     }
-                }); 
-                this.sourceCardItemsClicks$.next(sourceItemsArray$);
+                });
+                this.sourceCardItemsUpdate$.next();
             }, 0);
         });
 
-       
+        this.categoryCardItems.changes.subscribe(() => {
+            setTimeout(() => {
+                this.categoryCardItems.forEach(ci => {
+                    if (!this.categoryClicksSubscriptions[ci.item.id]) {
+                        this.categoryClicksSubscriptions[ci.item.id] = new BehaviorSubject(ci.clicks$);
+                    } else {
+                        this.categoryClicksSubscriptions[ci.item.id].next(ci.clicks$);
+                    }
+                });
+                this.categoryCardItemsUpdate$.next();
+            }, 0);
+        });
+
+        this.sourceCardItemsUpdate$.subscribe(() => {
+            (<any>Object).entries(this.sourceClicksSubscriptions).forEach(([key, subjectClick$]) => {
+                if (subjectClick$.observers.length === 0) {
+                    this.subscriptions[`${key}`] = subjectClick$.pipe(switchAll()).subscribe(newItem => {
+                        console.log(`source Item clicked:`, newItem);
+                        this.sourceCardItemsArray.map(si => {
+                            if (si.id === newItem.id) {
+                                si.isActive = !si.isActive;
+                                return si;
+                            }
+                            si.isActive = false;
+                            return si;
+                        });
+                    });
+                }
+            });
+        });
+
+        this.categoryCardItemsUpdate$.subscribe(() => {
+            (<any>Object).entries(this.categoryClicksSubscriptions).forEach(([key, subjectClick$]) => {
+                if (subjectClick$.observers.length === 0) {
+                    this.subscriptions[`${key}`] = subjectClick$.pipe(switchAll()).subscribe(newItem => {
+                        console.log(`category Item clicked:`, newItem);
+                        this.categoryCardItemsArray.map(ci => {
+                            if (ci.id === newItem.id) {
+                                ci.isActive = !ci.isActive;
+                                return ci;
+                            }
+                            ci.isActive = false;
+                            return ci;
+                        });
+                    });
+                }
+            });
+        });
+
         this.subscriptions.sourceFilterSubscription =
             this.filterSources &&
             this.filterSources.filterText$
@@ -125,52 +160,6 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
                     )
                 )
                 .subscribe();
-
-        this.subscriptions.categoryItemClicksSubscription = this.categoryCardItemsClicks$
-            .pipe(
-                mergeMap(array$ => from(array$)),
-                mergeAll()
-            )
-            .subscribe(newItem => {
-                console.log(`category Item clicked:`, newItem);
-                this.categoryCardItemsArray.map(ec => {
-                    if (ec.id === newItem.id) {
-                        ec.isActive = !ec.isActive;
-                        return ec;
-                    }
-                    ec.isActive = false;
-                    return ec;
-                });
-            });
-
-        this.subscriptions.sourceItemClicksSubscription = this.sourceCardItemsClicks$
-            .pipe(
-                mergeMap(array$ => from(array$)),
-                mergeAll(),
-            )
-            .subscribe(newItem => {
-                console.log(`source Item clicked:`, newItem);
-                this.sourceCardItemsArray.map(si => {
-                    if (si.id === newItem.id) {
-                        si.isActive = !si.isActive;
-                        return si;
-                    }
-                    si.isActive = false;
-                    return si;
-                });
-            });
-
-        // var interval$ = interval(1000);
-        // from([interval$, interval$])
-        //     .pipe(mergeAll())
-        //     .subscribe(_ => console.log("interval", _));
-
-        // this.vm$ = combineLatest(this.sourceCardItemsArray$, this.expenseCategories$).pipe(
-        //     map(([sourceCardItemsArray, expenseCategories]) => ({
-        //         sourceCardItemsArray,
-        //         expenseCategories
-        //     }))
-        // );
     }
 
     saveEditable(value) {
