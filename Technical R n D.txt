@@ -48,3 +48,6 @@ https://blog.bitscry.com/2018/03/12/uploading-files-in-asp-net-core-from-an-mvc-
 
 ******** Medium Articles **********
 https://medium.com/@balazs.tapai1990/what-could-go-wrong-how-to-handle-errors-in-angular-6089b0c785e0
+
+********* Issues
+https://medium.com/@penghuili/angular-how-to-use-viewchild-to-get-component-shown-after-afterviewinit-b55bbd5b8f6f

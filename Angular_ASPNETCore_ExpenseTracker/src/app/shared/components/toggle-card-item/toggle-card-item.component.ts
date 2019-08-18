@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, ElementRef } from "@angular/core";
 import { fromEvent, Observable } from "rxjs";
-import { tap, map } from "rxjs/operators";
+import { tap, map, share } from "rxjs/operators";
 
 @Component({
     selector: "toggle-card-item",
@@ -30,9 +30,14 @@ export class ToggleCardItemComponent implements OnInit {
     constructor(public elementRef: ElementRef) {}
 
     ngOnInit() {
-        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(map(() => {
+        this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(
+            map(() => {
             console.log(this.item);
             return this.item;
         }));
+    }
+
+    ngOnDestroy(){
+        console.log('card-item destroyed')
     }
 }

@@ -1,10 +1,7 @@
 <page-layout>
     <h1>Field Category Mapping</h1>
 
-    <div
-        class="container"
-        *ngIf="(vm$ | async) as vm"
-    >
+    <div class="container">
         <div class="container-column w-300">
             <app-filter-text #filterSources [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
 
@@ -21,8 +18,8 @@
                 </inline-edit>
             </inline-editor>
             <div class="body">
-                <div *ngFor="let sourceValue of vm.sourceValues">
-                    <toggle-card-item (onRemove)="onRemoveItem($event)" [item]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
+                <div *ngFor="let sourceValue of sourceCardItemsArray$ | async">
+                    <toggle-card-item #source (onRemove)="onRemoveItem($event)" [item]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
                 </div>
             </div>
         </div>
@@ -41,8 +38,8 @@
                 </inline-edit>
             </inline-editor>
             <div class="body">
-                <div *ngFor="let category of vm.expenseCategories">
-                    <toggle-card-item (onRemove)="onRemoveItem($event)" [item]="category" [activeColor]="'#5ed07d'"></toggle-card-item>
+                <div *ngFor="let category of categoryCardItemsArray$ | async">
+                    <toggle-card-item #destination (onRemove)="onRemoveItem($event)" [item]="category" [activeColor]="'#5ed07d'"></toggle-card-item>
                 </div>
             </div>
         </div>

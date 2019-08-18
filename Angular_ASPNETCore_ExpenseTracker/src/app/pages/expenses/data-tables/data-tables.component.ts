@@ -50,8 +50,6 @@ export class DataTablesComponent {
         //  this.table.offset = 0;
     }
     onSelect({ selected }) {
-        //console.log("Select Event", selected, this.selected);
-        //console.log(this.selected.length);
         this.selected.splice(0, this.selected.length);
         this.selected.push(...selected);
         if (selected.length == 1) {

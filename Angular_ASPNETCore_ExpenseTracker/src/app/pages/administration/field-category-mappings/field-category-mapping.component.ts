@@ -6,10 +6,11 @@ import { Item } from "./item.model";
 import { FilterTextComponent } from "../../../shared/components/filter-text/filter-text.component";
 import { tap } from "rxjs/operators/tap";
 import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
-import { from, combineLatest } from "rxjs";
-import { mergeAll, map, mergeMap } from "rxjs/operators";
+import { from, combineLatest, of, interval } from "rxjs";
+import { mergeAll, map, mergeMap, switchAll, merge, switchMap } from "rxjs/operators";
 import { ExpenseCategoryService } from "../expense-category/expense-category.service";
 import { ExpenseCategoryApiResponse } from "../expense-category/expense-category";
+import { publishReplay } from 'rxjs-compat/operator/publishReplay';
 
 @Component({
     selector: "field-category-mapping",
@@ -17,31 +18,35 @@ import { ExpenseCategoryApiResponse } from "../expense-category/expense-category
     styleUrls: ["./field-category-mapping.component.scss"]
 })
 export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
-    private sourceValues: Item[] = [
+    private sourceCardItemsArray: Item[] = [
         {
-            // id: uuid(),
-            id: "1",
-            text: "Test",
-            isActive: false
-        },
-        {
-            id: "2",
+            id: uuid(),
             text: "Test1",
             isActive: false
         },
         {
-            id: "3",
+            id: uuid(),
             text: "Test2",
+            isActive: false
+        },
+        {
+            id: uuid(),
+            text: "Test3",
             isActive: false
         }
     ];
 
+    private categoryCardItemsArray: Item[] = [];
+
     editableText: string;
     private subscriptions: { [key: string]: Subscription } = {};
+    private sourceClicksSubscriptions: { [key: string]: Observable<any> } = {}; 
+    private categoryClicksSubscriptions: { [key: string]: Observable<any> } = {}; 
 
     // View Refs
     @ViewChild("filterSources") filterSources: FilterTextComponent;
-    @ViewChildren(ToggleCardItemComponent) toggleCardItems!: QueryList<ToggleCardItemComponent>;
+    @ViewChildren("source", { read: ToggleCardItemComponent }) sourceCardItems!: QueryList<ToggleCardItemComponent>;
+    @ViewChildren("destination", { read: ToggleCardItemComponent }) categoryCardItems!: QueryList<ToggleCardItemComponent>;
 
     expenseCategories$: Observable<Item[]> = this.expenseCategoryService.getExpenseCategories().pipe(
         map(r =>
@@ -54,11 +59,13 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
             })
         )
     );
-   
-    sourceValues$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceValues);
-    toggleCardItemsArray$: Array<Observable<any>> = [];
 
+    sourceCardItemsArray$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>(this.sourceCardItemsArray);
+    sourceCardItemsClicks$: BehaviorSubject<Observable<any>[]> = new BehaviorSubject<Observable<any>[]>([]);
     sourceFilter$: Observable<string>;
+
+    categoryCardItemsArray$: BehaviorSubject<Item[]> = new BehaviorSubject<Item[]>([]);
+    categoryCardItemsClicks$: BehaviorSubject<Observable<any>[]> = new BehaviorSubject<Observable<any>[]>([]);
 
     vm$: Observable<any>;
 
@@ -67,20 +74,51 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
      */
     constructor(private expenseCategoryService: ExpenseCategoryService) {}
 
-       ngOnDestroy(): void {
+    ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
     }
 
+    ngOnInit(): void {
+        this.expenseCategories$.subscribe(categories => {
+            this.categoryCardItemsArray = categories;
+            this.categoryCardItemsArray$.next(categories);
+        });
+    }
     ngAfterViewInit() {
-        this.toggleCardItems.forEach(cardItem => this.toggleCardItemsArray$.push(cardItem.clicks$));
+        this.categoryCardItems.changes.subscribe(() => {
+            setTimeout(() => {
+                const categoryItemsArray$ = [];
+                this.categoryCardItems.forEach(ci => {
+                    if(!this.categoryClicksSubscriptions[ci.item.id]){
+                        this.categoryClicksSubscriptions[ci.item.id] = ci.clicks$;
+                        categoryItemsArray$.push(ci.clicks$);
+                    }
+                });
+                this.categoryCardItemsClicks$.next(categoryItemsArray$);
+            }, 0);
+        });
 
+        this.sourceCardItems.changes.subscribe(() => {
+            setTimeout(() => {
+                const sourceItemsArray$ = [];
+                this.sourceCardItems.forEach(si => {
+                    if(!this.sourceClicksSubscriptions[si.item.id]){
+                        this.sourceClicksSubscriptions[si.item.id] = si.clicks$;
+                        sourceItemsArray$.push(si.clicks$);
+                    }
+                }); 
+                this.sourceCardItemsClicks$.next(sourceItemsArray$);
+            }, 0);
+        });
+
+       
         this.subscriptions.sourceFilterSubscription =
             this.filterSources &&
             this.filterSources.filterText$
                 .pipe(
                     tap(filterText =>
-                        this.sourceValues$.next(
-                            this.sourceValues.filter(src => {
+                        this.sourceCardItemsArray$.next(
+                            this.sourceCardItemsArray.filter(src => {
                                 return src.text.startsWith(filterText);
                             })
                         )
@@ -88,57 +126,76 @@ export class FieldCategoryMappingComponent implements AfterViewInit, OnDestroy {
                 )
                 .subscribe();
 
-        this.subscriptions.cardItemClicksSubscription = from(this.toggleCardItemsArray$)
+        this.subscriptions.categoryItemClicksSubscription = this.categoryCardItemsClicks$
             .pipe(
-                mergeAll(),
-
-                // think switchMap fro sourceValue$...??
-                tap(newItem => {
-                    console.log(`Item clicked:`, newItem);
-                    this.sourceValues = this.sourceValues.map(item => {
-                        if (item.id === newItem.id) {
-                            item.isActive = !item.isActive;
-                            return item;
-                        }
-
-                        item.isActive = false;
-                        return item;
-                    });
-                    this.sourceValues$.next(this.sourceValues);
-                })
+                mergeMap(array$ => from(array$)),
+                mergeAll()
             )
-            .subscribe();
+            .subscribe(newItem => {
+                console.log(`category Item clicked:`, newItem);
+                this.categoryCardItemsArray.map(ec => {
+                    if (ec.id === newItem.id) {
+                        ec.isActive = !ec.isActive;
+                        return ec;
+                    }
+                    ec.isActive = false;
+                    return ec;
+                });
+            });
 
-        this.vm$ = combineLatest(this.sourceValues$, this.expenseCategories$).pipe(
-            map(([sourceValues, expenseCategories]) => ({
-                sourceValues,
-                expenseCategories
-            }))
-        );
+        this.subscriptions.sourceItemClicksSubscription = this.sourceCardItemsClicks$
+            .pipe(
+                mergeMap(array$ => from(array$)),
+                mergeAll(),
+            )
+            .subscribe(newItem => {
+                console.log(`source Item clicked:`, newItem);
+                this.sourceCardItemsArray.map(si => {
+                    if (si.id === newItem.id) {
+                        si.isActive = !si.isActive;
+                        return si;
+                    }
+                    si.isActive = false;
+                    return si;
+                });
+            });
+
+        // var interval$ = interval(1000);
+        // from([interval$, interval$])
+        //     .pipe(mergeAll())
+        //     .subscribe(_ => console.log("interval", _));
+
+        // this.vm$ = combineLatest(this.sourceCardItemsArray$, this.expenseCategories$).pipe(
+        //     map(([sourceCardItemsArray, expenseCategories]) => ({
+        //         sourceCardItemsArray,
+        //         expenseCategories
+        //     }))
+        // );
     }
 
     saveEditable(value) {
         //call to http service
     }
-
     onAddSourceItem(data) {
         if (!data) return;
 
-        if (!this.sourceValues.find(src => src.text === data)) {
-            this.sourceValues.push({
-                id: uuid(),
-                text: data,
-                isActive: false
-            });
+        if (!this.sourceCardItemsArray.find(src => src.text === data)) {
+            this.sourceCardItemsArray = [
+                ...this.sourceCardItemsArray,
+                {
+                    id: uuid(),
+                    text: data,
+                    isActive: false
+                }
+            ];
         }
-
-        this.sourceValues$.next(this.sourceValues);
+        this.sourceCardItemsArray$.next(this.sourceCardItemsArray);
     }
 
     onRemoveItem(data) {
         console.log(data);
         if (!data) return;
-        this.sourceValues = this.sourceValues.filter(s => s.text !== data);
-        this.sourceValues$.next(this.sourceValues);
+        this.sourceCardItemsArray = this.sourceCardItemsArray.filter(s => s.text !== data);
+        this.sourceCardItemsArray$.next(this.sourceCardItemsArray);
     }
 }
