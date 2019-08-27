@@ -1,0 +1,19 @@
+<app-filter-text #filterItems [normalLabel]="label" [filterLabel]="filterLabel"></app-filter-text>
+
+<inline-editor [label]="editorLabel" (onBlur)="onAddItem($event)" (onEnter)="onAddItem($event)">
+    <inline-normal>
+        <div class="add-item">
+            <mat-icon>add</mat-icon>
+        </div>
+    </inline-normal>
+    <inline-edit>
+        <div class="input-item">
+            <input inlineEditInputRef type="text" />
+        </div>
+    </inline-edit>
+</inline-editor>
+<div class="body">
+    <div *ngFor="let cardItem of cardItemsArray$ | async">
+        <toggle-card-item (onRemove)="onRemoveItem($event)" [item]="cardItem" [activeColor]="'#5ed07d'"></toggle-card-item>
+    </div>
+</div>

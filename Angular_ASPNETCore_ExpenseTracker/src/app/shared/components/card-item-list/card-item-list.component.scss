@@ -1,33 +1,22 @@
 @import "../../styles/main/util/color-variables";
 
-.card-item {
+.add-item {
     height: 30px;
     margin: 8px;
-    padding: 0px 4px;
     border-radius: 3px;
-    background: $shade20;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    -ms-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    -o-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-
-    span{
-        flex-grow: 1;
-    }
-
-    i {
-        visibility: hidden;
-        right: 0;
-        margin: auto 7px;
-    }
-
+    background: $shade30;
+    text-align: center;
     &:hover {
-        i {
-            cursor: pointer;
-            visibility: visible;
-        }
+        background: $shade40;
+    }
+}
+
+.input-item {
+    display: flex;
+    justify-content: center;
+
+    > input {
+        margin: 8px;
+        width: 100%;
     }
 }

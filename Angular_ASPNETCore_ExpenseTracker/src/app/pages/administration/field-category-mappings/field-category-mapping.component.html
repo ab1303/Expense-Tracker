@@ -3,45 +3,10 @@
 
     <div class="container">
         <div class="container-column w-300">
-            <app-filter-text #filterSources [normalLabel]="'Source'" [filterLabel]="'Filter Source'"></app-filter-text>
-
-            <inline-editor [label]="'Source Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
-                <inline-normal>
-                    <div class="add-item">
-                        <mat-icon>add</mat-icon>
-                    </div>
-                </inline-normal>
-                <inline-edit>
-                    <div class="input-item">
-                        <input inlineEditInputRef type="text" />
-                    </div>
-                </inline-edit>
-            </inline-editor>
-            <div class="body">
-                <div *ngFor="let sourceValue of sourceCardItemsArray$ | async">
-                    <toggle-card-item #source (onRemove)="onRemoveItem($event)" [item]="sourceValue" [activeColor]="'#5ed07d'"></toggle-card-item>
-                </div>
-            </div>
+            <card-item-list [label]="'Source'" [items]="sourceCardItemsArray"></card-item-list>
         </div>
         <div class="container-column w-300 m-l-20">
-            <app-filter-text #filterDestination [normalLabel]="'Destination'" [filterLabel]="'Filter Destination'"></app-filter-text>
-            <inline-editor [label]="'Destination Category'" (onBlur)="onAddSourceItem($event)" (onEnter)="onAddSourceItem($event)">
-                <inline-normal>
-                    <div class="add-item">
-                        <mat-icon>add</mat-icon>
-                    </div>
-                </inline-normal>
-                <inline-edit>
-                    <div class="input-item">
-                        <input inlineEditInputRef type="text" />
-                    </div>
-                </inline-edit>
-            </inline-editor>
-            <div class="body">
-                <div *ngFor="let category of categoryCardItemsArray$ | async">
-                    <toggle-card-item #destination (onRemove)="onRemoveItem($event)" [item]="category" [activeColor]="'#5ed07d'"></toggle-card-item>
-                </div>
-            </div>
+            <card-item-list [label]="'Destination'" [items]="categoryCardItemsArray"></card-item-list>
         </div>
     </div>
 </page-layout>
