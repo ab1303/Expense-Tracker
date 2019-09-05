@@ -397,13 +397,14 @@
   version "11.13.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.7.tgz#85dbb71c510442d00c0631f99dae957ce44fd104"
 
+"@types/node@8.9.0":
+  version "8.9.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.9.0.tgz#99449266e9f023cc3ad5de304d759de787d18ea4"
+  integrity sha512-LVPrm5uzrma9ThwNiCgXWtsiXgPgUyEBzJJUJ8zcY0z/Dfdwa1mZ6PR51/mTKourRKnpEx/gwDHYUiY0Z/Juzg==
+
 "@types/node@^6.0.46":
   version "6.14.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.14.5.tgz#36dfa8fd73d6fc3725393a2fe98964b92a4999c1"
-
-"@types/node@~8.0.31":
-  version "8.0.58"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.58.tgz#5b3881c0be3a646874803fee3197ea7f1ed6df90"
 
 "@types/q@^0.0.32":
   version "0.0.32"

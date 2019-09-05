@@ -10,7 +10,7 @@ import { tap, map, share } from "rxjs/operators";
             <span>
                 {{ item.text }}
             </span>
-            <i (click)="onRemove.emit(item.text)">remove</i>
+            <i (click)="onRemove.emit(item)">remove</i>
         </div>
     `
 })
@@ -32,7 +32,6 @@ export class ToggleCardItemComponent implements OnInit {
     ngOnInit() {
         this.clicks$ = fromEvent(this.elementRef.nativeElement, "click").pipe(
             map(() => {
-            console.log(this.item);
             return this.item;
         }));
     }

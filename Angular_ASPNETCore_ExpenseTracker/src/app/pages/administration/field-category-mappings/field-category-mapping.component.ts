@@ -3,9 +3,9 @@ import { Subscription, Observable } from "rxjs/Rx";
 import { v4 as uuid } from "uuid";
 
 import { Item } from "./item.model";
-import { ToggleCardItemComponent } from "../../../shared/components/toggle-card-item/toggle-card-item.component";
 import { map } from "rxjs/operators";
 import { ExpenseCategoryService } from "../expense-category/expense-category.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: "field-category-mapping",
@@ -36,9 +36,6 @@ export class FieldCategoryMappingComponent implements OnDestroy {
     editableText: string;
     private subscriptions: { [key: string]: Subscription } = {};
 
-    // View Refs
-    @ViewChildren("destination", { read: ToggleCardItemComponent }) categoryCardItems!: QueryList<ToggleCardItemComponent>;
-
     expenseCategories$: Observable<Item[]> = this.expenseCategoryService.getExpenseCategories().pipe(
         map(r =>
             r.expenseCategories.map(category => {
@@ -56,7 +53,7 @@ export class FieldCategoryMappingComponent implements OnDestroy {
     /**
      *
      */
-    constructor(private expenseCategoryService: ExpenseCategoryService) {}
+    constructor(private expenseCategoryService: ExpenseCategoryService, private toastrService: ToastrService) {}
 
     ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
@@ -66,6 +63,54 @@ export class FieldCategoryMappingComponent implements OnDestroy {
         this.expenseCategories$.subscribe(categories => {
             this.categoryCardItemsArray = [...categories];
         });
+    }
+
+    sourceItemAdded(sourceName) {
+        console.log("source item added", sourceName);
+        this.sourceCardItemsArray = this.listItemAdded({ id: uuid(), name: sourceName }, this.sourceCardItemsArray);
+    }
+
+    sourceItemRemoved(sourceItem) {
+        console.log("source item removed", sourceItem);
+        this.sourceCardItemsArray = this.listItemRemoved(sourceItem, this.sourceCardItemsArray);
+    }
+
+    categoryItemAdded(categoryName) {
+        console.log("category item added", categoryName);
+        this.expenseCategoryService.addExpenseCategory(categoryName, "").subscribe(response => {
+            this.categoryCardItemsArray = this.listItemAdded({ id: response.model, name: categoryName }, this.categoryCardItemsArray);
+
+            this.toastrService.success("Expense category added");
+        });
+    }
+
+    categoryItemRemoved(categoryItem) {
+        console.log("category item removed", categoryItem);
+        this.expenseCategoryService.deleteExpenseCategory(categoryItem.id).subscribe(response => {
+            this.categoryCardItemsArray = this.listItemRemoved(categoryItem, this.categoryCardItemsArray);
+            this.toastrService.success('Expense category deleted');
+        });
+       
+    }
+
+    listItemAdded(item, collection) {
+        if (!collection.find(src => src.text === item)) {
+            return [
+                ...collection,
+                {
+                    id: item.id,
+                    text: item.name,
+                    isActive: false
+                }
+            ];
+        }
+
+        return collection;
+    }
+
+    listItemRemoved(listItem, collection) {
+        if (!listItem) return;
+        return collection.filter(s => s.text !== listItem.text);
     }
 
     saveEditable(value) {

@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild, ViewChildren, QueryList, AfterViewInit, OnInit, SimpleChanges } from "@angular/core";
+import { Component, Input, ElementRef, ViewChild, ViewChildren, QueryList, AfterViewInit, OnInit, SimpleChanges, EventEmitter, Output } from "@angular/core";
 import { Observable, Subscription, BehaviorSubject, Subject } from "rxjs";
 import { tap, switchAll } from "rxjs/operators";
 import { Item } from "../../../pages/administration/field-category-mappings/item.model";
@@ -13,10 +13,15 @@ import { v4 as uuid } from "uuid";
 })
 export class CardItemListComponent implements OnInit, AfterViewInit {
     @Input() label: string;
+
+    @Output() public onItemAdd: EventEmitter<string> = new EventEmitter<string>();
+    @Output() public onItemRemove: EventEmitter<string> = new EventEmitter<string>();
+
+
     private filterLabel: string;
     private editorLabel: string;
     private subscriptions: { [key: string]: Subscription } = {};
-    private clicksSubscriptions: { [key: string]: BehaviorSubject<Observable<Item>> } = {};
+    private clicks$Array: { [key: string]: BehaviorSubject<Observable<Item>> } = {};
 
     // View Refs
     @ViewChild("filterItems") filterItems: FilterTextComponent;
@@ -48,7 +53,7 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.subscriptions.sourceFilterSubscription =
+        this.subscriptions.filterSubscription =
             this.filterItems &&
             this.filterItems.filterText$
                 .pipe(
@@ -67,7 +72,7 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
         });
 
         this.cardItemsUpdate$.subscribe(() => {
-            (<any>Object).entries(this.clicksSubscriptions).forEach(([key, subjectClick$]) => {
+            (<any>Object).entries(this.clicks$Array).forEach(([key, subjectClick$]) => {
                 if (subjectClick$.observers.length === 0) {
                     this.subscriptions[`${key}`] = subjectClick$.pipe(switchAll()).subscribe(newItem => {
                         console.log(`source Item clicked:`, newItem);
@@ -88,10 +93,10 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
     setupClicksSubscription(){
         setTimeout(() => {
             this.cardItems.forEach(si => {
-                if (!this.clicksSubscriptions[si.item.id]) {
-                    this.clicksSubscriptions[si.item.id] = new BehaviorSubject(si.clicks$);
+                if (!this.clicks$Array[si.item.id]) {
+                    this.clicks$Array[si.item.id] = new BehaviorSubject(si.clicks$);
                 } else {
-                    this.clicksSubscriptions[si.item.id].next(si.clicks$);
+                    this.clicks$Array[si.item.id].next(si.clicks$);
                 }
             });
             this.cardItemsUpdate$.next();
@@ -99,24 +104,10 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
     }
     onAddItem(data) {
         if (!data) return;
-
-        if (!this.cardItemsArray.find(src => src.text === data)) {
-            this.cardItemsArray = [
-                ...this.cardItemsArray,
-                {
-                    id: uuid(),
-                    text: data,
-                    isActive: false
-                }
-            ];
-        }
-        this.cardItemsArray$.next(this.cardItemsArray);
+        this.onItemAdd.emit(data);
     }
 
-    onRemoveItem(data) {
-        console.log(data);
-        if (!data) return;
-        this.cardItemsArray = this.cardItemsArray.filter(s => s.text !== data);
-        this.cardItemsArray$.next(this.cardItemsArray);
+    onRemoveItem(item) {
+        this.onItemRemove.emit(item);
     }
 }

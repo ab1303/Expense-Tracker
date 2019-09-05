@@ -1,0 +1,5 @@
+Issue:
+Conflicting type definitions for node
+
+Resolutions
+Deleted folder node_modules/@types/node
