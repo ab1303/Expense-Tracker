@@ -95,7 +95,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 {
                     Message = result.Message,
                     Code = InternalApiStatusCode.Success,
-                    Model = result.Model
+                    Model = result.Result
                 });
 
             }

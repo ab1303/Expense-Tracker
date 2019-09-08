@@ -61,7 +61,7 @@ namespace ETS.Services.Implementations
                 return new ServiceResult<long>
                 {
                     Status = ServiceStatus.Success,
-                    Model = paySlip.Id
+                    Result = paySlip.Id
                 };
 
             }

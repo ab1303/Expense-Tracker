@@ -27,7 +27,7 @@ namespace ETS.Services.Results
 
     public class ServiceResult<T> : ServiceResult
     {
-        public T Model { get; set; }
+        public T Result { get; set; }
     }
 
     public enum ServiceStatus

@@ -3,7 +3,6 @@ using ETS.DataCore.Intefaces;
 using ETS.Domain;
 using ETS.Services.DTO;
 using ETS.Services.Interfaces;
-using ETS.Services.Repositories;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +53,7 @@ namespace ETS.Services.Implementations
                 return new ServiceResult<long>
                 {
                     Status = ServiceStatus.Success,
-                    Model = expenseCategory.Id
+                    Result = expenseCategory.Id
                 };
 
             }
