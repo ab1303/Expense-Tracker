@@ -8,7 +8,7 @@ import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 
-const API_URL = `${API_BASE_ADDRESS}/ExpenseCategory`;
+const API_URL = `${API_BASE_ADDRESS}/CategoryMapping`;
 @Injectable()
 export class CategoryMappingService {
     constructor(private http: HttpClient) {}
@@ -29,7 +29,7 @@ export class CategoryMappingService {
             try {
                 // TODO:
                 // errMessage = error.json().error;
-                errMessage = "what the fuck";
+                errMessage = "Some error has happened";
             } catch (err) {
                 errMessage = error.statusText;
             }

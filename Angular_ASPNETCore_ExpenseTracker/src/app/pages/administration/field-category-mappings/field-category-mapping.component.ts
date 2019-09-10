@@ -6,6 +6,9 @@ import { Item } from "./item.model";
 import { map } from "rxjs/operators";
 import { ExpenseCategoryService } from "../expense-category/expense-category.service";
 import { ToastrService } from "ngx-toastr";
+import { CategoryMappingService } from "./category-mapping.service";
+import { CategoryMapping } from "./types/category-mapping.model";
+import { FieldCategory } from "./types/field-category.model";
 
 @Component({
     selector: "field-category-mapping",
@@ -32,6 +35,7 @@ export class FieldCategoryMappingComponent implements OnDestroy {
     ];
 
     private categoryCardItemsArray: Item[] = [];
+    private categoryMappingsArray: CategoryMapping[] = [];
 
     editableText: string;
     private subscriptions: { [key: string]: Subscription } = {};
@@ -48,12 +52,28 @@ export class FieldCategoryMappingComponent implements OnDestroy {
         )
     );
 
+    categoryMappings$: Observable<CategoryMapping[]> = this.categoryMappingService.getCategoryMappings(FieldCategory.ExpenseCategory).pipe(
+        map(r =>
+            r.categoryMappings.map(cm => {
+                return {
+                    id: cm.id,
+                    sourceValue: cm.sourceValue,
+                    destinationValue: cm.destinationValue,
+                };
+            })
+        )
+    );
+
     vm$: Observable<any>;
 
     /**
      *
      */
-    constructor(private expenseCategoryService: ExpenseCategoryService, private toastrService: ToastrService) {}
+    constructor(
+        private toastrService: ToastrService,
+        private expenseCategoryService: ExpenseCategoryService,
+        private categoryMappingService: CategoryMappingService
+    ) {}
 
     ngOnDestroy(): void {
         (<any>Object).values(this.subscriptions).forEach(subscription => subscription.unsubscribe());
@@ -62,6 +82,10 @@ export class FieldCategoryMappingComponent implements OnDestroy {
     ngOnInit(): void {
         this.expenseCategories$.subscribe(categories => {
             this.categoryCardItemsArray = [...categories];
+        });
+
+        this.categoryMappings$.subscribe(cm => {
+            this.categoryMappingsArray = [...cm];
         });
     }
 
@@ -88,9 +112,8 @@ export class FieldCategoryMappingComponent implements OnDestroy {
         console.log("category item removed", categoryItem);
         this.expenseCategoryService.deleteExpenseCategory(categoryItem.id).subscribe(response => {
             this.categoryCardItemsArray = this.listItemRemoved(categoryItem, this.categoryCardItemsArray);
-            this.toastrService.success('Expense category deleted');
+            this.toastrService.success("Expense category deleted");
         });
-       
     }
 
     listItemAdded(item, collection) {

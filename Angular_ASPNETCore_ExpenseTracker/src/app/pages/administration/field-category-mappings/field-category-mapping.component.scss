@@ -2,8 +2,11 @@
 
 @import "../../../shared/styles/main/util/color-variables";
 
-.container {
+.page-container {
     display: flex;
+    // border: 2px solid black;
+    margin: 0 15px;
+    padding: 0 5px;
 
     &-column {
         border: none !important;
@@ -42,9 +45,7 @@
             }
         }
 
-        &-body {
-        }
-
+      
        
     }
 }

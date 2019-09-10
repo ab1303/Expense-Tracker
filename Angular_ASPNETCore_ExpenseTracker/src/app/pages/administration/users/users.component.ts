@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { UsersService } from "./users.service";
 import { TrackByService } from "../../../core/trackby.service";
 @Component({
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UsersComponent implements OnInit {
 

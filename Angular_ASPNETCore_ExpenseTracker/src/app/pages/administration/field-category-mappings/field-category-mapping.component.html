@@ -1,22 +1,35 @@
-<page-layout>
-    <h1>Field Category Mapping</h1>
-
-    <div class="container">
-        <div class="container-column w-300">
-            <card-item-list
-                [label]="'Source'"
-                [items]="sourceCardItemsArray"
-                (onItemAdd)="sourceItemAdded($event)"
-                (onItemRemove)="sourceItemRemoved($event)"
-            ></card-item-list>
+<div id="content_wrapper" class="boxedlayout3-wrapper">
+    <div class="content">
+        <div class="header-wrapper header-sm shadow-none">
+            <div class="row">
+                <header>
+                    <h1>Field Category Mapping</h1>
+                </header>
+            </div>
         </div>
-        <div class="container-column w-300 m-l-20">
-            <card-item-list
-                [label]="'Destination'"
-                [items]="categoryCardItemsArray"
-                (onItemAdd)="categoryItemAdded($event)"
-                (onItemRemove)="categoryItemRemoved($event)"
-            ></card-item-list>
+        <div class="content-body">
+            <div class="page-container">
+                <div class="page-container-column" style="width:25%">
+                    <card-item-list
+                        [label]="'Source'"
+                        [items]="sourceCardItemsArray"
+                        (onItemAdd)="sourceItemAdded($event)"
+                        (onItemRemove)="sourceItemRemoved($event)"
+                    ></card-item-list>
+                </div>
+                <div class="page-container-column m-l-20" style="width:25%">
+                    <card-item-list
+                        [label]="'Target'"
+                        [items]="categoryCardItemsArray"
+                        (onItemAdd)="categoryItemAdded($event)"
+                        (onItemRemove)="categoryItemRemoved($event)"
+                    ></card-item-list>
+                </div>
+
+                <div class="page-container-column m-l-20" style="width:40%">
+                    <category-mapping-table [categoryMappingsArray]="categoryMappingsArray"></category-mapping-table>
+                </div>
+            </div>
         </div>
     </div>
-</page-layout>
+</div>

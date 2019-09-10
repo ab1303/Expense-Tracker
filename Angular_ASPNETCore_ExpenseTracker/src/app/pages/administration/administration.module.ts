@@ -17,6 +17,8 @@ import { ExpenseCategoryService } from "./expense-category/expense-category.serv
 import { AddModalComponent as ExpenseCategoryAddModal } from "./expense-category/components/add-modal/add-modal.component";
 import { EditModalComponent as ExpenseCategoryEditModal } from "./expense-category/components/edit-modal/edit-modal.component";
 import { FieldCategoryMappingComponent } from "./field-category-mappings/field-category-mapping.component";
+import { CategoryMappingService } from './field-category-mappings/category-mapping.service';
+import { CategoryMappingTableComponent } from './field-category-mappings/components/category-mapping-table.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { FieldCategoryMappingComponent } from "./field-category-mappings/field-c
     ExpenseCategoryAddModal,
     ExpenseCategoryEditModal,
     FieldCategoryMappingComponent,
+    CategoryMappingTableComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +37,7 @@ import { FieldCategoryMappingComponent } from "./field-category-mappings/field-c
     SharedModule,
     RouterModule.forChild(ADMIN_ROUTES)
   ],
-  providers: [ExpenseCategoryService, UsersService, TrackByService],
+  providers: [ExpenseCategoryService, CategoryMappingService, UsersService, TrackByService],
   entryComponents: [ExpenseCategoryAddModal, ExpenseCategoryEditModal],
 })
 export class AdminModule { }

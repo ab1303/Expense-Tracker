@@ -36,7 +36,7 @@ namespace Angular_ASPNETCore_ExpenseTracker.Apis
                 {
                     CategoryMappings = _categoryMappingService.GetCategoryMappings(fieldCategory).Result,
                     Code = InternalApiStatusCode.Success,
-                    Message = "list of expense categories",
+                    Message = "list of category mappings",
 
                 };
 
