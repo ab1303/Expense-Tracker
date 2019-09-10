@@ -3,7 +3,6 @@ using Angular_ASPNETCore_ExpenseTracker.Models;
 using Angular_ASPNETCore_ExpenseTracker.Models.ApiResponses;
 using Angular_ASPNETCore_ExpenseTracker.Models.ExpenseCategory;
 using ETS.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

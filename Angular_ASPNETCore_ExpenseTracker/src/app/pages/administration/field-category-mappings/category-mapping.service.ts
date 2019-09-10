@@ -7,6 +7,8 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/observable/throw";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
+import { GenericBaseApiResponse } from '../../../shared/model/api-responses/GenericBaseApiResponse';
+import { BaseApiResponse } from '../../../shared/model/api-responses/base-api-response';
 
 const API_URL = `${API_BASE_ADDRESS}/CategoryMapping`;
 @Injectable()
@@ -21,6 +23,24 @@ export class CategoryMappingService {
             .map((response: CategoryMappingApiResponse) => response)
             .catch(this.handleError);
     }
+
+    
+  addCategoryMapping(fieldCategory: number, source: string, target: string): Observable<GenericBaseApiResponse<number>> {
+    return this.http
+      .post<GenericBaseApiResponse<number>>(`${API_URL}/Add`, {
+        fieldCategory,
+        source,
+        target,
+      })
+      .catch(this.handleError);
+  }
+
+   
+  deleteCategoryMapping(id: number): Observable<BaseApiResponse> {
+    return this.http.delete<BaseApiResponse>(`${API_URL}/Delete/${id}`).catch(this.handleError);
+  }
+
+
 
     private handleError(error: any) {
         console.error("server error:", error);

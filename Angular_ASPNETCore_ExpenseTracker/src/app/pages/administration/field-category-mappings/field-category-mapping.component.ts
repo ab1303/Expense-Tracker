@@ -58,7 +58,7 @@ export class FieldCategoryMappingComponent implements OnDestroy {
                 return {
                     id: cm.id,
                     sourceValue: cm.sourceValue,
-                    destinationValue: cm.destinationValue,
+                    destinationValue: cm.destinationValue
                 };
             })
         )
@@ -80,13 +80,15 @@ export class FieldCategoryMappingComponent implements OnDestroy {
     }
 
     ngOnInit(): void {
-        this.expenseCategories$.subscribe(categories => {
-            this.categoryCardItemsArray = [...categories];
-        });
+        Observable.combineLatest([this.expenseCategories$, this.categoryMappings$])
+            .pipe(
+                map(([categories, categoryMappings]) => {
+                    this.categoryCardItemsArray = [...categories];
+                    this.categoryMappingsArray = [...categoryMappings];
+                })
+            )
+            .subscribe();
 
-        this.categoryMappings$.subscribe(cm => {
-            this.categoryMappingsArray = [...cm];
-        });
     }
 
     sourceItemAdded(sourceName) {
