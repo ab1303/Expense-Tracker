@@ -13,7 +13,7 @@
     <ngx-datatable-column name="Target" prop="destinationValue"></ngx-datatable-column>
     <ngx-datatable-column name="">
         <ng-template let-row="row" ngx-datatable-cell-template>
-            <a href="javascript:void(0)" attr.data-userId="{{ row.id }}" class="icon">
+            <a (click)="removeMapping.emit(row.id)" attr.data-userId="{{ row.id }}" class="icon">
                 <i class="zmdi zmdi-delete"></i>
             </a>
         </ng-template>

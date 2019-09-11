@@ -16,6 +16,7 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
 
     @Output() public onItemAdd: EventEmitter<string> = new EventEmitter<string>();
     @Output() public onItemRemove: EventEmitter<string> = new EventEmitter<string>();
+    @Output() public onItemClick: EventEmitter<Item> = new EventEmitter<Item>();
 
 
     private filterLabel: string;
@@ -75,7 +76,6 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
             (<any>Object).entries(this.clicks$Array).forEach(([key, subjectClick$]) => {
                 if (subjectClick$.observers.length === 0) {
                     this.subscriptions[`${key}`] = subjectClick$.pipe(switchAll()).subscribe(newItem => {
-                        console.log(`source Item clicked:`, newItem);
                         this.cardItemsArray.map(si => {
                             if (si.id === newItem.id) {
                                 si.isActive = !si.isActive;
@@ -84,6 +84,8 @@ export class CardItemListComponent implements OnInit, AfterViewInit {
                             si.isActive = false;
                             return si;
                         });
+
+                        this.onItemClick.emit(newItem);
                     });
                 }
             });

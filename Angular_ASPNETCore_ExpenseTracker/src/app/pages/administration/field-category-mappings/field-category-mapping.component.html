@@ -9,8 +9,16 @@
         </div>
         <div class="content-body">
             <div class="page-container">
+                <ul class="actions fab center-right">
+                    <li>
+                        <button class="btn btn-accent btn-fab" mat-ripple #addBtn>
+                            <i class="zmdi zmdi-plus"></i>
+                        </button>
+                    </li>
+                </ul>
                 <div class="page-container-column" style="width:25%">
                     <card-item-list
+                        #sourceList
                         [label]="'Source'"
                         [items]="sourceCardItemsArray"
                         (onItemAdd)="sourceItemAdded($event)"
@@ -19,6 +27,7 @@
                 </div>
                 <div class="page-container-column m-l-20" style="width:25%">
                     <card-item-list
+                        #targetList
                         [label]="'Target'"
                         [items]="categoryCardItemsArray"
                         (onItemAdd)="categoryItemAdded($event)"
@@ -27,7 +36,7 @@
                 </div>
 
                 <div class="page-container-column m-l-20" style="width:40%">
-                    <category-mapping-table [categoryMappingsArray]="categoryMappingsArray"></category-mapping-table>
+                    <category-mapping-table [categoryMappingsArray]="categoryMappingsArray" (removeMapping)="removeCategoryMapping($event)"></category-mapping-table>
                 </div>
             </div>
         </div>

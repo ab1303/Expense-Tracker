@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input } from '@angular/core';
+import { Component, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { CategoryMapping } from '../types/category-mapping.model';
 
 
@@ -11,5 +11,6 @@ import { CategoryMapping } from '../types/category-mapping.model';
 export class CategoryMappingTableComponent{
     
     @Input() categoryMappingsArray: CategoryMapping[]
+    @Output() removeMapping = new EventEmitter<number>();
 
 }
